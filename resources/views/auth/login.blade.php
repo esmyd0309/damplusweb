@@ -8,6 +8,7 @@
     <div class="card-title">
      
       <h1>DAMPLUS</h1>
+       <p><center> Estudio Juridico Medina</center></p>
     </div>
     
     <div class="content">

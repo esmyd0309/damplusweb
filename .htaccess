@@ -1,3 +1,0 @@
-Options +SymLinksIfOwnerMatch
-RewriteEngine On
-RewriteRule ^ damplusweb/public/index.php [L]

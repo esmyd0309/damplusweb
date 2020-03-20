@@ -180,20 +180,20 @@ class ClientesController extends Controller
      
         //$clientes = ClientesVentas::where("IdCampañaPersona",'like',$request->texto."%")->take(10)->get();
 
-        $clientes = DB::connection('sqlsrv')->table('tbCampañaPersona')
-        ->join('tbCampaña', 'tbCampaña.IdCampaña', '=', 'tbCampañaPersona.IdCampaña')
-    
-        ->select('tbCampañaPersona.Identificacion',
-                  'tbCampañaPersona.Nombres',
-                  'tbCampañaPersona.TelefonoPrincipal',
-                  'tbCampañaPersona.ValorDeuda',
-                  'tbCampañaPersona.SaldoDeuda',
-                  'tbCampaña.Descripcion',
-                  'tbCampañaPersona.IdCampaña',
-                  'tbCampañaPersona.IdAgente',
-                  'tbCampañaPersona.Campo9'
+        $clientes = DB::connection('mysql')->table('clientescobranza')
+        
+        ->select('clientescobranza.idc',
+                 'clientescobranza.cedula',
+                  'clientescobranza.Nombres',
+                  'clientescobranza.valordeuda',
+                  'clientescobranza.saldodeuda',
+                  'clientescobranza.descripcion',
+                  'clientescobranza.descripcion',
+
+                  'clientescobranza.agente',
+                  'clientescobranza.area'
                   )
-        ->where("tbCampañaPersona.Identificacion",'like',$request->texto."%")
+        ->where("clientescobranza.cedula",'like',$request->texto."%")
         ->take(10)->get();
         return view('Cobranza.Clientes.buscador.paginas', compact('clientes'));
     }

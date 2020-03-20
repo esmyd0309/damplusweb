@@ -544,7 +544,7 @@ Route::resource('procesos', 'PredictivoController');
 		 */
 
 		Route::resource('deudor', 'Cobranza\Contactos\DatosController');
-		Route::get('/deudor/show/{id}/{idcam}', 'Cobranza\Contactos\DatosController@show')->name('deudor.show'); 
+		Route::get('/deudor/show/{id}', 'Cobranza\Contactos\DatosController@show')->name('deudor.show'); 
 
 		/**
 		 * CONTACTOS CLIENTES. VENTAS

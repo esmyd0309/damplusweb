@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Datos extends Model
 {
-    protected $connection = 'sqlsrv';
-    protected $table ='TBL_CLIENTE';
+
+    protected $table ='tbl_cliente';
 }

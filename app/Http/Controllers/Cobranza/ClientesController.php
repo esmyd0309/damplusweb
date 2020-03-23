@@ -189,7 +189,6 @@ class ClientesController extends Controller
                   'clientescobranza.saldodeuda',
                   'clientescobranza.descripcion',
                   'clientescobranza.descripcion',
-
                   'clientescobranza.agente',
                   'clientescobranza.area'
                   )

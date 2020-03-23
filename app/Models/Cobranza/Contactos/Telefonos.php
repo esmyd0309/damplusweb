@@ -6,8 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Telefonos extends Model
 {
-    //
-    
-    protected $connection = 'sqlsrv';
-    protected $table ='TBL_TELEFONOS';
+    protected $table ='tbl_telefonos';
 }

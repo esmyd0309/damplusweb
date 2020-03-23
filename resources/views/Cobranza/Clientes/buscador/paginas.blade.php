@@ -23,7 +23,7 @@
                     <td>{{ $item->descripcion }}</td>
                     <td>{{ $item->area }}</td>
                     <td>{{ $item->agente }}</td>
-                    <td style="width: 5px"> <a href="{{ route('deudor.show', $item->idc )}}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a></td>
+                    <td style="width: 5px"> <a href="{{ route('deudor.show', [$item->idc,$item->cedula] )}}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a></td>
                 </tr>
                 @endforeach   
             </tbody>

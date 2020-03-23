@@ -32,23 +32,24 @@ class DatosController extends Controller
     }
 
     
-    public function show($id,$ced)
+    public function show($idc,$ced)
     {
        
-        $idc = $id.$ced;
-        // dd($idc);
         /**
          * buscar datos del cliente en tbcampañaPersona
          */
-        $datos          = ClientesCobranza::where('Identificacion',$ced)->where('IdCampaña',$id)->first();
+        $datos          = ClientesCobranza::where('idc',$idc)->first();
         /**
          * busco los datos relacionados al cliente en la tabla TBL_CLIENTE
          */
         $datosgenerales = Datos::where('cedula',$ced)->first();
+        
+    
+
         /**
          * busco los datos relacionados al cliente en la tablA TBL_RUC
          */
-        $ruc            = Ruc::where('CEDULA',$ced)->first();
+       // $ruc            = Ruc::where('CEDULA',$ced)->first();
         /**
          * busco los datos relacionados al cliente en la tabla TBL_TELEFONOS
          */
@@ -56,28 +57,28 @@ class DatosController extends Controller
         /**
          * busco los datos relacionados al cliente en la tabla TBL_TRABAJO
          */
-        $trabajo        = Trabajo::where('CEDULA',$ced)->first();
+       // $trabajo        = Trabajo::where('CEDULA',$ced)->first();
 
          /**
          * busco los datos relacionados al cliente en la tabla TBL_MEDIDOR
          */
-        $medidor        = Medidor::where('CEDULA',$ced)->first();
+       // $medidor        = Medidor::where('CEDULA',$ced)->first();
 
         /**
          * busco los datos relacionados al cliente en la tabla TBL_MEDIDOR
          */
-        $agua        = Agua::where('CEDULA',$ced)->first();
+      //  $agua        = Agua::where('CEDULA',$ced)->first();
     
         /**
          * busco la cedulas de los parentescos en TBL_PARENTESCO
          */
-        $cedula_parientes   = Deudor::select('CED_PARIENETE')->where('CED_DEUDOR',$ced)->DISTINCT('CED_PARIENETE')->get();
+      //  $cedula_parientes   = Deudor::select('CED_PARIENETE')->where('CED_DEUDOR',$ced)->DISTINCT('CED_PARIENETE')->get();
 
-        $cedulas_parentescos[]="";
+      /*  $cedulas_parentescos[]="";
         foreach ($cedula_parientes as  $parentesco) {
         $cedulas_parentescos[] =$parentesco->CED_PARIENETE;
         }
-
+        */
 
         
   
@@ -85,7 +86,7 @@ class DatosController extends Controller
 /**
  * Buscar Datos de Parenntescos 
  */
-        $telefonosparentescos = Datos::select(
+       /* $telefonosparentescos = Datos::select(
                                                 'TBL_TELEFONOS.TLF_FIJO1',
                                                 'TBL_TELEFONOS.TLF_FIJO2',	
                                                 'TBL_TELEFONOS.TLF_FIJO3',	
@@ -146,14 +147,14 @@ class DatosController extends Controller
                                                         ->orderBy('TBL_PARENTESCO.DESC_PARIENTE', 'DESC')
                                                         ->get();
       
-
+                                                    */
 
         
 
 //dd($trabajoparientes);
 
-        $DAMPLUStelefonos = DAMPLUStelefonos::where('idc',$idc)->first();
-        return view('Cobranza.Contactos.show',compact('datos','datosgenerales','ruc','telefonos','telefonosparentescos','medidor','trabajo','agua','trabajoparientes','RUCparientes','idc','DAMPLUStelefonos'));
+        //$DAMPLUStelefonos = DAMPLUStelefonos::where('idc',$idc)->first();
+        return view('Cobranza.Contactos.show',compact('datos','datosgenerales','telefonos'));
     }
 
     /**

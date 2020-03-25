@@ -573,7 +573,11 @@ Route::resource('procesos', 'PredictivoController');
 		 */
 		Route::post('/DAMPLUSsegmentar/post/{idc}', 'Cobranza\ClientesController@segmentar')->name('DAMPLUSsegmentar.segmentar');
 
+		Route::get('clientesweb', 'Cobranza\web\ClientesController@index')->name('clientesweb');
+		Route::group(['middleware' => ['cors']], function () {
 
-		
+			Route::get('apiclientescobranza/{datobuscar}/{tipobuscar}', 'Cobranza\ApiclientesController@apiclientescobranza');
+
+		});
 
 		

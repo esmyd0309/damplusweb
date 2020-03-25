@@ -5,8 +5,14 @@
  */
 
 require('./bootstrap');
+require('../../node_modules/bootstrap/dist/css/bootstrap.min.css');
+require('../../node_modules/bootstrap-vue/dist/bootstrap-vue.css');
+
 window.Vue = require('vue');
 
+
+import BootstrapVue from "bootstrap-vue" //Importing
+Vue.use(BootstrapVue) // Teslling Vue to use this whole application
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,9 +25,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('cliente-component', require('./components/ClienteComponent.vue').default);
-Vue.component('pagos-component', require('./components/PagosComponent.vue').default);
-Vue.component('amortizacion-component', require('./components/AmortizacionComponent.vue').default);
+
 Vue.component('formulario-component', require('./components/FormularioComponent.vue').default);
 
 /**

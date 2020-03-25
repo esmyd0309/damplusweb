@@ -167,7 +167,7 @@
                   </div>
                 </div>
 
-<formulario-component></formulario-component>
+
               </div>
             </div>
                             

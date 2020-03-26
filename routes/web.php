@@ -576,6 +576,8 @@ Route::resource('procesos', 'PredictivoController');
 		Route::get('clientesweb', 'Cobranza\web\ClientesController@index')->name('clientesweb');
 		
 			Route::get('apiclientescobranza/{datobuscar}/{tipobuscar}', 'Cobranza\ApiclientesController@apiclientescobranza');
+			Route::post('apiclientescobranzaguardar', 'Cobranza\ApiclientesController@apiclientescobranzaguardar');
+			Route::get('apiclientescobranzagestiones/{idc}', 'Cobranza\ApiclientesController@apiclientescobranzagestiones');
 
 
 		

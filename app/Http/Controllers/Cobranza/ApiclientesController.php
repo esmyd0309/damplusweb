@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Cobranza;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cobranza\ApiClientes;
+use App\Models\Cobranza\web\DAMPLUSWEBgestiones;
+use Carbon\Carbon;
+
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use App\User;
@@ -71,5 +74,35 @@ class ApiclientesController extends Controller
     
 
 
+    }
+
+    public function apiclientescobranzaguardar(Request $request )
+    {   
+      $fecha = Carbon::now();
+
+      $tabla = new DAMPLUSWEBgestiones();
+      $tabla->idc = $request->idc;
+      $tabla->cedula = $request->cedula;
+      $tabla->telefono = $request->telefono;
+      $tabla->comentario = $request->comentario;
+      $tabla->estado = $request->estado;
+      $tabla->fechapagar = $request->fechapagar;
+      $tabla->valor = $request->valor;
+      $tabla->formapago = $request->forma;
+
+
+      $tabla->agente = \Auth::user()->usuario;
+      $tabla->fecha = $fecha;
+
+      $tabla->save();
+
+      return $tabla;
+
+    }
+    public function apiclientescobranzagestiones($idc )
+    {  
+      
+       $clientes = DAMPLUSWEBgestiones::where('idc',$idc)->get();
+        return $clientes;
     }
 }

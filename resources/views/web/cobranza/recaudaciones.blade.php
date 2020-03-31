@@ -4,8 +4,7 @@
 @section('content')
 
   <div>
-    <formulario-component></formulario-component>
-
+    <recaudacion-component :id="{{ $idc }}"></recaudacion-component>
   </div>
 
 @endsection

@@ -12,6 +12,8 @@ use App\Models\Cobranza\ClientesCobranza;
 use App\Models\Cobranza\Contactos\Medidor;
 use App\Models\Cobranza\Contactos\Trabajo;
 use App\Models\Cobranza\Contactos\Telefonos;
+use App\Models\Cobranza\web\DAMPLUSWEBtelefonos;
+
 use DB;
 use App\Models\Cobranza\DAMPLUStelefonos;
 class DatosController extends Controller
@@ -151,10 +153,18 @@ class DatosController extends Controller
 
         
 
-//dd($trabajoparientes);
+                        $bancos = DB::connection('mysql')
+                        ->table('bancos')
+                        ->select('bancos.nombre')
+                        ->get();
+                        $formas_pagos = DB::connection('mysql')
+                        ->table('formas_pagos')
+                        ->select('formas_pagos.nombre')
+                        ->get();
 
-        //$DAMPLUStelefonos = DAMPLUStelefonos::where('idc',$idc)->first();
-        return view('Cobranza.Contactos.show',compact('datos','datosgenerales','telefonos'));
+        $telefonosagregados = DAMPLUSWEBtelefonos::where('cedula',$ced)->get();
+      // dd($telefonosagregados);
+        return view('Cobranza.Contactos.show',compact('datos','datosgenerales','telefonos','idc','bancos','formas_pagos','telefonosagregados'));
     }
 
     /**

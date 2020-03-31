@@ -27,6 +27,10 @@ Vue.use(BootstrapVue) // Teslling Vue to use this whole application
 
 
 Vue.component('formulario-component', require('./components/FormularioComponent.vue').default);
+Vue.component('gestiones-component', require('./components/GestionesComponent.vue').default);
+Vue.component('telefono-component', require('./components/TelefonoComponent.vue').default);
+
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

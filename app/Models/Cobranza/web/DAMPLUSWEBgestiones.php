@@ -8,7 +8,21 @@ class DAMPLUSWEBgestiones extends Model
 {
     public $timestamps = false;
     protected $table ='DAMPLUSWEBgestiones';
-    protected $fillable = ['idc','cedula', 'telefono','comentario','estado','agente','fecha',];
+    protected $fillable = 
+    [
+        'idc',
+        'cedula', 
+        'telefono',
+        'comentario',
+        'estado',
+        'agente',
+        'fecha',
+        'fechapagar',
+        'valor',
+        'formapago',
+        'tipocompromiso',
+        'tipocontacto',
+    ];
 
 
 }

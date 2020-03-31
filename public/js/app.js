@@ -2011,6 +2011,71 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data() {
     return {
@@ -2033,35 +2098,46 @@ __webpack_require__.r(__webpack_exports__);
         comentario: '',
         estado: '',
         fechapagar: '',
-        valor: '',
-        forma: ''
+        valorcompromiso: '',
+        formapagocompromiso: '',
+        fecharecaudacion: '',
+        valorrecaudo: '',
+        formarecaudo: '',
+        bancoorigen: '',
+        bancodestino: '',
+        archivo: ''
       },
       options: [{
-        text: 'compromiso',
+        text: 'COMPROMISO',
         value: 'compromiso'
       }, {
-        text: 'Efectivo',
+        text: 'EFECTIVO',
         value: 'Efectivo'
       }, {
-        text: 'Efectivo Tercero',
+        text: 'EFECTIVO TERCERO',
         value: 'Efectivo Tercero'
+      }, {
+        text: 'RECAUDACION',
+        value: 'recaudacion'
       }],
       formaspago: [{
-        text: 'transferencia',
+        text: 'TRANSFERENCIA',
         value: 'transferencia'
       }, {
-        text: 'deposito',
+        text: 'DEPOSITO',
         value: 'deposito'
       }, {
-        text: 'oficina',
+        text: 'PAGO OFICINA',
         value: 'oficina'
       }, {
-        text: 'terreno',
+        text: 'TERRENO',
         value: 'terreno'
       }],
       errors: [],
       gestiones: [],
-      crear: false
+      crear: false,
+      bancos: [],
+      parametros: []
     };
   },
 
@@ -2076,7 +2152,12 @@ __webpack_require__.r(__webpack_exports__);
 
   },
 
-  beforeMount() {},
+  beforeMount() {
+    axios.get('bancos').then(res => {
+      this.bancos = res.data;
+    });
+    console.log(this.bancos);
+  },
 
   methods: {
     TipoBuscar(event) {
@@ -2106,30 +2187,903 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     agregar() {
-      if (this.form.estado != 'compromiso') {
-        this.form.valor = '';
-        this.form.forma = '';
-        this.form.fechapagar = '';
+      if (this.form.estado == 'compromiso') {
+        this.parametros = {
+          telefono: this.form.telefono,
+          comentario: this.form.comentario,
+          estado: this.form.estado,
+          idc: this.datoscliente.idc,
+          cedula: this.datoscliente.cedula,
+          fechapagar: this.form.fechapagar,
+          valorcompromiso: this.form.valorcompromiso,
+          formapagocompromiso: this.form.formapagocompromiso
+        };
       }
 
-      const parametros = {
-        telefono: this.form.telefono,
-        comentario: this.form.comentario,
-        estado: this.form.estado,
-        idc: this.datoscliente.idc,
-        cedula: this.datoscliente.cedula,
-        fechapagar: this.form.fechapagar,
-        valor: this.form.valor,
-        forma: this.form.forma
-      };
+      if (this.form.estado == 'recaudacion') {
+        this.parametros = {
+          telefono: this.form.telefono,
+          comentario: this.form.comentario,
+          estado: this.form.estado,
+          idc: this.datoscliente.idc,
+          cedula: this.datoscliente.cedula,
+          fecharecaudacion: this.form.fecharecaudacion,
+          formarecaudo: this.form.formarecaudo,
+          valorrecaudo: this.form.valorrecaudo,
+          bancoorigen: this.form.bancoorigen,
+          bancodestino: this.form.bancodestino,
+          archivo: this.form.archivo
+        };
+      }
+
+      if (this.form.estado != 'recaudacion' && this.form.estado != 'compromiso') {
+        this.parametros = {
+          telefono: this.form.telefono,
+          comentario: this.form.comentario,
+          estado: this.form.estado,
+          idc: this.datoscliente.idc,
+          cedula: this.datoscliente.cedula
+        };
+      }
+
+      console.log(this.parametros);
       this.form.telefono = '';
       this.form.comentario = '';
       this.form.estado = '';
       this.form.valor = '';
-      this.form.forma = '';
-      this.form.fechapagar = ''; //console.log(parametros)
+      this.form.formapagocompromiso = '';
+      this.form.fechapagar = '';
+      this.form.formarecaudo = '';
+      this.form.bancoorigen = '';
+      this.form.bancodestino = '';
+      this.form.valorcompromiso = '';
+      this.form.archivo = '';
+      this.form.archivo = '';
+      axios.post('apiclientescobranzaguardar', this.parametros).then(res => {
+        this.gestiones.push(res.data);
+        this.$swal('Creado con Exito');
+      });
+      this.crear = false;
+    },
 
-      axios.post('apiclientescobranzaguardar', parametros).then(res => {
+    checkForm: function () {
+      this.errors = [];
+
+      if (!this.form.telefono) {
+        this.errors.push('El Telefono es Obligatorio');
+      }
+
+      if (!this.form.comentario) {
+        this.errors.push('El comentario es Obligatorio');
+      }
+
+      if (!this.form.estado) {
+        this.errors.push('Seleccione un estado');
+      }
+
+      if (this.form.telefono && this.form.comentario && this.form.estado) {
+        this.agregar();
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/GestionesComponent.vue":
+/*!******************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/GestionesComponent.vue ***!
+  \******************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'gestiones',
+  props: {
+    id: {
+      default: 1
+    }
+  },
+
+  data() {
+    return {
+      form: {
+        contacto: '',
+        numero: '',
+        terreno: '',
+        prefijo: '',
+        comentario: '',
+        estado: '',
+        telefono: '',
+        respuestasms: false,
+        repuestawhatsapp: false,
+        respuestaemail: false,
+        mensajeenviado: '',
+        mensajerespuesta: ''
+      },
+      contacto: [{
+        text: 'TELEFONICA',
+        value: 'TELEFONICA'
+      }, {
+        text: 'SMS',
+        value: 'SMS'
+      }, {
+        text: 'WHATSAPP',
+        value: 'WHATSAPP'
+      }, {
+        text: 'EMAIL',
+        value: 'EMAIL'
+      }, {
+        text: 'TERRENO',
+        value: 'TERRENO'
+      }],
+      estado: [{
+        text: 'CONTACTO TITULAR',
+        value: 'CONTACTO TITULAR'
+      }, {
+        text: 'CONTACTO TERCERO',
+        value: 'CONTACTO TERCERO'
+      }, {
+        text: 'ENVIO DE DATOS',
+        value: 'ENVIO DE DATOS'
+      }, {
+        text: 'RECORDATORIO DE DEUDA',
+        value: 'RECORDATORIO DE DEUDA'
+      }, {
+        text: 'RECORDATORIO DE PAGO',
+        value: 'RECORDATORIO DE PAGO'
+      }, {
+        text: 'INCUMPLIMIENTO',
+        value: 'INCUMPLIMIENTO'
+      }, {
+        text: 'AGRADECIMIENTO',
+        value: 'AGRADECIMIENTO'
+      }],
+      prefijo: [{
+        text: '02',
+        value: '02'
+      }, {
+        text: '03',
+        value: '03'
+      }, {
+        text: '04',
+        value: '04'
+      }, {
+        text: '05',
+        value: '05'
+      }, {
+        text: '06',
+        value: '06'
+      }, {
+        text: '07',
+        value: '07'
+      }, {
+        text: '08',
+        value: '08'
+      }, {
+        text: '09',
+        value: '09'
+      }],
+      errors: [],
+      crear: false,
+      gestiones: []
+    };
+  },
+
+  computed: {
+    comprobar() {
+      return {
+        numero: (this.form.prefijo + this.form.numero).length >= 9 ? true : false,
+        comentario: this.form.comentario.length > 15 ? true : false,
+        mensajeenviado: this.form.mensajeenviado.length > 15 ? true : false,
+        mensajerespuesta: this.form.mensajerespuesta.length > 15 ? true : false,
+        telefono: this.form.telefono.length >= 10 ? true : false
+      };
+    }
+
+  },
+
+  created() {},
+
+  methods: {
+    agregar() {
+      const parametros = {
+        contacto: this.form.contacto,
+        estado: this.form.estado,
+        comentario: this.form.comentario,
+        terreno: this.form.terreno,
+        telefono: this.form.telefono,
+        prefijo: this.form.prefijo,
+        numero: this.form.numero,
+        idc: this.id,
+        respuestasms: this.form.respuestasms,
+        repuestawhatsapp: this.form.repuestawhatsapp,
+        respuestaemail: this.form.respuestaemail,
+        mensajeenviado: this.form.mensajeenviado,
+        mensajerespuesta: this.form.mensajerespuesta
+      };
+      this.form.contacto = '';
+      this.form.estado = '';
+      this.form.comentario = '';
+      this.form.terreno = '';
+      this.form.telefono = '';
+      this.form.prefijo = '';
+      this.form.numero = '';
+      this.form.respuestasms = '';
+      this.form.repuestawhatsapp = '';
+      this.form.respuestaemail = '';
+      this.form.mensajeenviado = '';
+      this.form.mensajerespuesta = '';
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('gestionesAdd', parametros).then(res => {
+        this.gestiones.push(res.data);
+        this.$swal('Creado con Exito');
+      });
+    },
+
+    checkForm: function () {
+      this.errors = [];
+
+      if (!this.form.contacto) {
+        this.errors.push('El contacto es Obligatorio');
+      }
+
+      if (!this.form.comentario) {
+        this.errors.push('El comentario es Obligatorio');
+      }
+
+      if (!this.form.estado) {
+        this.errors.push('Seleccione un estado');
+      }
+
+      if (this.form.contacto && this.form.comentario && this.form.estado) {
+        this.agregar();
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/TelefonoComponent.vue":
+/*!*****************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/TelefonoComponent.vue ***!
+  \*****************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    id: {
+      default: 1
+    }
+  },
+
+  data() {
+    return {
+      form: {
+        telefono: '',
+        prefijo: '',
+        convensional: '',
+        comentario: ''
+      }
+    };
+  },
+
+  computed: {
+    comprobar() {
+      return {
+        telefono: this.form.telefono.length > 9 ? true : false,
+        comentario: this.form.comentario.length > 9 ? true : false,
+        fechapagar: this.form.fechapagar.length > 1 ? true : false
+      };
+    }
+
+  },
+
+  beforeMount() {},
+
+  methods: {
+    TipoBuscar(event) {
+      this.datobuscar = '';
+      this.tipobuscar = event;
+    },
+
+    GestionarCliente(item) {
+      this.datoscliente.idc = item.idc;
+      this.datoscliente.cedula = item.cedula;
+      this.datoscliente.nombres = item.Nombres;
+      this.datoscliente.cartera = item.descripcion;
+      this.datoscliente.area = item.area;
+      this.datoscliente.valordeuda = item.valordeuda;
+      this.datoscliente.saldodeuda = item.saldodeuda;
+      axios.get('apiclientescobranzagestiones/' + item.idc).then(res => {
+        this.gestiones = res.data;
+      });
+    },
+
+    agregar() {
+      if (this.form.estado == 'compromiso') {
+        this.parametros = {
+          telefono: this.form.telefono,
+          comentario: this.form.comentario,
+          estado: this.form.estado,
+          idc: this.datoscliente.idc,
+          cedula: this.datoscliente.cedula,
+          fechapagar: this.form.fechapagar,
+          valorcompromiso: this.form.valorcompromiso,
+          formapagocompromiso: this.form.formapagocompromiso
+        };
+      }
+
+      if (this.form.estado == 'recaudacion') {
+        this.parametros = {
+          telefono: this.form.telefono,
+          comentario: this.form.comentario,
+          estado: this.form.estado,
+          idc: this.datoscliente.idc,
+          cedula: this.datoscliente.cedula,
+          fecharecaudacion: this.form.fecharecaudacion,
+          formarecaudo: this.form.formarecaudo,
+          valorrecaudo: this.form.valorrecaudo,
+          bancoorigen: this.form.bancoorigen,
+          bancodestino: this.form.bancodestino,
+          archivo: this.form.archivo
+        };
+      }
+
+      if (this.form.estado != 'recaudacion' && this.form.estado != 'compromiso') {
+        this.parametros = {
+          telefono: this.form.telefono,
+          comentario: this.form.comentario,
+          estado: this.form.estado,
+          idc: this.datoscliente.idc,
+          cedula: this.datoscliente.cedula
+        };
+      }
+
+      console.log(this.parametros);
+      this.form.telefono = '';
+      this.form.comentario = '';
+      this.form.estado = '';
+      this.form.valor = '';
+      this.form.formapagocompromiso = '';
+      this.form.fechapagar = '';
+      this.form.formarecaudo = '';
+      this.form.bancoorigen = '';
+      this.form.bancodestino = '';
+      this.form.valorcompromiso = '';
+      this.form.archivo = '';
+      this.form.archivo = '';
+      axios.post('apiclientescobranzaguardar', this.parametros).then(res => {
         this.gestiones.push(res.data);
         this.$swal('Creado con Exito');
       });
@@ -80646,6 +81600,1000 @@ function normalizeComponent (
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-29aa669e\",\"hasScoped\":false,\"optionsId\":\"0\",\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/GestionesComponent.vue":
+/*!*************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-29aa669e","hasScoped":false,"optionsId":"0","buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/GestionesComponent.vue ***!
+  \*************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "b-button",
+        {
+          directives: [
+            {
+              name: "b-modal",
+              rawName: "v-b-modal.modal-xl",
+              modifiers: { "modal-xl": true }
+            }
+          ],
+          staticClass: "btn btn-primary btn-sm",
+          attrs: { variant: "primary" }
+        },
+        [_c("i", { staticClass: "fas fa-plus-circle" }), _vm._v(" Gestiones")]
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        { attrs: { id: "modal-xl", size: "xl", title: "Extra Large Modal" } },
+        [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.checkForm($event)
+                }
+              }
+            },
+            [
+              _vm.errors.length
+                ? _c("p", [
+                    _c(
+                      "ul",
+                      _vm._l(_vm.errors, function(error, index) {
+                        return _c("li", { key: index }, [
+                          _vm._v(
+                            "\r\n                            " +
+                              _vm._s(error) +
+                              "\r\n                        "
+                          )
+                        ])
+                      }),
+                      0
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "b-row",
+                [
+                  _c(
+                    "b-col",
+                    { attrs: { md: "4" } },
+                    [
+                      _c(
+                        "b-input-group",
+                        {
+                          staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                          attrs: { prepend: "Tipo Contacto" }
+                        },
+                        [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.contacto,
+                                  expression: "form.contacto"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { required: "" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.form,
+                                    "contacto",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            _vm._l(_vm.contacto, function(item, index) {
+                              return _c(
+                                "option",
+                                { key: index, domProps: { value: item.value } },
+                                [
+                                  _vm._v(
+                                    "\r\n                                " +
+                                      _vm._s(item.text) +
+                                      "\r\n                            "
+                                  )
+                                ]
+                              )
+                            }),
+                            0
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-col",
+                    { attrs: { md: "4" } },
+                    [
+                      _c(
+                        "b-input-group",
+                        {
+                          staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                          attrs: { prepend: "Estado" }
+                        },
+                        [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.estado,
+                                  expression: "form.estado"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { required: "" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.form,
+                                    "estado",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            _vm._l(_vm.estado, function(item, index) {
+                              return _c(
+                                "option",
+                                { key: index, domProps: { value: item.value } },
+                                [
+                                  _vm._v(
+                                    "\r\n                                " +
+                                      _vm._s(item.text) +
+                                      "\r\n                            "
+                                  )
+                                ]
+                              )
+                            }),
+                            0
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "b-row",
+                [
+                  _vm.form.contacto == "TELEFONICA"
+                    ? _c("b-col", { attrs: { md: "4" } }, [
+                        _c("div", { staticClass: "input-group" }, [
+                          _c("div", { staticClass: "input-group-prepend" }, [
+                            _c("label", { staticClass: "input-group-text" }, [
+                              _vm._v("Prefijo")
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.prefijo,
+                                  expression: "form.prefijo"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { required: "" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.form,
+                                    "prefijo",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            _vm._l(_vm.prefijo, function(item, index) {
+                              return _c(
+                                "option",
+                                { key: index, domProps: { value: item.value } },
+                                [
+                                  _vm._v(
+                                    "\r\n                                " +
+                                      _vm._s(item.text) +
+                                      "\r\n                            "
+                                  )
+                                ]
+                              )
+                            }),
+                            0
+                          )
+                        ])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "TELEFONICA" && _vm.form.prefijo != "09"
+                    ? _c("b-col", { attrs: { md: "4" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group" },
+                          [
+                            _c("div", { staticClass: "input-group-prepend" }, [
+                              _c("label", { staticClass: "input-group-text" }, [
+                                _vm._v("Numero Convencional")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("b-form-input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "input-valid",
+                                state: _vm.comprobar.numero,
+                                placeholder:
+                                  "Numero Convencional solo 7 caracteres...",
+                                maxlength: "7",
+                                minlength: "7",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.form.numero,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "numero", $$v)
+                                },
+                                expression: "form.numero"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        !_vm.comprobar.numero
+                          ? _c("small", [
+                              _vm._v("Es Obligatorio y un max de 7 Caracteres")
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "TELEFONICA" && _vm.form.prefijo == "09"
+                    ? _c("b-col", { attrs: { md: "4" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group" },
+                          [
+                            _c("div", { staticClass: "input-group-prepend" }, [
+                              _c("label", { staticClass: "input-group-text" }, [
+                                _vm._v("Numero Celular ")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("b-form-input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "input-valid",
+                                state: _vm.comprobar.numero,
+                                placeholder:
+                                  "Numero Convencional solo 8 caracteres...",
+                                maxlength: "8",
+                                minlength: "8",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.form.numero,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "numero", $$v)
+                                },
+                                expression: "form.numero"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        !_vm.comprobar.numero
+                          ? _c("small", [
+                              _vm._v("Es Obligatorio y un max de 8 Caracteres")
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "TELEFONICA"
+                    ? _c("b-col", { attrs: { md: "3" } }, [
+                        _c("strong", [
+                          _vm._v(
+                            " \r\n                        " +
+                              _vm._s(_vm.form.prefijo) +
+                              " \r\n                        " +
+                              _vm._s(_vm.form.numero) +
+                              "\r\n                    "
+                          )
+                        ])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "SMS"
+                    ? _c("b-col", { attrs: { md: "4" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group" },
+                          [
+                            _c("div", { staticClass: "input-group-prepend" }, [
+                              _c("label", { staticClass: "input-group-text" }, [
+                                _vm._v("Numero Celular ")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("b-form-input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "input-valid",
+                                state: _vm.comprobar.telefono,
+                                placeholder:
+                                  "Numero Celular solo 10 caracteres...",
+                                maxlength: "10",
+                                minlength: "10",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.form.telefono,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "telefono", $$v)
+                                },
+                                expression: "form.telefono"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        !_vm.comprobar.telefono
+                          ? _c("small", [
+                              _vm._v("Es Obligatorio y un max de 10 Caracteres")
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "SMS"
+                    ? _c("b-col", { attrs: { md: "3" } }, [
+                        _c(
+                          "strong",
+                          [
+                            _c(
+                              "b-alert",
+                              { attrs: { show: "", variant: "primary" } },
+                              [
+                                _c("center", [
+                                  _vm._v(_vm._s(_vm.form.telefono))
+                                ])
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "SMS"
+                    ? _c(
+                        "b-col",
+                        { attrs: { md: "3" } },
+                        [
+                          _c(
+                            "b-form-checkbox",
+                            {
+                              model: {
+                                value: _vm.form.respuestasms,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "respuestasms", $$v)
+                                },
+                                expression: "form.respuestasms"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\r\n                        Respuesta \r\n                    "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "b-row",
+                [
+                  _vm.form.contacto == "SMS"
+                    ? _c("b-col", { attrs: { md: "6" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group" },
+                          [
+                            _c("div", { staticClass: "input-group-prepend" }, [
+                              _c("label", { staticClass: "input-group-text" }, [
+                                _vm._v("Mensaje Enviado")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("b-form-textarea", {
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "input-valid",
+                                state: _vm.comprobar.mensajeenviado,
+                                placeholder: "sms enviado...",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.form.mensajeenviado,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "mensajeenviado", $$v)
+                                },
+                                expression: "form.mensajeenviado"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        !_vm.comprobar.mensajeenviado
+                          ? _c("small", [
+                              _vm._v(
+                                "Es Obligatorio y un minimo de 10 Caracteres"
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "SMS" && this.form.respuestasms == true
+                    ? _c("b-col", { attrs: { md: "6" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group" },
+                          [
+                            _c("div", { staticClass: "input-group-prepend" }, [
+                              _c("label", { staticClass: "input-group-text" }, [
+                                _vm._v("Mensaje Respuesta")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("b-form-textarea", {
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "input-valid",
+                                state: _vm.comprobar.mensajerespuesta,
+                                placeholder: "sms recibido...",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.form.mensajerespuesta,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "mensajerespuesta", $$v)
+                                },
+                                expression: "form.mensajerespuesta"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        !_vm.comprobar.mensajerespuesta
+                          ? _c("small", [
+                              _vm._v(
+                                "Es Obligatorio y un minimo de 10 Caracteres"
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "WHATSAPP"
+                    ? _c("b-col", { attrs: { md: "4" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group" },
+                          [
+                            _c("div", { staticClass: "input-group-prepend" }, [
+                              _c("label", { staticClass: "input-group-text" }, [
+                                _vm._v("Whatsapp")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("b-form-input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "input-valid",
+                                state: _vm.comprobar.telefono,
+                                placeholder: "Whatsapp...",
+                                maxlength: "10",
+                                minlength: "10",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.form.telefono,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "telefono", $$v)
+                                },
+                                expression: "form.telefono"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        !_vm.comprobar.telefono
+                          ? _c("small", [
+                              _vm._v(
+                                "Es Obligatorio y un minimo de 10 Caracteres"
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "WHATSAPP"
+                    ? _c("b-col", { attrs: { md: "3" } }, [
+                        _c(
+                          "strong",
+                          [
+                            _c(
+                              "b-alert",
+                              { attrs: { show: "", variant: "primary" } },
+                              [_vm._v(_vm._s(_vm.form.telefono))]
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "WHATSAPP"
+                    ? _c(
+                        "b-col",
+                        { attrs: { md: "3" } },
+                        [
+                          _c(
+                            "b-form-checkbox",
+                            {
+                              model: {
+                                value: _vm.form.repuestawhatsapp,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "repuestawhatsapp", $$v)
+                                },
+                                expression: "form.repuestawhatsapp"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\r\n                        Respuesta \r\n                    "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "WHATSAPP"
+                    ? _c("b-col", { attrs: { md: "6" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group" },
+                          [
+                            _c("div", { staticClass: "input-group-prepend" }, [
+                              _c("label", { staticClass: "input-group-text" }, [
+                                _vm._v("Mensaje Enviado")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("b-form-textarea", {
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "input-valid",
+                                state: _vm.comprobar.mensajeenviado,
+                                placeholder: "whatsapp enviado...",
+                                maxlength: "255",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.form.mensajeenviado,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "mensajeenviado", $$v)
+                                },
+                                expression: "form.mensajeenviado"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        !_vm.comprobar.mensajeenviado
+                          ? _c("small", [
+                              _vm._v(
+                                "Es Obligatorio y un minimo de 15 Caracteres"
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "WHATSAPP" &&
+                  this.form.repuestawhatsapp == true
+                    ? _c("b-col", { attrs: { md: "6" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group" },
+                          [
+                            _c("div", { staticClass: "input-group-prepend" }, [
+                              _c("label", { staticClass: "input-group-text" }, [
+                                _vm._v("Mensaje Respuesta")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("b-form-textarea", {
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "input-valid",
+                                state: _vm.comprobar.mensajerespuesta,
+                                placeholder: "whatsapp recibido...",
+                                maxlength: "255",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.form.mensajerespuesta,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "mensajerespuesta", $$v)
+                                },
+                                expression: "form.mensajerespuesta"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        !_vm.comprobar.mensajerespuesta
+                          ? _c("small", [
+                              _vm._v(
+                                "Es Obligatorio y un minimo de 15 Caracteres"
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "EMAIL"
+                    ? _c("b-col", { attrs: { md: "4" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group" },
+                          [
+                            _c("div", { staticClass: "input-group-prepend" }, [
+                              _c("label", { staticClass: "input-group-text" }, [
+                                _vm._v("Email")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("b-form-input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "input-valid",
+                                state: _vm.comprobar.email,
+                                placeholder: "Email@.com...",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.form.email,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "email", $$v)
+                                },
+                                expression: "form.email"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        !_vm.comprobar.telefono
+                          ? _c("small", [
+                              _vm._v(
+                                "Es Obligatorio y un minimo de 10 Caracteres"
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "EMAIL"
+                    ? _c(
+                        "b-col",
+                        { attrs: { md: "3" } },
+                        [
+                          _c(
+                            "b-form-checkbox",
+                            {
+                              model: {
+                                value: _vm.form.respuestaemail,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "respuestaemail", $$v)
+                                },
+                                expression: "form.respuestaemail"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\r\n                        Respuesta \r\n                    "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "EMAIL"
+                    ? _c("b-col", { attrs: { md: "6" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group" },
+                          [
+                            _c("div", { staticClass: "input-group-prepend" }, [
+                              _c("label", { staticClass: "input-group-text" }, [
+                                _vm._v("Mensaje Enviado")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("b-form-textarea", {
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "input-valid",
+                                state: _vm.comprobar.mensajeenviado,
+                                placeholder: "whatsapp enviado...",
+                                maxlength: "255",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.form.mensajeenviado,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "mensajeenviado", $$v)
+                                },
+                                expression: "form.mensajeenviado"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        !_vm.comprobar.mensajeenviado
+                          ? _c("small", [
+                              _vm._v(
+                                "Es Obligatorio y un minimo de 15 Caracteres"
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "EMAIL" &&
+                  this.form.respuestaemail == true
+                    ? _c("b-col", { attrs: { md: "6" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group" },
+                          [
+                            _c("div", { staticClass: "input-group-prepend" }, [
+                              _c("label", { staticClass: "input-group-text" }, [
+                                _vm._v("Mensaje Respuesta")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("b-form-textarea", {
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "input-valid",
+                                state: _vm.comprobar.mensajerespuesta,
+                                placeholder: "whatsapp recibido...",
+                                maxlength: "255",
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.form.mensajerespuesta,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "mensajerespuesta", $$v)
+                                },
+                                expression: "form.mensajerespuesta"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        !_vm.comprobar.mensajerespuesta
+                          ? _c("small", [
+                              _vm._v(
+                                "Es Obligatorio y un minimo de 15 Caracteres"
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.form.contacto == "TERRENO"
+                    ? _c("b-col", { attrs: { md: "6" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group" },
+                          [
+                            _c("div", { staticClass: "input-group-prepend" }, [
+                              _c("label", { staticClass: "input-group-text" }, [
+                                _vm._v("Dirección")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("b-form-textarea", {
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "input-valid",
+                                state: _vm.comprobar.terreno,
+                                placeholder: "Dirección de Visita..."
+                              },
+                              model: {
+                                value: _vm.form.terreno,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "terreno", $$v)
+                                },
+                                expression: "form.terreno"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        !_vm.comprobar.telefono
+                          ? _c("small", [
+                              _vm._v(
+                                "Es Obligatorio y un minimo de 20 Caracteres"
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    : _vm._e()
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "b-row",
+                [
+                  _c("b-col", { attrs: { md: "12" } }, [
+                    _c(
+                      "div",
+                      { staticClass: "input-group" },
+                      [
+                        _c("div", { staticClass: "input-group-prepend" }, [
+                          _c("label", { staticClass: "input-group-text" }, [
+                            _vm._v("Comentario")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("b-form-textarea", {
+                          attrs: {
+                            id: "input-valid",
+                            state: _vm.comprobar.comentario,
+                            placeholder: "comentario...",
+                            required: ""
+                          },
+                          model: {
+                            value: _vm.form.comentario,
+                            callback: function($$v) {
+                              _vm.$set(_vm.form, "comentario", $$v)
+                            },
+                            expression: "form.comentario"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    !_vm.comprobar.comentario
+                      ? _c("small", [
+                          _vm._v("Es Obligatorio y un minimo de 20 Caracteres")
+                        ])
+                      : _vm._e()
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "btn btn-primary btn-sm",
+                attrs: { type: "submit", value: "CREAR" }
+              })
+            ],
+            1
+          )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+if (false) {}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-414cd1a3\",\"hasScoped\":false,\"optionsId\":\"0\",\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/FormularioComponent.vue":
 /*!**************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-414cd1a3","hasScoped":false,"optionsId":"0","buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/FormularioComponent.vue ***!
@@ -80782,7 +82730,16 @@ var render = function() {
                         },
                         [_vm._v("Gestionar")]
                       )
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-sm btn-primary",
+                        attrs: { href: ["recaudacion/" + item.idc] }
+                      },
+                      [_c("i", { staticClass: "fas fa-money-check-alt" })]
+                    )
                   ])
                 }),
                 0
@@ -80869,7 +82826,7 @@ var render = function() {
                     [
                       _c(
                         "b-col",
-                        { attrs: { md: "3" } },
+                        { attrs: { md: "4" } },
                         [
                           _c(
                             "b-input-group",
@@ -80910,7 +82867,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "b-col",
-                        { attrs: { md: "3" } },
+                        { attrs: { md: "4" } },
                         [
                           _c(
                             "b-input-group",
@@ -80977,72 +82934,9 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _vm.form.estado == "compromiso"
-                        ? _c(
-                            "b-col",
-                            { attrs: { md: "3" } },
-                            [
-                              _c("b-form-datepicker", {
-                                staticClass: "mb-2",
-                                attrs: {
-                                  id: "datepicker-invalid",
-                                  state: _vm.comprobar.fechapagar
-                                },
-                                model: {
-                                  value: _vm.form.fechapagar,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.form, "fechapagar", $$v)
-                                  },
-                                  expression: "form.fechapagar"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.form.estado == "compromiso"
-                        ? _c(
-                            "b-col",
-                            { attrs: { md: "3" } },
-                            [
-                              _c(
-                                "b-input-group",
-                                {
-                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
-                                  attrs: { prepend: "Valor" }
-                                },
-                                [
-                                  _c("b-form-input", {
-                                    attrs: {
-                                      id: "input-valid",
-                                      placeholder: "$ 222,22"
-                                    },
-                                    model: {
-                                      value: _vm.form.valor,
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.form, "valor", $$v)
-                                      },
-                                      expression: "form.valor"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        : _vm._e()
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "b-row",
-                    [
                       _c(
                         "b-col",
-                        { attrs: { md: "6" } },
+                        { attrs: { md: "4" } },
                         [
                           _c(
                             "b-input-group",
@@ -81078,12 +82972,92 @@ var render = function() {
                             : _vm._e()
                         ],
                         1
-                      ),
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "b-row",
+                    [
+                      _vm.form.estado == "compromiso"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-form-group",
+                                {
+                                  attrs: {
+                                    label: "Fecha Deposito : ",
+                                    "label-for": "file-small",
+                                    "label-cols-sm": "4",
+                                    "label-size": "sm"
+                                  }
+                                },
+                                [
+                                  _c("b-form-datepicker", {
+                                    staticClass: "mb-2",
+                                    attrs: { id: "datepicker-invalid" },
+                                    model: {
+                                      value: _vm.form.fechapagar,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "fechapagar", $$v)
+                                      },
+                                      expression: "form.fechapagar"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _vm.form.estado == "compromiso"
                         ? _c(
                             "b-col",
-                            { attrs: { md: "3" } },
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-input-group",
+                                {
+                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                                  attrs: { prepend: "Valor" }
+                                },
+                                [
+                                  _c("b-form-input", {
+                                    attrs: {
+                                      id: "input-valid",
+                                      placeholder: "$ 222,22"
+                                    },
+                                    model: {
+                                      value: _vm.form.valorcompromiso,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.form,
+                                          "valorcompromiso",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "form.valorcompromiso"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.form.estado == "compromiso"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
                             [
                               _c(
                                 "b-input-group",
@@ -81099,8 +83073,8 @@ var render = function() {
                                         {
                                           name: "model",
                                           rawName: "v-model",
-                                          value: _vm.form.forma,
-                                          expression: "form.forma"
+                                          value: _vm.form.formapagocompromiso,
+                                          expression: "form.formapagocompromiso"
                                         }
                                       ],
                                       on: {
@@ -81121,7 +83095,7 @@ var render = function() {
                                             })
                                           _vm.$set(
                                             _vm.form,
-                                            "forma",
+                                            "formapagocompromiso",
                                             $event.target.multiple
                                               ? $$selectedVal
                                               : $$selectedVal[0]
@@ -81159,6 +83133,370 @@ var render = function() {
                     ],
                     1
                   ),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "b-row",
+                    [
+                      _vm.form.estado == "recaudacion"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-form-group",
+                                {
+                                  attrs: {
+                                    label: "Fecha Deposito : ",
+                                    "label-for": "file-small",
+                                    "label-cols-sm": "4",
+                                    "label-size": "sm"
+                                  }
+                                },
+                                [
+                                  _c("b-form-datepicker", {
+                                    staticClass: "mb-2",
+                                    attrs: { id: "datepicker-invalid" },
+                                    model: {
+                                      value: _vm.form.fecharecaudacion,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.form,
+                                          "fecharecaudacion",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "form.fecharecaudacion"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.form.estado == "recaudacion"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-input-group",
+                                {
+                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                                  attrs: { prepend: "Valor" }
+                                },
+                                [
+                                  _c("b-form-input", {
+                                    attrs: {
+                                      id: "input-valid",
+                                      placeholder: "$ 222,22"
+                                    },
+                                    model: {
+                                      value: _vm.form.valorrecaudo,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "valorrecaudo", $$v)
+                                      },
+                                      expression: "form.valorrecaudo"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.form.estado == "recaudacion"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-form-group",
+                                {
+                                  attrs: {
+                                    label: "Recibo: ",
+                                    "label-for": "file-small",
+                                    "label-cols-sm": "2",
+                                    "label-size": "sm"
+                                  }
+                                },
+                                [
+                                  _c("b-form-file", {
+                                    attrs: { id: "file-small", size: "sm" },
+                                    model: {
+                                      value: _vm.form.archivo,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "archivo", $$v)
+                                      },
+                                      expression: "form.archivo"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "b-row",
+                    [
+                      _vm.form.estado == "recaudacion"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-input-group",
+                                {
+                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                                  attrs: {
+                                    prepend: "Banco Destino",
+                                    "label-size": "sm"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.bancodestino,
+                                          expression: "form.bancodestino"
+                                        }
+                                      ],
+                                      staticClass: "form-control mb-2",
+                                      domProps: {
+                                        value: _vm.form.bancodestino
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.$set(
+                                            _vm.form,
+                                            "bancodestino",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "option",
+                                        { attrs: { value: "", disabled: "" } },
+                                        [_vm._v("Seleccione un Banco ")]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(_vm.bancos, function(item, index) {
+                                        return _c(
+                                          "option",
+                                          {
+                                            key: index,
+                                            domProps: { value: item.nombre }
+                                          },
+                                          [_vm._v(_vm._s(item.nombre))]
+                                        )
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.form.estado == "recaudacion"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-input-group",
+                                {
+                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                                  attrs: { prepend: "Banco Origen" }
+                                },
+                                [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.bancoorigen,
+                                          expression: "form.bancoorigen"
+                                        }
+                                      ],
+                                      staticClass: "form-control mb-2",
+                                      domProps: { value: _vm.form.bancoorigen },
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.$set(
+                                            _vm.form,
+                                            "bancoorigen",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "option",
+                                        { attrs: { value: "", disabled: "" } },
+                                        [_vm._v("Seleccione un Banco  ")]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(_vm.bancos, function(item, index) {
+                                        return _c(
+                                          "option",
+                                          {
+                                            key: index,
+                                            domProps: { value: item.nombre }
+                                          },
+                                          [_vm._v(_vm._s(item.nombre))]
+                                        )
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.form.estado == "recaudacion"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-input-group",
+                                {
+                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                                  attrs: { prepend: "Forma Pago" }
+                                },
+                                [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.formarecaudo,
+                                          expression: "form.formarecaudo"
+                                        }
+                                      ],
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.$set(
+                                            _vm.form,
+                                            "formarecaudo",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        }
+                                      }
+                                    },
+                                    _vm._l(_vm.formaspago, function(
+                                      item,
+                                      index
+                                    ) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: index,
+                                          domProps: { value: item.value }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\r\n                                " +
+                                              _vm._s(item.text) +
+                                              "\r\n                            "
+                                          )
+                                        ]
+                                      )
+                                    }),
+                                    0
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("b-row"),
                   _vm._v(" "),
                   _c("input", {
                     staticClass: "btn btn-primary btn-sm",
@@ -81271,6 +83609,853 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+if (false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d945d03e\",\"hasScoped\":false,\"optionsId\":\"0\",\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/TelefonoComponent.vue":
+/*!************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/template-compiler?{"id":"data-v-d945d03e","hasScoped":false,"optionsId":"0","buble":{"transforms":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/TelefonoComponent.vue ***!
+  \************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "b-modal",
+        { attrs: { id: "modal-xl", size: "xl", title: "Datos Cliente" } },
+        [
+          _c(
+            "center",
+            [
+              !_vm.crear
+                ? _c(
+                    "b-button",
+                    {
+                      attrs: { variant: "primary" },
+                      on: {
+                        click: function($event) {
+                          _vm.crear = true
+                        }
+                      },
+                      model: {
+                        value: _vm.crear,
+                        callback: function($$v) {
+                          _vm.crear = $$v
+                        },
+                        expression: "crear"
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-plus" })]
+                  )
+                : _vm._e()
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.crear
+            ? _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.checkForm($event)
+                    }
+                  }
+                },
+                [
+                  _vm.errors.length
+                    ? _c("p", [
+                        _c(
+                          "ul",
+                          _vm._l(_vm.errors, function(error, index) {
+                            return _c("li", { key: index }, [
+                              _vm._v(
+                                "\r\n                            " +
+                                  _vm._s(error) +
+                                  "\r\n                        "
+                              )
+                            ])
+                          }),
+                          0
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "b-row",
+                    [
+                      _c(
+                        "b-col",
+                        { attrs: { md: "4" } },
+                        [
+                          _c(
+                            "b-input-group",
+                            {
+                              staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                              attrs: { prepend: "Telefono" }
+                            },
+                            [
+                              _c("b-form-input", {
+                                attrs: {
+                                  id: "input-valid",
+                                  state: _vm.comprobar.telefono,
+                                  placeholder: "Telefono...",
+                                  max: "10"
+                                },
+                                model: {
+                                  value: _vm.form.telefono,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.form, "telefono", $$v)
+                                  },
+                                  expression: "form.telefono"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          !_vm.comprobar.telefono
+                            ? _c("small", [
+                                _vm._v(
+                                  "Es Obligatorio y un minimo de 9 Caracteres"
+                                )
+                              ])
+                            : _vm._e()
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-col",
+                        { attrs: { md: "4" } },
+                        [
+                          _c(
+                            "b-input-group",
+                            {
+                              staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                              attrs: { prepend: "Estado" }
+                            },
+                            [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.form.estado,
+                                      expression: "form.estado"
+                                    }
+                                  ],
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.form,
+                                        "estado",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                _vm._l(_vm.options, function(item, index) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      key: index,
+                                      domProps: { value: item.value }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\r\n                                " +
+                                          _vm._s(item.text) +
+                                          "\r\n                            "
+                                      )
+                                    ]
+                                  )
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-col",
+                        { attrs: { md: "4" } },
+                        [
+                          _c(
+                            "b-input-group",
+                            {
+                              staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                              attrs: { prepend: "Comentario" }
+                            },
+                            [
+                              _c("b-form-textarea", {
+                                attrs: {
+                                  id: "input-valid",
+                                  state: _vm.comprobar.comentario,
+                                  placeholder: "comentario..."
+                                },
+                                model: {
+                                  value: _vm.form.comentario,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.form, "comentario", $$v)
+                                  },
+                                  expression: "form.comentario"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          !_vm.comprobar.comentario
+                            ? _c("small", [
+                                _vm._v(
+                                  "Es Obligatorio y un minimo de 20 Caracteres"
+                                )
+                              ])
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "b-row",
+                    [
+                      _vm.form.estado == "compromiso"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-form-group",
+                                {
+                                  attrs: {
+                                    label: "Fecha Deposito : ",
+                                    "label-for": "file-small",
+                                    "label-cols-sm": "4",
+                                    "label-size": "sm"
+                                  }
+                                },
+                                [
+                                  _c("b-form-datepicker", {
+                                    staticClass: "mb-2",
+                                    attrs: { id: "datepicker-invalid" },
+                                    model: {
+                                      value: _vm.form.fechapagar,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "fechapagar", $$v)
+                                      },
+                                      expression: "form.fechapagar"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.form.estado == "compromiso"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-input-group",
+                                {
+                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                                  attrs: { prepend: "Valor" }
+                                },
+                                [
+                                  _c("b-form-input", {
+                                    attrs: {
+                                      id: "input-valid",
+                                      placeholder: "$ 222,22"
+                                    },
+                                    model: {
+                                      value: _vm.form.valorcompromiso,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.form,
+                                          "valorcompromiso",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "form.valorcompromiso"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.form.estado == "compromiso"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-input-group",
+                                {
+                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                                  attrs: { prepend: "Forma Pago" }
+                                },
+                                [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.formapagocompromiso,
+                                          expression: "form.formapagocompromiso"
+                                        }
+                                      ],
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.$set(
+                                            _vm.form,
+                                            "formapagocompromiso",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        }
+                                      }
+                                    },
+                                    _vm._l(_vm.formaspago, function(
+                                      item,
+                                      index
+                                    ) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: index,
+                                          domProps: { value: item.value }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\r\n                                " +
+                                              _vm._s(item.text) +
+                                              "\r\n                            "
+                                          )
+                                        ]
+                                      )
+                                    }),
+                                    0
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "b-row",
+                    [
+                      _vm.form.estado == "recaudacion"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-form-group",
+                                {
+                                  attrs: {
+                                    label: "Fecha Deposito : ",
+                                    "label-for": "file-small",
+                                    "label-cols-sm": "4",
+                                    "label-size": "sm"
+                                  }
+                                },
+                                [
+                                  _c("b-form-datepicker", {
+                                    staticClass: "mb-2",
+                                    attrs: { id: "datepicker-invalid" },
+                                    model: {
+                                      value: _vm.form.fecharecaudacion,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.form,
+                                          "fecharecaudacion",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "form.fecharecaudacion"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.form.estado == "recaudacion"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-input-group",
+                                {
+                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                                  attrs: { prepend: "Valor" }
+                                },
+                                [
+                                  _c("b-form-input", {
+                                    attrs: {
+                                      id: "input-valid",
+                                      placeholder: "$ 222,22"
+                                    },
+                                    model: {
+                                      value: _vm.form.valorrecaudo,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "valorrecaudo", $$v)
+                                      },
+                                      expression: "form.valorrecaudo"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.form.estado == "recaudacion"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-form-group",
+                                {
+                                  attrs: {
+                                    label: "Recibo: ",
+                                    "label-for": "file-small",
+                                    "label-cols-sm": "2",
+                                    "label-size": "sm"
+                                  }
+                                },
+                                [
+                                  _c("b-form-file", {
+                                    attrs: { id: "file-small", size: "sm" },
+                                    model: {
+                                      value: _vm.form.archivo,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.form, "archivo", $$v)
+                                      },
+                                      expression: "form.archivo"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "b-row",
+                    [
+                      _vm.form.estado == "recaudacion"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-input-group",
+                                {
+                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                                  attrs: {
+                                    prepend: "Banco Destino",
+                                    "label-size": "sm"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.bancodestino,
+                                          expression: "form.bancodestino"
+                                        }
+                                      ],
+                                      staticClass: "form-control mb-2",
+                                      domProps: {
+                                        value: _vm.form.bancodestino
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.$set(
+                                            _vm.form,
+                                            "bancodestino",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "option",
+                                        { attrs: { value: "", disabled: "" } },
+                                        [_vm._v("Seleccione un Banco ")]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(_vm.bancos, function(item, index) {
+                                        return _c(
+                                          "option",
+                                          {
+                                            key: index,
+                                            domProps: { value: item.nombre }
+                                          },
+                                          [_vm._v(_vm._s(item.nombre))]
+                                        )
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.form.estado == "recaudacion"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-input-group",
+                                {
+                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                                  attrs: { prepend: "Banco Origen" }
+                                },
+                                [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.bancoorigen,
+                                          expression: "form.bancoorigen"
+                                        }
+                                      ],
+                                      staticClass: "form-control mb-2",
+                                      domProps: { value: _vm.form.bancoorigen },
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.$set(
+                                            _vm.form,
+                                            "bancoorigen",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "option",
+                                        { attrs: { value: "", disabled: "" } },
+                                        [_vm._v("Seleccione un Banco  ")]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(_vm.bancos, function(item, index) {
+                                        return _c(
+                                          "option",
+                                          {
+                                            key: index,
+                                            domProps: { value: item.nombre }
+                                          },
+                                          [_vm._v(_vm._s(item.nombre))]
+                                        )
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.form.estado == "recaudacion"
+                        ? _c(
+                            "b-col",
+                            { attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-input-group",
+                                {
+                                  staticClass: "mb-2 mr-sm-2 mb-sm-0",
+                                  attrs: { prepend: "Forma Pago" }
+                                },
+                                [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.form.formarecaudo,
+                                          expression: "form.formarecaudo"
+                                        }
+                                      ],
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.$set(
+                                            _vm.form,
+                                            "formarecaudo",
+                                            $event.target.multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          )
+                                        }
+                                      }
+                                    },
+                                    _vm._l(_vm.formaspago, function(
+                                      item,
+                                      index
+                                    ) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: index,
+                                          domProps: { value: item.value }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\r\n                                " +
+                                              _vm._s(item.text) +
+                                              "\r\n                            "
+                                          )
+                                        ]
+                                      )
+                                    }),
+                                    0
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("b-row"),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "btn btn-primary btn-sm",
+                    attrs: { type: "submit", value: "CREAR" }
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "b-row",
+            [
+              _c("b-col", { attrs: { md: "12" } }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c("table", { staticClass: "table table-striped-md" }, [
+                    _c("thead", { staticClass: "thead-dark" }, [
+                      _c("tr", [
+                        _c("th", [_vm._v("Registrado")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Idc")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Agente")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Telefono")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Estado")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Comentario")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Fecha Conpromiso")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Valor a Pagar")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Forma Pago")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.gestiones, function(item, index) {
+                        return _c("tr", { key: index }, [
+                          _c("td", [_vm._v(_vm._s(item.fecha))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.idc))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.agente))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.telefono))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "badge badge-warning float-center"
+                              },
+                              [_vm._v(_vm._s(item.estado))]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.comentario))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.fechapagar))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.valor))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.formapago))])
+                        ])
+                      }),
+                      0
+                    )
+                  ])
+                ])
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 if (false) {}
@@ -93364,6 +96549,8 @@ Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_0__["default"]); // Teslling Vue 
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('formulario-component', __webpack_require__(/*! ./components/FormularioComponent.vue */ "./resources/js/components/FormularioComponent.vue")["default"]);
+Vue.component('gestiones-component', __webpack_require__(/*! ./components/GestionesComponent.vue */ "./resources/js/components/GestionesComponent.vue")["default"]);
+Vue.component('telefono-component', __webpack_require__(/*! ./components/TelefonoComponent.vue */ "./resources/js/components/TelefonoComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -93470,6 +96657,98 @@ var Component = Object(_node_modules_vue_loader_lib_runtime_component_normalizer
   __vue_module_identifier__
 )
 Component.options.__file = "resources\\js\\components\\FormularioComponent.vue"
+
+/* hot reload */
+if (false) {}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+
+/***/ "./resources/js/components/GestionesComponent.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/GestionesComponent.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_GestionesComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !babel-loader!../../../node_modules/vue-loader/lib/selector?type=script&index=0!./GestionesComponent.vue */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/GestionesComponent.vue");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_template_compiler_index_id_data_v_29aa669e_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_GestionesComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/template-compiler/index?{"id":"data-v-29aa669e","hasScoped":false,"optionsId":"0","buble":{"transforms":{}}}!../../../node_modules/vue-loader/lib/selector?type=template&index=0!./GestionesComponent.vue */ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-29aa669e\",\"hasScoped\":false,\"optionsId\":\"0\",\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/GestionesComponent.vue");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_component_normalizer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/component-normalizer */ "./node_modules/vue-loader/lib/runtime/component-normalizer.js");
+var disposed = false
+/* script */
+
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+
+var Component = Object(_node_modules_vue_loader_lib_runtime_component_normalizer__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_GestionesComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+  _node_modules_vue_loader_lib_template_compiler_index_id_data_v_29aa669e_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_GestionesComponent_vue__WEBPACK_IMPORTED_MODULE_1__["render"],
+  _node_modules_vue_loader_lib_template_compiler_index_id_data_v_29aa669e_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_GestionesComponent_vue__WEBPACK_IMPORTED_MODULE_1__["staticRenderFns"],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\js\\components\\GestionesComponent.vue"
+
+/* hot reload */
+if (false) {}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+
+/***/ "./resources/js/components/TelefonoComponent.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/TelefonoComponent.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_TelefonoComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !babel-loader!../../../node_modules/vue-loader/lib/selector?type=script&index=0!./TelefonoComponent.vue */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/TelefonoComponent.vue");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_template_compiler_index_id_data_v_d945d03e_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_TelefonoComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/template-compiler/index?{"id":"data-v-d945d03e","hasScoped":false,"optionsId":"0","buble":{"transforms":{}}}!../../../node_modules/vue-loader/lib/selector?type=template&index=0!./TelefonoComponent.vue */ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d945d03e\",\"hasScoped\":false,\"optionsId\":\"0\",\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/TelefonoComponent.vue");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_component_normalizer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/component-normalizer */ "./node_modules/vue-loader/lib/runtime/component-normalizer.js");
+var disposed = false
+/* script */
+
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+
+var Component = Object(_node_modules_vue_loader_lib_runtime_component_normalizer__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_TelefonoComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+  _node_modules_vue_loader_lib_template_compiler_index_id_data_v_d945d03e_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_TelefonoComponent_vue__WEBPACK_IMPORTED_MODULE_1__["render"],
+  _node_modules_vue_loader_lib_template_compiler_index_id_data_v_d945d03e_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_TelefonoComponent_vue__WEBPACK_IMPORTED_MODULE_1__["staticRenderFns"],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\js\\components\\TelefonoComponent.vue"
 
 /* hot reload */
 if (false) {}

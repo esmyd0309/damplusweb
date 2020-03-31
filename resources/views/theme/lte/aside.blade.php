@@ -97,13 +97,13 @@
               </li>
               @endcan
 
-              @can('clientes.index')
+              <!--<@can('clientes.index')
               <li class="nav-item">
                 <a href="{{ route('clientesweb') }}" class="nav-link">
                   <i class="nav-icon fas fa-money-check"></i><strong><p>Gestionar</p></strong>
                 </a>
               </li>
-              @endcan
+              @endcan--->
 
            
               <i class="fad fa-album-collection"></i>

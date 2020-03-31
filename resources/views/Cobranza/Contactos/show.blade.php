@@ -20,15 +20,7 @@
     </ul>
   </div>
   @endif
-  @if ($errors->any())
-  <div class="alert alert-warning">
-    <ul>
-      @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-@endif
+
   @if(session('msg'))
     <div class="alert alert-success alert-dismissible">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -117,52 +109,188 @@
               
             <div class="card-body">
               <div class="tab-content">
-
                 
                 <div class=" tab-pane" id="contactos">
                   <h4 class=" text-center">Información de Contacto Titular</h4>
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th class=" text-center" style="width: 7px"><i class="fas fa-phone-square-alt"></i></th>
-                        <th class=" text-center" style="width: 7px"><i class="fas fa-phone-square-alt"></i></th>
-                        <th class=" text-center" style="width: 7px"><i class="fas fa-phone-square-alt"></i></th>
-                        <th class=" text-center" style="width: 7px"><i class="fas fa-phone-square-alt"></i></th>
-                        <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
-                        <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
-                        <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
-                        <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
-                        <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
-                        <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
-                        <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
-                        <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($telefonos as  $item)
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
                         <tr>
-                          <td class=" text-center" style="width: 7px">{{ $item->TLF_FIJO1 }}</td>
-                          <td class=" text-center" style="width: 7px">{{ $item->TLF_FIJO2 }}</td>
-                          <td class=" text-center" style="width: 7px">{{ $item->TLF_FIJO3 }}</td>
-                          <td class=" text-center" style="width: 7px">{{ $item->TLF_FIJO4 }}</td>
-                          <td class=" text-center" style="width: 7px">{{ $item->CEL1_NVO1 }}</td>
-                          <td class=" text-center" style="width: 7px">{{ $item->CEL2_NVO1 }}</td>
-                          <td class=" text-center" style="width: 7px">{{ $item->CEL3_NVO1 }}</td>
-                          <td class=" text-center" style="width: 7px">{{ $item->CEL4_NVO1 }}</td>
-                          <td class=" text-center" style="width: 7px">{{ $item->CEL5_NVO1 }}</td>
-                          <td class=" text-center" style="width: 7px">{{ $item->CEL6_NVO1 }}</td>
-                          <td class=" text-center" style="width: 7px">{{ $item->CEL7_NVO1 }}</td>
-                          <td class=" text-center" style="width: 7px">{{ $item->CEL8_NVO1 }}</td>
-                        </tr>                           
-                      @endforeach
-                    </tbody>
-                  </table>
-                  <hr>
-                  
+                          <th class=" text-center" style="width: 7px"><i class="fas fa-phone-square-alt"></i></th>
+                          <th class=" text-center" style="width: 7px"><i class="fas fa-phone-square-alt"></i></th>
+                          <th class=" text-center" style="width: 7px"><i class="fas fa-phone-square-alt"></i></th>
+                          <th class=" text-center" style="width: 7px"><i class="fas fa-phone-square-alt"></i></th>
+                          <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
+                          <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
+                          <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
+                          <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
+                          <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
+                          <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
+                          <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
+                          <th class=" text-center" style="width: 7px"><i class="fas fa-mobile-alt"></i></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach ($telefonos as  $item)
+                          <tr>
+                            <td class=" text-center" style="width: 7px">{{ $item->TLF_FIJO1 }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->TLF_FIJO2 }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->TLF_FIJO3 }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->TLF_FIJO4 }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->CEL1_NVO1 }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->CEL2_NVO1 }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->CEL3_NVO1 }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->CEL4_NVO1 }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->CEL5_NVO1 }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->CEL6_NVO1 }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->CEL7_NVO1 }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->CEL8_NVO1 }}</td>
+                          </tr>                           
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".telefono"><i class="fas fa-plus-circle"></i> Telefono</button>
+                    </div>
+                  </div>
+                  <!-- Modal telefono-->
+                  <div class="modal fade telefono" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+                      <div class="modal-content">
+                        {!! Form::open(['route' => ['contactosAdd', $idc]]) !!}
+                              {{csrf_field()}}
+                                <div class="modal-body">
+                                  @include('Cobranza.Contactos.web.contactos')
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                  <button type="submit" class="btn btn-primary">Agregar</button>
+                                </div>
+                        {!! Form::close() !!}
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Modal telefono-->
                 </div>
 
                 <div class=" active tab-pane" id="gestiones">
                   <div class="container">
+
+                    @if(Session::has('info'))
+                      <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                          <center> <strong>{{ Session::get('info') }}</strong></center>  
+                      </div>
+                    @endif
+                    @if (count($errors) > 0)
+                      <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                          <h5><i class="icon fas fa-exclamation-triangle"></i>Error</h5>  
+                        <ul>
+                        </ul>
+                      </div>
+                    @endif
+                    @if ($errors->any())
+                      <div class="alert alert-warning">
+                        <ul>
+                          @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                          @endforeach
+                        </ul>
+                      </div>
+                    @endif
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-example-modal-xl"><i class="fas fa-plus-circle"></i> Recaudación</button>
+                      </div>
+                      <div class="col-lg-4">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".compromisos"><i class="fas fa-plus-circle"></i> Compromiso</button>
+                      </div>
+                      <div class="col-lg-4">
+                        <gestiones-component :id="{{ $idc }}"/>
+                      </div>
+                    </div>
+                    <hr>
+                     <!-- Modal recaudacion -->
+                      <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                          <div class="modal-content">
+                            {!! Form::open(['route' => ['recaudacionesAdd', $idc], 'enctype' => 'multipart/form-data']) !!}
+                                  {{csrf_field()}}
+                                    <div class="modal-body">
+                                      @include('Cobranza.Contactos.web.formulario')
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                      <button type="submit" class="btn btn-primary">Agregar</button>
+                                    </div>
+                            {!! Form::close() !!}
+                          </div>
+                        </div>
+                      </div>
+                    <!-- / Modal recaudacion-->
+
+                    <!-- Modal Compromiso-->
+                    <div class="modal fade compromisos" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                          {!! Form::open(['route' => ['compromisoAdd', $idc], 'enctype' => 'multipart/form-data']) !!}
+                                {{csrf_field()}}
+                                  <div class="modal-body">
+                                    @include('Cobranza.Contactos.web.formulariocompromiso')
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Agregar</button>
+                                  </div>
+                          {!! Form::close() !!}
+                        </div>
+                      </div>
+                    </div>
+                  <!-- Modal Compromiso-->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#recaudaciones" role="tab" aria-controls="recaudaciones" aria-selected="true">Recaudaciones</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#compromisos" role="tab" aria-controls="compromisos" aria-selected="false">Compromisos</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#gestiones" role="tab" aria-controls="gestiones" aria-selected="false">Gestiones</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                      <div class="tab-pane fade show active" id="recaudaciones" role="tabpanel" aria-labelledby="home-tab">
+                          <table class="table">
+                            <thead class="thead-dark table-striped">
+                              <tr>
+                                <th>Documento</th>
+                                <th>Fecha Deposito</th>
+                                <th>Forma Deposito</th>
+                                <th>Banco Origen</th>
+                                <th>Banco Destino</th>
+                                <th>Valor</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                      </div>
+                      <div class="tab-pane fade" id="compromisos" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                      <div class="tab-pane fade" id="gestiones" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                    </div>
+
+
+
 
                   </div>
                 </div>

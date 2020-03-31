@@ -564,8 +564,7 @@ Route::resource('procesos', 'PredictivoController');
 		Route::get('rechazos', 'Operaciones\RechazosControlle@index')->name('rechazos.index');
 		
 
-		Route::get('email', 'EmailController@email')->name('email');
-		Route::post('/contactar', 'EmailController@contact')->name('contact');
+		
 		//Ruta que esta señalando nuestro formulario
 
 		/**
@@ -574,10 +573,18 @@ Route::resource('procesos', 'PredictivoController');
 		Route::post('/DAMPLUSsegmentar/post/{idc}', 'Cobranza\ClientesController@segmentar')->name('DAMPLUSsegmentar.segmentar');
 
 		Route::get('clientesweb', 'Cobranza\web\ClientesController@index')->name('clientesweb');
-		
+		Route::get('recaudacion/{idc}', 'Cobranza\ApiclientesController@recaudacion');
+		Route::get('datosclienteweb/{idc}', 'Cobranza\ApiclientesController@datosclienteweb');
+		Route::get('bancos', 'Cobranza\ApiclientesController@bancos');
 			Route::get('apiclientescobranza/{datobuscar}/{tipobuscar}', 'Cobranza\ApiclientesController@apiclientescobranza');
-			Route::post('apiclientescobranzaguardar', 'Cobranza\ApiclientesController@apiclientescobranzaguardar');
+		Route::post('gestionesweb', 'Cobranza\ApiclientesController@gestionesweb')->name('gestionesweb');
+		
 			Route::get('apiclientescobranzagestiones/{idc}', 'Cobranza\ApiclientesController@apiclientescobranzagestiones');
 
+		/**crear una recaudacion */
+		Route::post('recaudacionesAdd', 'Cobranza\web\GestionesController@recaudacionesAdd')->name('recaudacionesAdd');
+		Route::post('compromisoAdd', 'Cobranza\web\GestionesController@compromisoAdd')->name('compromisoAdd');
+		Route::post('contactosAdd', 'Cobranza\web\ContactosController@contactosAdd')->name('contactosAdd');
+		Route::post('gestionesAdd', 'Cobranza\web\ContactosController@gestionesAdd')->name('gestionesAdd');
 
 		

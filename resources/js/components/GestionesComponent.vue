@@ -498,7 +498,7 @@ export default {
                 this.form.mensajerespuesta  = '';  
 
 
-                axios.post('http://damplus.estudiojuridicomedina.com/gestionesAdd',parametros)
+                axios.post('http://damplus.estudiojuridicomedina.com/damplusweb/public/gestionesAdd',parametros)
                 .then(res => {
                     this.gestiones.push(res.data)
                      this.$swal('Gestión Creada con Exito');

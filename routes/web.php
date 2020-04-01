@@ -588,8 +588,8 @@ Route::get('/cifrar/{pass}', function ($pass) {
 		
 		Route::group(['middleware' => ['cors']], function () {
 			//Rutas a las que se permitirá acceso
-			Route::post('/gestionesAdd', 'Cobranza\web\GestionesController@gestionesAdd');
+			
 		});
-		
+		Route::post('/gestionesAdd', 'Cobranza\web\GestionesController@gestionesAdd');
 
 		

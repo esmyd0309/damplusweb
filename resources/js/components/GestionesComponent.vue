@@ -438,7 +438,7 @@ export default {
             bodyTextVariant: 'dark',
             footerBgVariant: 'warning',
             footerTextVariant: 'dark',
-            enlace: 'http://damplus.estudiojuridicomedina.com/'
+            enlace: 'http://damplus.estudiojuridicomedina.com/damplusweb/public/'
         }
     },
     computed: {
@@ -462,7 +462,7 @@ export default {
     created() {
     },
     methods:{
-     
+    
       
         agregar(){
 
@@ -497,12 +497,7 @@ export default {
                 this.form.mensajeenviado  = '';
                 this.form.mensajerespuesta  = '';  
 
-
-                axios.post('http://damplus.estudiojuridicomedina.com/damplusweb/public/gestionesAdd',{
-                    headers: {
-	  'Access-Control-Allow-Origin': '*',
-	},parametros})
-                
+                axios.post(this.enlace+'gestionesAdd',parametros)
                 .then(res => {
                     this.gestiones.push(res.data)
                      this.$swal('Gestión Creada con Exito');

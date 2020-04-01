@@ -19,14 +19,14 @@ class Cors
 
     if(method_exists($handle, 'header'))
     {
-        $handle->header('Access-Control-Allow-Origin' , '*')
+        $handle->header('Access-Control-Allow-Origin' , 'http://damplus.estudiojuridicomedina.com')
                ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
                ->header('Access-Control-Allow-Headers', '*');
     }
 
       return $handle;
         return $next($request)
-        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Origin: http://damplus.estudiojuridicomedina.com');
         header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
         header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
     }

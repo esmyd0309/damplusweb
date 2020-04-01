@@ -39,7 +39,7 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" >Numero</label>
                     </div>
-                    {!! Form::text('numero' , null, ['id'=>'numero','class' =>'form-control my-colorpicker1',  'placeholder' => ' Min 7 - Max 9 caracteres','maxlength'=> '9','minlength'=> '7' ]) !!}
+                    {!! Form::text('numero' , null, ['id'=>'numero','class' =>'form-control my-colorpicker1',  'placeholder' => ' Min 7 - Max 9 caracteres','maxlength'=> '8','minlength'=> '7' ]) !!}
                 </div>
             </div>
         </div>

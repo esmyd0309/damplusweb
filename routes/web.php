@@ -590,6 +590,6 @@ Route::get('/cifrar/{pass}', function ($pass) {
 			//Rutas a las que se permitirá acceso
 			
 		});
-		Route::post('/gestionesAdd', 'Cobranza\web\GestionesController@gestionesAdd');
+		Route::post('gestionesAdd', 'Cobranza\web\GestionesController@gestionesAdd');
 
 		

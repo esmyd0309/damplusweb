@@ -462,9 +462,7 @@ export default {
     created() {
     },
     methods:{
-      get(){
-          window.location.href = 'https://www.yoursite.com/blog'
-      },
+     
       
         agregar(){
 

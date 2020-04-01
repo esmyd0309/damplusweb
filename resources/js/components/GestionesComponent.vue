@@ -438,7 +438,7 @@ export default {
             bodyTextVariant: 'dark',
             footerBgVariant: 'warning',
             footerTextVariant: 'dark',
-            enlace: 'http://damplus.estudiojuridicomedina.com/damplusweb/public/'
+            enlace: 'http://localhost/damplusweb/public/'
         }
     },
     computed: {

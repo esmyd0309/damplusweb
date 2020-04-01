@@ -150,7 +150,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="row">
+                  <div class="row" id="agregartelefonos">
                     <div class="col-lg-12">
                       <!-- Button trigger modal -->
                       <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".telefono"><i class="fas fa-plus-circle"></i> Telefono</button>
@@ -213,7 +213,7 @@
                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".compromisos"><i class="fas fa-plus-circle"></i> Compromiso</button>
                       </div>
                       <div class="col-lg-4">
-                        <gestiones-component :id="{{ $idc }}"/>
+                        <gestiones-component :id="{{ $idc }}" :cedula="{{ $ced }}"></gestiones-component>
                       </div>
                     </div>
                     <hr>

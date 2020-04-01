@@ -7,12 +7,17 @@
 require('./bootstrap');
 require('../../node_modules/bootstrap/dist/css/bootstrap.min.css');
 require('../../node_modules/bootstrap-vue/dist/bootstrap-vue.css');
+require('../../node_modules/sweetalert2/dist/sweetalert2.min.css');
+
+import VueSimpleAlert from "vue-simple-alert";
+import VueSweetalert2 from 'vue-sweetalert2';
 
 window.Vue = require('vue');
-
-
 import BootstrapVue from "bootstrap-vue" //Importing
+
 Vue.use(BootstrapVue) // Teslling Vue to use this whole application
+Vue.use(VueSimpleAlert);
+Vue.use(VueSweetalert2);
 
 /**
  * The following block of code may be used to automatically register your
@@ -26,9 +31,7 @@ Vue.use(BootstrapVue) // Teslling Vue to use this whole application
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 
-Vue.component('formulario-component', require('./components/FormularioComponent.vue').default);
 Vue.component('gestiones-component', require('./components/GestionesComponent.vue').default);
-Vue.component('telefono-component', require('./components/TelefonoComponent.vue').default);
 
 
 

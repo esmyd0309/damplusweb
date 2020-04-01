@@ -121,47 +121,39 @@ class GestionesController extends Controller
     public function gestionesAdd(Request $request )
     {   
 
-        DD($request );
-      $v = \Validator::make($request->all(), [
-            
-        'contacto' => 'required',
-        'valor' => 'required',
-        'formapago' => 'required',
-        'tipocompromiso' => 'required',
-        'comentario' => 'required|min:20',
-        'fechapago' => 'required',
-
-       ]);
-
-      if ($v->fails())
-      {
-          return redirect()->back()->withInput()->withErrors($v->errors());
-      }
+   
       $date = Carbon::now();
       $fecha= $date->format('Y-m-d H:i');
 
       $fecha = Carbon::now();
       $tabla = new DAMPLUSWEBgestiones();
-      $tabla->telefono = $request->contacto;
-      $tabla->valor = $request->valor;
-      $tabla->formapago = $request->formapago;
-      $tabla->fechapago = $request->fechapago;
-      $tabla->tipocompromiso = $request->tipocompromiso;
-      $tabla->tipocontacto = $request->tipocontacto;
-      $tabla->comentario = $request->comentario;
-      $tabla->agente = \Auth::user()->usuario;
       $tabla->fecha = $fecha;
-      $tabla->estado = 'compromiso';
+      $tabla->agente = \Auth::user()->usuario;
       $tabla->idc = $request->idc;
-      $tabla->cedula = $request->cedula;
+      if ($request->telefono) {
+        $tabla->telefono = $request->telefono;
+      }else{
+        $tabla->telefono = $request->prefijo.$request->numero;
+
+      }
+      $tabla->estado = $request->estado;
+      $tabla->comentario = $request->comentario;
+      $tabla->contacto = $request->contacto;
+      $tabla->direccion = $request->terreno;
+      $tabla->prefijo = $request->prefijo;
+      $tabla->numero = $request->numero;
+      $tabla->respuestasms = $request->respuestasms;
+      $tabla->repuestawhatsapp = $request->repuestawhatsapp;
+      $tabla->respuestaemail = $request->respuestaemail;
+      $tabla->mensajeenviado = $request->mensajeenviado;
+      $tabla->mensajerespuesta = $request->mensajerespuesta;
+
+      
       $tabla->save();
 
-        return redirect()->back()->with('info', 'Compromiso Agregada Correctamente..!');    
+        return redirect()->back()->with('info', 'Gestion Agregada Correctamente..!');    
     }
 
-    public function gestionesweb(Request $request )
-    { 
-      dd($request );
-    }
+  
     
 }

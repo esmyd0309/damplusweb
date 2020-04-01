@@ -66,7 +66,7 @@ class Kernel extends HttpKernel
         'permission'    => \Caffeinated\Shinobi\Middleware\UserHasPermission::class,
         'perfil'    => \App\Http\Middleware\InfoActualizadaMiddleware::class,
         'cors'    => \App\Http\Middleware\Cors::class,
-        'cors' => \Barryvdh\Cors\HandleCors::class,
+        "cors" => \App\Http\Middleware\Cors::class,
     ];
 
     /**

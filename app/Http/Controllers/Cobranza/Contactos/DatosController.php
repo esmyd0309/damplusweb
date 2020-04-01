@@ -164,7 +164,7 @@ class DatosController extends Controller
 
         $telefonosagregados = DAMPLUSWEBtelefonos::where('cedula',$ced)->get();
       // dd($telefonosagregados);
-        return view('Cobranza.Contactos.show',compact('datos','datosgenerales','telefonos','idc','bancos','formas_pagos','telefonosagregados'));
+        return view('Cobranza.Contactos.show',compact('datos','datosgenerales','telefonos','idc','bancos','formas_pagos','telefonosagregados','ced'));
     }
 
     /**

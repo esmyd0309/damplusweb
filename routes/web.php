@@ -407,8 +407,8 @@ Route::get('/cifrar/{pass}', function ($pass) {
 
 
 	
-/**procesos sistemas */
-Route::resource('procesos', 'PredictivoController');
+		/**procesos sistemas */
+		Route::resource('procesos', 'PredictivoController');
 
 		/**
 		 * Procesos de list y log, consolidado en el servidor 192.168.1.7 para consolidar la informacion predictiva
@@ -576,8 +576,8 @@ Route::resource('procesos', 'PredictivoController');
 		Route::get('recaudacion/{idc}', 'Cobranza\ApiclientesController@recaudacion');
 		Route::get('datosclienteweb/{idc}', 'Cobranza\ApiclientesController@datosclienteweb');
 		Route::get('bancos', 'Cobranza\ApiclientesController@bancos');
-			Route::get('apiclientescobranza/{datobuscar}/{tipobuscar}', 'Cobranza\ApiclientesController@apiclientescobranza');
-		Route::post('gestionesweb', 'Cobranza\ApiclientesController@gestionesweb')->name('gestionesweb');
+		Route::get('apiclientescobranza/{datobuscar}/{tipobuscar}', 'Cobranza\ApiclientesController@apiclientescobranza');
+		Route::post('gestionesweb', 'Cobranza\ApiclientesController@gestionesweb');
 		
 			Route::get('apiclientescobranzagestiones/{idc}', 'Cobranza\ApiclientesController@apiclientescobranzagestiones');
 
@@ -585,6 +585,11 @@ Route::resource('procesos', 'PredictivoController');
 		Route::post('recaudacionesAdd', 'Cobranza\web\GestionesController@recaudacionesAdd')->name('recaudacionesAdd');
 		Route::post('compromisoAdd', 'Cobranza\web\GestionesController@compromisoAdd')->name('compromisoAdd');
 		Route::post('contactosAdd', 'Cobranza\web\ContactosController@contactosAdd')->name('contactosAdd');
-		Route::post('gestionesAdd', 'Cobranza\web\ContactosController@gestionesAdd')->name('gestionesAdd');
+		
+		Route::group(['middleware' => ['cors']], function () {
+			//Rutas a las que se permitirá acceso
+			Route::post('/gestionesAdd', 'Cobranza\web\GestionesController@gestionesAdd');
+		});
+		
 
 		

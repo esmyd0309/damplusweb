@@ -496,9 +496,11 @@ export default {
                 this.form.respuestaemail  = '';
                 this.form.mensajeenviado  = '';
                 this.form.mensajerespuesta  = '';  
+const config = {
+    headers: {'Access-Control-Allow-Origin': '*'}
+};
 
-
-                axios.post('http://damplus.estudiojuridicomedina.com/damplusweb/public/gestionesAdd',parametros)
+                axios.post('http://damplus.estudiojuridicomedina.com/damplusweb/public/gestionesAdd',parametros,config)
                 .then(res => {
                     this.gestiones.push(res.data)
                      this.$swal('Gestión Creada con Exito');

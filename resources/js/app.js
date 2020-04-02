@@ -9,6 +9,15 @@ require('../../node_modules/bootstrap/dist/css/bootstrap.min.css');
 require('../../node_modules/bootstrap-vue/dist/bootstrap-vue.css');
 require('../../node_modules/sweetalert2/dist/sweetalert2.min.css');
 
+
+require('../../node_modules/ag-grid-community/dist/styles/ag-grid.css');
+require('../../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css');
+require('../../node_modules/ag-grid-community/dist/styles/ag-theme-blue.css');
+require('../../node_modules/ag-grid-community/dist/styles/webfont/agGridClassicFont.scss');
+require('../../node_modules/ag-grid-community/dist/styles/webfont/agGridBalhamFont.scss');
+require('../../node_modules/ag-grid-community/dist/styles/webfont/agGridMaterialFont.scss');
+
+
 import VueSimpleAlert from "vue-simple-alert";
 import VueSweetalert2 from 'vue-sweetalert2';
 
@@ -33,7 +42,6 @@ Vue.use(VueSweetalert2);
 
 Vue.component('gestiones-component', require('./components/GestionesComponent.vue').default);
 Vue.component('gestion-component', require('./components/GestionComponent.vue').default);
-
 
 
 /**

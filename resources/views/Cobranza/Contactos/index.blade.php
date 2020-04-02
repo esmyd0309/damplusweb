@@ -3,19 +3,23 @@
 @section('title', 'Contactos | Cobranza')
 @section('content')
 
-
-<div class="col-md-12">
+<div class="container">
+  <div class="col-md-12">
     <div class="alert alert-secondary" role="alert">
       <center> <small>BUSCAR CLIENTES COBRANZA</small> </center>
-      </div>
+    </div>
     <div class="card card-primary">
       <div class="input-group">
         <input type="text" class="form-control" id="texto" placeholder="Ingrese la Cedula">
-        <div class="input-group-append"><span class="input-group-text">Buscar</span></div>
+        <div class="input-group-append">
+          <span class="input-group-text">Buscar</span>
+        </div>
       </div>
       <div id="resultados" class="bg-light border">
       </div>
     </div>
+  </div>
+</div>
 
 
 

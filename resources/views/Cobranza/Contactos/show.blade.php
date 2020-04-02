@@ -285,7 +285,10 @@
                             </tbody>
                           </table>
                       </div>
-                      <div class="tab-pane fade" id="compromisos" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                      <div class="tab-pane fade" id="compromisos" role="tabpanel" aria-labelledby="profile-tab">
+                        <gestiones-component :id="{{ $idc }}" :cedula="{{ $ced }}"></gestiones-component>
+
+                      </div>
                       <div class="tab-pane fade" id="gestiones" role="tabpanel" aria-labelledby="contact-tab">...</div>
                     </div>
 

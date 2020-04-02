@@ -438,7 +438,7 @@ export default {
             bodyTextVariant: 'dark',
             footerBgVariant: 'warning',
             footerTextVariant: 'dark',
-            enlace: 'http://damplus.estudiojuridicomedina.com/'
+            enlace: 'http://localhost/damplusweb/public/'
         }
     },
     computed: {
@@ -477,6 +477,7 @@ export default {
                                         prefijo:            this.form.prefijo,
                                         numero:             this.form.numero,
                                         idc:                this.id,
+                                        cedula:                this.cedula,
                                         respuestasms:       this.form.respuestasms,
                                         repuestawhatsapp:   this.form.repuestawhatsapp,
                                         respuestaemail:     this.form.respuestaemail,

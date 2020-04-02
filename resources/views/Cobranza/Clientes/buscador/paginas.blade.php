@@ -1,5 +1,5 @@
 @if (count($clientes))
-   
+<div class="table-responsive"> 
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -28,9 +28,7 @@
                 @endforeach   
             </tbody>
         </thead>
-        
-
-    
     </table>
+</div> 
              
 @endif

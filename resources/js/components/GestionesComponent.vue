@@ -438,7 +438,7 @@ export default {
             bodyTextVariant: 'dark',
             footerBgVariant: 'warning',
             footerTextVariant: 'dark',
-            enlace: 'http://localhost/damplusweb/public/'
+           // enlace: 'http://localhost/damplusweb/public/'
         }
     },
     computed: {
@@ -499,7 +499,7 @@ export default {
                 this.form.mensajeenviado  = '';
                 this.form.mensajerespuesta  = '';  
 
-                axios.post('http://damplus.estudiojuridicomedina.com/'+gestionesAdd,parametros)
+                axios.post('gestionesAdd',parametros)
                 .then(res => {
                     this.gestiones.push(res.data)
                      this.$swal('Gestión Creada con Exito');

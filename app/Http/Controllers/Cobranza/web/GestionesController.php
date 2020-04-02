@@ -148,7 +148,6 @@ class GestionesController extends Controller
       $tabla->respuestaemail = $request->respuestaemail;
       $tabla->mensajeenviado = $request->mensajeenviado;
       $tabla->mensajerespuesta = $request->mensajerespuesta;
-      DD($tabla );
 
       
       $tabla->save();

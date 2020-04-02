@@ -586,7 +586,11 @@ Route::get('/cifrar/{pass}', function ($pass) {
 		Route::post('compromisoAdd', 'Cobranza\web\GestionesController@compromisoAdd')->name('compromisoAdd');
 		Route::post('contactosAdd', 'Cobranza\web\ContactosController@contactosAdd')->name('contactosAdd');
 		
-	
+		Route::group(['middleware' => ['cors']], function () {
+			//Rutas a las que se permitirá acceso
 			Route::post('gestionesAdd', 'Cobranza\web\GestionesController@gestionesAdd');
+
+			
+		});
 
 		

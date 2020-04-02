@@ -10,7 +10,7 @@
     </div>
     <div class="card card-primary">
       <div class="input-group">
-        <input type="text" class="form-control" id="texto" placeholder="Ingrese la Cedula">
+        <input type="text" class="form-control" id="texto" placeholder="Ingrese la Cedula ó Apellidos ">
         <div class="input-group-append">
           <span class="input-group-text">Buscar</span>
         </div>

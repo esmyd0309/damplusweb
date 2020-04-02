@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "@ag-grid-community/all-modules": "^23.0.2",
         "ag-grid-community": "^23.0.2",
         "ag-grid-vue": "^23.0.2",
         "bootstrap-vue": "^2.8.0",

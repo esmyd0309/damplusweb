@@ -193,7 +193,8 @@ class ClientesController extends Controller
                   'clientescobranza.area'
                   )
         ->where("clientescobranza.cedula",'like',$request->texto."%")
-        ->take(10)->get();
+        ->orwhere("clientescobranza.Nombres",'like',"%".$request->texto."%")
+        ->take(5)->get();
         return view('Cobranza.Clientes.buscador.paginas', compact('clientes'));
     }
 

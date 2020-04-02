@@ -205,14 +205,14 @@
                       </div>
                     @endif
                     <div class="row">
-                      <div class="col-lg-4">
+                      <div class="col">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bd-example-modal-xl"><i class="fas fa-plus-circle"></i> Recaudación</button>
                       </div>
-                      <div class="col-lg-4">
+                      <div class="col">
                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".compromisos"><i class="fas fa-plus-circle"></i> Compromiso</button>
                       </div>
-                      <div class="col-lg-4">
+                      <div class="col">
                         <gestion-component :id="{{ $idc }}" :cedula="{{ $ced }}"></gestion-component>
                       </div>
                     </div>
@@ -253,51 +253,37 @@
                         </div>
                       </div>
                     </div>
-                  <!-- Modal Compromiso-->
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#recaudaciones" role="tab" aria-controls="recaudaciones" aria-selected="true">Recaudaciones</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#compromisos" role="tab" aria-controls="compromisos" aria-selected="false">Compromisos</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#gestiones" role="tab" aria-controls="gestiones" aria-selected="false">Gestiones</a>
-                      </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                      <div class="tab-pane fade show active" id="recaudaciones" role="tabpanel" aria-labelledby="home-tab">
-                          <table class="table">
-                            <thead class="thead-dark table-striped">
-                              <tr>
-                                <th>Documento</th>
-                                <th>Fecha Deposito</th>
-                                <th>Forma Deposito</th>
-                                <th>Banco Origen</th>
-                                <th>Banco Destino</th>
-                                <th>Valor</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td></td>
-                              </tr>
-                            </tbody>
-                          </table>
+                    <!-- Modal Compromiso-->
+                    <div class="container">
+                      <div class="row">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                          <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#recaudaciones" role="tab" aria-controls="recaudaciones" aria-selected="true">Recaudaciones</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#compromisos" role="tab" aria-controls="compromisos" aria-selected="false">Compromisos</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#X" role="tab" aria-controls="X" aria-selected="false">Gestiones</a>
+                          </li>
+                        </ul>
                       </div>
-                      <div class="tab-pane fade" id="compromisos" role="tabpanel" aria-labelledby="profile-tab">
-                        <gestiones-component :id="{{ $idc }}" :cedula="{{ $ced }}"></gestiones-component>
-
-                      </div>
-                      <div class="tab-pane fade" id="gestiones" role="tabpanel" aria-labelledby="contact-tab">...</div>
                     </div>
-
-
+                    <div class="tab-content" id="myTabContent">
+                      <div class="tab-pane fade show active" id="recaudaciones"  aria-labelledby="home-tab">
+                        <getrecaudaciones-component :id="{{ $idc }}" :cedula="{{ $ced }}" />
+                      </div>
+                      <div class="tab-pane fade" id="compromisos"  aria-labelledby="profile-tab">
+                        <gestionescompromiso-component :id="{{ $idc }}" :cedula="{{ $ced }}" />                        
+                      </div>
+                      <div class="tab-pane fade" id="X"  aria-labelledby="contact-tab">
+                        <gestiones-component :id="{{ $idc }}" :cedula="{{ $ced }}" />
+                      </div>
+                    </div>
 
 
                   </div>
                 </div>
-
 
               </div>
             </div>

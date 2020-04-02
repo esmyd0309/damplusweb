@@ -42,6 +42,9 @@ Vue.use(VueSweetalert2);
 
 Vue.component('gestiones-component', require('./components/GestionesComponent.vue').default);
 Vue.component('gestion-component', require('./components/GestionComponent.vue').default);
+Vue.component('gestionescompromiso-component', require('./components/GestionescompromisoComponent.vue').default);
+Vue.component('getrecaudaciones-component', require('./components/GetrecaudacionesComponent.vue').default);
+
 
 
 /**

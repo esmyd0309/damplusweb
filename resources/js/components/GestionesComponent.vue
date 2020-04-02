@@ -1,9 +1,20 @@
 <template>
    <div>
-        <ag-grid-vue style="width: 500px; height: 300px;"
-            class="ag-theme-balham"
-            :columnDefs="columnDefs"
-            :rowData="rowData"
+        <ag-grid-vue 
+                style="width: 100%; height: 100%;"
+                class="ag-theme-blue"
+                id="myGrid"
+                :columnDefs="columnDefs"
+                :rowData="rowData"
+                :domLayout="domLayout"
+                :modules="modules" 
+                :rowDragManaged="true"
+                :enableColResize="true"
+                enableSorting="true"
+                enableFilter="true"
+                animateRows="true"
+                pagination="true"
+                rowSelection="multiple"
         >
     </ag-grid-vue>
    </div>
@@ -14,30 +25,49 @@ import axios from 'axios'
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import { AgGridVue } from 'ag-grid-vue';
+import { AllCommunityModules } from "@ag-grid-community/all-modules";
 
 export default  {
     name: 'App',
+    props: {
+        id: {
+        default: 1
+        },
+        cedula: {
+        default: 1
+        }
+    },
     data() {
         return {
             columnDefs: null,
-            rowData: null
+            rowData: null,
+            domLayout: null,
+            modules: AllCommunityModules,
+
         }
     },
     components: {
         AgGridVue
     },
+    created(){
+     
+        this.domLayout = "autoHeight";
+        
+    },
     beforeMount() {
         this.columnDefs = [
-            {headerName: 'Make', field: 'make'},
-            {headerName: 'Model', field: 'model'},
-            {headerName: 'Price', field: 'price'}
+            {headerName: 'Fecha', field: 'fecha'},
+            {headerName: 'Estado', field: 'estado'},
+            {headerName: 'Contacto', field: 'contacto'},
+            {headerName: 'Telefono', field: 'telefono'},
+            {headerName: 'Comentario', field: 'comentario'}
         ];
+      
 
-        this.rowData = [
-            {make: 'Toyota', model: 'Celica', price: 35000},
-            {make: 'Ford', model: 'Mondeo', price: 32000},
-            {make: 'Porsche', model: 'Boxter', price: 72000}
-        ];
+       
+        fetch('http://localhost/damplusweb/public/getgestiones/'+this.id)
+            .then(result => result.json())
+            .then(rowData => this.rowData = rowData);
     },
 }
 </script>

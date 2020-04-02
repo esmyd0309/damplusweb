@@ -154,7 +154,64 @@ class GestionesController extends Controller
 
         return redirect()->back()->with('info', 'Gestion Agregada Correctamente..!');    
     }
+    public function getgestiones($idc)
+    {  
+      $gestiones = DB::connection('mysql')->table('DAMPLUSWEBgestiones')
+      ->select(
+                'DAMPLUSWEBgestiones.fecha',
+                'DAMPLUSWEBgestiones.estado',
+                'DAMPLUSWEBgestiones.contacto',
+                'DAMPLUSWEBgestiones.telefono',
+                'DAMPLUSWEBgestiones.comentario'
+              )
+      ->where("DAMPLUSWEBgestiones.idc",$idc)
+      ->where("DAMPLUSWEBgestiones.estado",'!=','compromiso')
+      ->orderBy('fecha', 'desc')
 
+      ->get();
+      
+       return response()->json($gestiones);
+    }
+
+    public function getcompromisos($idc)
+    {  
+      $gestiones = DB::connection('mysql')->table('DAMPLUSWEBgestiones')
+      ->select(
+                'DAMPLUSWEBgestiones.fecha',
+                'DAMPLUSWEBgestiones.estado',
+                'DAMPLUSWEBgestiones.contacto',
+                'DAMPLUSWEBgestiones.telefono',
+                'DAMPLUSWEBgestiones.comentario'
+              )
+      ->where("DAMPLUSWEBgestiones.idc",$idc)
+      ->where("DAMPLUSWEBgestiones.estado",'compromiso')
+      ->orderBy('fecha', 'desc')
+
+      ->get();
+      
+       return response()->json($gestiones);
+    }
+
+    public function getrecaudaciones($idc)
+    {  
+      $gestiones = DB::connection('mysql')->table('dampluswebrecaudaciones')
+      ->select(
+                'dampluswebrecaudaciones.fecha',
+                'dampluswebrecaudaciones.documento',
+                'dampluswebrecaudaciones.agente',
+                'dampluswebrecaudaciones.formapago',
+                'dampluswebrecaudaciones.fechapago',
+                'dampluswebrecaudaciones.valor',
+                'dampluswebrecaudaciones.comentario',
+                'dampluswebrecaudaciones.archivo'
+              )
+      ->where("dampluswebrecaudaciones.idc",$idc)
+      ->orderBy('fecha', 'desc')
+
+      ->get();
+      
+       return response()->json($gestiones);
+    }
   
     
 }

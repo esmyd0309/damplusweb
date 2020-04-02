@@ -1,9 +1,9 @@
 @if (count($clientes))
 <div class="table-responsive"> 
-    <table class="table table-bordered">
+    <table class="table table-bordered table-sm">
         <thead>
             <tr>
-                <th>Idc</th>
+               
                 <th>Cedula</th>
                 <th>Nombres</th>
                 <th>Deuda</th>
@@ -15,8 +15,8 @@
             <tbody>
                 @foreach ($clientes as $item)
                 <tr>
-                    <td style="width: 10px">{{ $item->idc }}</td>
-                    <td style="width: 10px">{{ $item->cedula }}</td>
+                    
+                    <td style="width: 10px"><a href="{{ route('deudor.show', [$item->idc,$item->cedula] )}}" class="btn btn-sm btn-primary">{{ $item->cedula }}</a></td>
                     <td >{{ $item->Nombres }}</td>
                     <td style="width: 10px">{{ $item->valordeuda }}</td>
                     <td style="width: 10px">{{ $item->saldodeuda }}</td>

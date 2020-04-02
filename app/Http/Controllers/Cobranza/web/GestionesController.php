@@ -120,7 +120,6 @@ class GestionesController extends Controller
     }
     public function gestionesAdd(Request $request )
     {   
-      DD($request );
 
       $date = Carbon::now();
       $fecha= $date->format('Y-m-d H:i');
@@ -149,6 +148,7 @@ class GestionesController extends Controller
       $tabla->respuestaemail = $request->respuestaemail;
       $tabla->mensajeenviado = $request->mensajeenviado;
       $tabla->mensajerespuesta = $request->mensajerespuesta;
+      DD($tabla );
 
       
       $tabla->save();

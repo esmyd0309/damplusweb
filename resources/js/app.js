@@ -32,6 +32,7 @@ Vue.use(VueSweetalert2);
 
 
 Vue.component('gestiones-component', require('./components/GestionesComponent.vue').default);
+Vue.component('gestion-component', require('./components/GestionComponent.vue').default);
 
 
 

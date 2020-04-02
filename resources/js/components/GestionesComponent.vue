@@ -65,7 +65,7 @@ export default  {
       
 
        
-        fetch('http://localhost/damplusweb/public/getgestiones/'+this.id)
+        fetch('http://damplus.estudiojuridicomedina.com/public/getgestiones/'+this.id)
             .then(result => result.json())
             .then(rowData => this.rowData = rowData);
     },

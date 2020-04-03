@@ -70,16 +70,7 @@ export default  {
             .then(rowData => this.rowData = rowData);
     },
     getData(){
-        this.columnDefs = [
-            {headerName: 'Fecha', field: 'fecha'},
-            {headerName: 'Estado', field: 'estado'},
-            {headerName: 'Contacto', field: 'contacto'},
-            {headerName: 'Telefono', field: 'telefono'},
-            {headerName: 'Comentario', field: 'comentario'}
-        ];
       
-
-       
         fetch('http://damplus.estudiojuridicomedina.com/getgestiones/'+this.id)
             .then(result => result.json())
             .then(rowData => this.rowData = rowData);

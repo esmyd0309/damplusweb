@@ -271,6 +271,7 @@
                     </div>
                     <div class="tab-content" id="myTabContent">
                       <div class="tab-pane fade show active" id="recaudaciones"  aria-labelledby="home-tab">
+                        
                         <getrecaudaciones-component :id="{{ $idc }}" :cedula="{{ $ced }}"  />
                       </div>
                       <div class="tab-pane fade" id="compromisos"  aria-labelledby="profile-tab">

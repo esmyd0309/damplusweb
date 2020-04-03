@@ -3,9 +3,9 @@
 <div class="container">
     <div class="row">
         <div  class="col">
-            <div class="input-group mb-3">
+            <div class="input-group">
                 <div class="input-group-prepend">
-                  <label class="input-group-text" for="inputGroupSelect01" >Tipo</label>
+                    <label class="input-group-text" >Tipo</label>
                 </div>
                 <select class="custom-select"  name="tipo" required>
                   <option selected disabled>Seleccione el Tipo </option>
@@ -15,12 +15,12 @@
             </div>
         </div>
         <div  class="col">
-            <div class="input-group mb-3">
+            <div class="input-group">
                 <div class="input-group-prepend">
-                  <label class="input-group-text" for="inputGroupSelect01">Prefijo</label>
+                    <label class="input-group-text" >Prefijo</label>
                 </div>
                 <select class="custom-select"  name="prefijo" required>
-                  <option selected disabled>Seleccione un Prefijo</option>
+                    <option selected disabled>Seleccione un Prefijo</option>
                     <option value="02">02</option>
                     <option value="03">03</option>
                     <option value="04">04</option>
@@ -29,26 +29,24 @@
                     <option value="07">07</option>
                     <option value="08">08</option>
                     <option value="09">09</option>
-                 
                 </select>
             </div>
         </div>
+    </div>
+    <br>
+    <div class="row">
         <div class="col">
-            <div class="col-auto">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" >Numero</label>
-                    </div>
-                    {!! Form::text('numero' , null, ['id'=>'numero','class' =>'form-control my-colorpicker1',  'placeholder' => ' Min 7 - Max 9 caracteres','maxlength'=> '8','minlength'=> '7' ]) !!}
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" >Numero</label>
                 </div>
+                {!! Form::text('numero' , null, ['id'=>'numero','class' =>'form-control my-colorpicker1',  'placeholder' => ' Min 7 - Max 9 caracteres','maxlength'=> '8','minlength'=> '7' ]) !!}
             </div>
         </div>
-    </div>
-    <div class="row">
         <div  class="col">
-            <div class="input-group mb-3">
+            <div class="input-group">
                 <div class="input-group-prepend">
-                  <label class="input-group-text">Contacto</label>
+                    <label class="input-group-text" >Contacto</label>
                 </div>
                 <select class="custom-select"  name="contacto" required>
                   <option selected disabled>Seleccione Un Contacto</option>
@@ -60,8 +58,12 @@
                 </select>
             </div>
         </div>
+    </div>
+
+    <br>
+    <div class="row">
         <div  class="col">
-            <div class="input-group mb-3">
+            <div class="input-group">
                 <div class="input-group-prepend">
                   <label class="input-group-text">Referencia</label>
                 </div>
@@ -83,10 +85,9 @@
             </div>
         </div>
     </div>
-   
+    <br>
     <div class="row">
         <div class="col">
-        
             <div class="input-group">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Observación</label>

@@ -516,7 +516,7 @@ export default {
                 });
                 EventBus.$on('getdata', function () {
                     
-                        this.getData();
+                       console.log( this.getData());
                     
                 }.bind(this));
                   this.show=false

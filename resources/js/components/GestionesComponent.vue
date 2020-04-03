@@ -50,7 +50,7 @@ export default  {
         AgGridVue
     },
     created(){
-        EventBus.$emit('getdata', $this.getData());
+        EventBus.$emit('getdata', this.getDatagestiones);
         this.domLayout = "autoHeight";
         
     },
@@ -69,7 +69,7 @@ export default  {
             .then(result => result.json())
             .then(rowData => this.rowData = rowData);
     },
-    getData(){
+    getDatagestiones(){
       
         fetch('http://damplus.estudiojuridicomedina.com/getgestiones/'+this.id)
             .then(result => result.json())

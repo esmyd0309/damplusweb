@@ -366,12 +366,15 @@ import 'whatwg-fetch';
 import VueSwal from 'vue-swal'
 import VueSweetalert2 from 'vue-sweetalert2';
 import EventBus from "../event-bus";
+import Gestiones from "./GestionesComponent";
+
 
 const options = {
     confirmButtonColor: '#41b882',
     cancelButtonColor: '#ff7674',
 };
  Vue.use(VueSweetalert2, options);
+Vue.use(EventBus)
 
 Vue.use(VueSwal)
 export default {
@@ -511,7 +514,7 @@ export default {
                     this.gestiones.push(res.data)
                     this.$swal('Gestión Creada con Exito');
                 });
-                EventBus.$on('getdata', function (index) {
+                EventBus.$on('getdata', function () {
                     
                         this.getData();
                     

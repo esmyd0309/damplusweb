@@ -382,6 +382,9 @@ export default {
         cedula: {
         default: 1
         },
+        idcampana: {
+        default: 1
+        },
     },
      data() {
         return {
@@ -438,7 +441,8 @@ export default {
             bodyTextVariant: 'dark',
             footerBgVariant: 'warning',
             footerTextVariant: 'dark',
-            enlace: 'http://damplus.estudiojuridicomedina.com/'
+            enlace: 'http://damplus.estudiojuridicomedina.com/',
+            idcampana: ''
         }
     },
     computed: {
@@ -477,7 +481,9 @@ export default {
                                         prefijo:            this.form.prefijo,
                                         numero:             this.form.numero,
                                         idc:                this.id,
-                                        cedula:                this.cedula,
+                                        idcampana:                this.idcampana,
+                                        idcampana:                this.idcampana,
+
                                         respuestasms:       this.form.respuestasms,
                                         repuestawhatsapp:   this.form.repuestawhatsapp,
                                         respuestaemail:     this.form.respuestaemail,

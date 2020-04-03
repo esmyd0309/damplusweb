@@ -271,13 +271,13 @@
                     </div>
                     <div class="tab-content" id="myTabContent">
                       <div class="tab-pane fade show active" id="recaudaciones"  aria-labelledby="home-tab">
-                        <getrecaudaciones-component :id="{{ $idc }}" :cedula="{{ $ced }}" />
+                        <getrecaudaciones-component :id="{{ $idc }}" :cedula="{{ $ced }}"  />
                       </div>
                       <div class="tab-pane fade" id="compromisos"  aria-labelledby="profile-tab">
                         <gestionescompromiso-component :id="{{ $idc }}" :cedula="{{ $ced }}" />                        
                       </div>
                       <div class="tab-pane fade" id="X"  aria-labelledby="contact-tab">
-                        <gestiones-component :id="{{ $idc }}" :cedula="{{ $ced }}" />
+                        <gestiones-component :id="{{ $idc }}" :cedula="{{ $ced }}" :idcampana="{{ $datos->idcampana }}"/>
                       </div>
                     </div>
 

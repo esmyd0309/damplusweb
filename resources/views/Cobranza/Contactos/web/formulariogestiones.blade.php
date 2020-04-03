@@ -108,4 +108,5 @@
 </div>
 <input name="idc" type="hidden" value="{{ $datos->idc }}">
 <input name="cedula" type="hidden" value="{{ $datos->cedula }}">
+<input name="idcampana" type="hidden" value="{{ $datos->idcampana }}">
 

@@ -120,8 +120,8 @@ class GestionesController extends Controller
     }
     public function gestionesAdd(Request $request )
     {   
+      
       $idcampana =  $request->idcampana.$request->cedula;
-
       $date = Carbon::now();
       $fecha= $date->format('Y-m-d H:i');
 

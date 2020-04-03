@@ -120,6 +120,7 @@ class GestionesController extends Controller
     }
     public function gestionesAdd(Request $request )
     {   
+      $idcampana =  $request->idc;
 
       $date = Carbon::now();
       $fecha= $date->format('Y-m-d H:i');
@@ -128,7 +129,7 @@ class GestionesController extends Controller
       $tabla = new DAMPLUSWEBgestiones();
       $tabla->fecha = $fecha;
       $tabla->agente = \Auth::user()->usuario;
-      $tabla->idc = $request->idc;
+      $tabla->idc = $idcampana;
       $tabla->cedula = $request->cedula;
 
       if ($request->telefono) {
@@ -147,6 +148,8 @@ class GestionesController extends Controller
       $tabla->repuestawhatsapp = $request->repuestawhatsapp;
       $tabla->respuestaemail = $request->respuestaemail;
       $tabla->mensajeenviado = $request->mensajeenviado;
+      $tabla->idcampana = $idcampana;
+
       $tabla->mensajerespuesta = $request->mensajerespuesta;
 
       

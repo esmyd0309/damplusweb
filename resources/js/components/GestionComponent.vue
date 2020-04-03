@@ -365,6 +365,8 @@ import Vue from "vue";
 import 'whatwg-fetch';
 import VueSwal from 'vue-swal'
 import VueSweetalert2 from 'vue-sweetalert2';
+import EventBus from "../event-bus";
+
 const options = {
     confirmButtonColor: '#41b882',
     cancelButtonColor: '#ff7674',
@@ -507,10 +509,13 @@ export default {
                 axios.post(this.enlace+'gestionesAdd',parametros)
                 .then(res => {
                     this.gestiones.push(res.data)
-                     this.$swal('Gestión Creada con Exito');
-
+                    this.$swal('Gestión Creada con Exito');
                 });
-
+                EventBus.$on('getdata', function (index) {
+                    
+                        this.getData();
+                    
+                }.bind(this));
                   this.show=false
             },
             checkForm: function(){

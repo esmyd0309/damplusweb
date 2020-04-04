@@ -26,7 +26,7 @@
                     </p>
                 <b-row>
                     <b-col md="3">
-                            <b-input-group prepend="Tipo" class="mb-2 mr-sm-2 mb-sm-0 input-group-text" >
+                            <b-input-group prepend="Tipo" class="mb-2 mr-sm-2 mb-sm-0" >
                             <select v-model="form.tipo" class="form-control" required>
                                 <option v-for="(item, index) in tipos" :key="index"  v-bind:value="item.value " >
                                     {{ item.text }}
@@ -35,7 +35,7 @@
                         </b-input-group>
                     </b-col>
                     <b-col md="3">
-                            <b-input-group prepend="Grupo" class="mb-2 mr-sm-2 mb-sm-0 input-group-text">
+                            <b-input-group prepend="Grupo" class="mb-2 mr-sm-2 mb-sm-0">
                             <select v-model="form.grupo" class="form-control" required>
                                 <option v-for="(item, index) in getgrupoestados" :key="index"  v-bind:value="item.id " >
                                     {{ item.nombre }}

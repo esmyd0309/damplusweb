@@ -243,8 +243,8 @@ class GestionesController extends Controller
 
     public function getgrupoestados()
     {  
-      $grupoestados = DB::connection('mysql')->table('dampluswebgruposestados')
-      ->select('dampluswebgruposestados.*')
+      $grupoestados = DB::connection('mysql')->table('DAMPLUSWEBgrupoestados')
+      ->select('DAMPLUSWEBgrupoestados.*')
       ->get();
       
        return response()->json($grupoestados);

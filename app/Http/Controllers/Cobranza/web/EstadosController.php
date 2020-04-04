@@ -28,7 +28,7 @@ class EstadosController extends Controller
                                         ->select('estados.*')
                                         ->orderBy('fecha', 'desc')
                                         ->get();
-        return view('Cobranza.contactos.web.estados',compact('estados'));
+        return view('Cobranza.Contactos.web.estados',compact('estados'));
     }
 
 }

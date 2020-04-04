@@ -332,7 +332,7 @@
                 <br>
                 <b-row>
                      <b-col md="4">
-                            <b-input-group prepend="Posicion" class="mb-2 mr-sm-2 mb-sm-0">
+                            <b-input-group prepend="Posición" class="mb-2 mr-sm-2 mb-sm-0">
                             <select v-model="form.posicion" class="form-control" required>
                                 <option v-for="(item, index) in getposicion" :key="index"  v-bind:value="item.nombre " >
                                     {{ item.nombre }}

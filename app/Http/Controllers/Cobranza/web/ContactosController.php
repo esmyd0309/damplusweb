@@ -10,6 +10,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use App\User;
 use Auth;
+use Carbon\Carbon;
+
 class ContactosController extends Controller
 {
     public function sanear_string($string)
@@ -93,6 +95,9 @@ class ContactosController extends Controller
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
 
+        $date = Carbon::now();
+        $fecha= $date->format('Y-m-d H:i');
+
         $telefono = new DAMPLUSWEBtelefonos();
         $telefono->cedula       = $request->cedula;
         $telefono->prefijo      = $request->prefijo;
@@ -102,7 +107,8 @@ class ContactosController extends Controller
         $telefono->contacto     = $request->contacto;
         $telefono->referencia   = $request->referencia;
         $telefono->observacion  = $request->observacion;
-
+        $telefono->fecha = $fecha;
+        $telefono->agente = \Auth::user()->usuario;
         $telefono->save();
 
         return redirect()

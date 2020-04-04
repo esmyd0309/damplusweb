@@ -57,8 +57,8 @@ export default  {
     beforeMount() {
         this.columnDefs = [
             {headerName: 'Fecha', field: 'fecha'},
-            {headerName: 'Documento', field: 'documento'},
             {headerName: 'Agente', field: 'agente'},
+            {headerName: 'Documento', field: 'documento'},
             {headerName: 'Forma Pago', field: 'formapago'},
             {headerName: 'Feha Pago', field: 'fechapago'},
             {headerName: 'Valor', field: 'valor'},
@@ -73,5 +73,6 @@ export default  {
             .then(result => result.json())
             .then(rowData => this.rowData = rowData);
     },
+    
 }
 </script>

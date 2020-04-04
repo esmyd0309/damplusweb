@@ -57,6 +57,7 @@ export default  {
     beforeMount() {
         this.columnDefs = [
             {headerName: 'Fecha', field: 'fecha'},
+            {headerName: 'Agente', field: 'agente'},
             {headerName: 'Estado', field: 'estado'},
             {headerName: 'Contacto', field: 'contacto'},
             {headerName: 'Telefono', field: 'telefono'},

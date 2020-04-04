@@ -174,6 +174,34 @@
                     </div>
                   </div>
                   <!-- Modal telefono-->
+                  <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                      <thead>
+                        <tr>
+                          <th class=" text-center" style="width: 7px">Fecha</th>
+                          <th class=" text-center" style="width: 7px">Telefono</th>
+                          <th class=" text-center" style="width: 7px">Contacto</th>
+                          <th class=" text-center" style="width: 7px">Referencia</th>
+                          <th class=" text-center" style="width: 7px">Tipo</th>
+                          <th class=" text-center" style="width: 7px">Observacion</th>
+                          <th class=" text-center" style="width: 7px">Agente</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach ($telefonosagregados as  $item)
+                          <tr>
+                            <td class=" text-center" style="width: 7px">{{ $item->fecha }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->telefono }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->contacto }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->referencia }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->tipo }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->observacion }}</td>
+                            <td class=" text-center" style="width: 7px">{{ $item->agente }}</td>
+                          </tr>                           
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
 
                 <div class=" active tab-pane" id="gestiones">

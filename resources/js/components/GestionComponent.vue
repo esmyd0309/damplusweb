@@ -331,6 +331,27 @@
                 </b-row>
                 <br>
                 <b-row>
+                     <b-col md="4">
+                            <b-input-group prepend="Posicion" class="mb-2 mr-sm-2 mb-sm-0">
+                            <select v-model="form.posicion" class="form-control" required>
+                                <option v-for="(item, index) in getposicion" :key="index"  v-bind:value="item.nombre " >
+                                    {{ item.nombre }}
+                                </option>
+                            </select>
+                        </b-input-group>
+                    </b-col>
+                    <b-col md="4">
+                            <b-input-group prepend="Causa" class="mb-2 mr-sm-2 mb-sm-0">
+                            <select v-model="form.causa" class="form-control" required>
+                                <option v-for="(item, index) in getcausas" :key="index"  v-bind:value="item.value " >
+                                    {{ item.text }}
+                                </option>
+                            </select>
+                        </b-input-group>
+                    </b-col>
+                </b-row>
+                <br>
+                <b-row>
                     <b-col md="2">
                     </b-col>
 
@@ -406,6 +427,8 @@ export default {
                 respuestaemail: false,
                 mensajeenviado: '',
                 mensajerespuesta: '',
+                posicion: '',
+                causa: ''
                 
             },
             contacto: [
@@ -415,14 +438,16 @@ export default {
                 { text: 'EMAIL', value: 'EMAIL' },
                 { text: 'TERRENO', value: 'TERRENO' }
             ],
-            estado: [
-                { text: 'CONTACTO TITULAR', value: 'CONTACTO TITULAR' },
-                { text: 'CONTACTO TERCERO', value: 'CONTACTO TERCERO' },
-                { text: 'ENVIO DE DATOS', value: 'ENVIO DE DATOS' },
-                { text: 'RECORDATORIO DE DEUDA', value: 'RECORDATORIO DE DEUDA' },
-                { text: 'RECORDATORIO DE PAGO', value: 'RECORDATORIO DE PAGO' },
-                { text: 'INCUMPLIMIENTO', value: 'INCUMPLIMIENTO' },
-                { text: 'AGRADECIMIENTO', value: 'AGRADECIMIENTO' }
+            getcausas: [
+                { text: 'PROBLEMA DE SALUD TITULAR', value: 'PROBLEMA DE SALUD TITULAR' },
+                { text: 'PROBLEMA DE SALUD FAMILIAR', value: 'PROBLEMA DE SALUD FAMILIAR' },
+                { text: 'POR LA EMERGENCIA', value: 'POR LA EMERGENCIA' },
+                { text: 'NEGATIVA AL PAGO', value: 'NEGATIVA AL PAGO' },
+                { text: 'NO CUENTA CON LOS RECURSOS', value: 'NO CUENTA CON LOS RECURSOS' },
+                { text: 'DESCONOCIMIENTO DE LA DEUDA', value: 'DESCONOCIMIENTO DE LA DEUDA' },
+                { text: 'NO PUEDE SALIR A DEPOSITAR', value: 'NO PUEDE SALIR A DEPOSITAR' },
+                { text: 'PAGO ESTE MES', value: 'PAGO ESTE MES' },
+                { text: 'FALTA DE REFERENCIAS DE PAGO', value: 'FALTA DE REFERENCIAS DE PAGO' }
             ],
             prefijo: [
                 { text: '02', value: '02' },
@@ -446,7 +471,8 @@ export default {
             footerBgVariant: 'warning',
             footerTextVariant: 'dark',
             enlace: 'http://damplus.estudiojuridicomedina.com/',
-            getestados: []
+            getestados: [],
+            getposicion: []
         }
     },
     computed: {
@@ -472,14 +498,14 @@ export default {
                         .then(res => {
                         this.getestados = res.data;
             });
+             axios.get('http://damplus.estudiojuridicomedina.com/getposicion')
+                        .then(res => {
+                        this.getposicion = res.data;
+            });
     },
     methods:{
     
-      
         agregar(){
-
-
-
                 const parametros  = {
                                         contacto:           this.form.contacto,
                                         estado:             this.form.estado,
@@ -488,6 +514,8 @@ export default {
                                         telefono:           this.form.telefono,
                                         prefijo:            this.form.prefijo,
                                         numero:             this.form.numero,
+                                        posicion:             this.form.posicion,
+                                        causa:             this.form.causa,
                                         idc:                this.id,
                                         cedula:                this.cedula,
                                         idcampana:                this.idcampana,
@@ -511,8 +539,9 @@ export default {
                 this.form.repuestawhatsapp  = '';
                 this.form.respuestaemail  = '';
                 this.form.mensajeenviado  = '';
-                this.form.mensajerespuesta  = '';  
-
+                this.form.mensajerespuesta  = '';
+                this.form.posicion  = '';  
+                this.form.causa  = '';
                 axios.post(this.enlace+'gestionesAdd',parametros)
                 .then(res => {
                     this.gestiones.push(res.data)

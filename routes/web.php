@@ -605,6 +605,7 @@ Route::get('/cifrar/{pass}', function ($pass) {
 		Route::post('estadosAdd', 'Cobranza\web\GestionesController@estadosAdd');
 		Route::get('getestados', 'Cobranza\web\GestionesController@getestados');
 		Route::get('getgrupoestados', 'Cobranza\web\GestionesController@getgrupoestados');
+		Route::get('getposicion', 'Cobranza\web\GestionesController@getposicion');
 
 
 

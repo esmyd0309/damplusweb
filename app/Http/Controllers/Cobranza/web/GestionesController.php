@@ -149,6 +149,8 @@ class GestionesController extends Controller
       $tabla->repuestawhatsapp = $request->repuestawhatsapp;
       $tabla->respuestaemail = $request->respuestaemail;
       $tabla->mensajeenviado = $request->mensajeenviado;
+      $tabla->posicion = $request->posicion;
+      $tabla->causa = $request->causa;
       $tabla->idcampana = $idcampana;
 
       $tabla->mensajerespuesta = $request->mensajerespuesta;
@@ -257,6 +259,17 @@ class GestionesController extends Controller
       ->get();
       
        return response()->json($estados);
+    }
+
+    public function getposicion()
+    {  
+      $posicion = DB::connection('mysql')->table('estados')
+      ->select('estados.*')
+      ->where('grupo',5)
+      ->where('estado',1)
+      ->get();
+      
+       return response()->json($posicion);
     }
    
     

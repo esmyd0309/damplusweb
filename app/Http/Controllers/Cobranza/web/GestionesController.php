@@ -164,12 +164,7 @@ class GestionesController extends Controller
     {  
       $gestiones = DB::connection('mysql')->table('DAMPLUSWEBgestiones')
       ->select(
-                'DAMPLUSWEBgestiones.fecha',
-                'DAMPLUSWEBgestiones.estado',
-                'DAMPLUSWEBgestiones.contacto',
-                'DAMPLUSWEBgestiones.telefono',
-                'DAMPLUSWEBgestiones.comentario',
-                'DAMPLUSWEBgestiones.agente'
+                'DAMPLUSWEBgestiones.*'
 
               )
       ->where("DAMPLUSWEBgestiones.idc",$idc)

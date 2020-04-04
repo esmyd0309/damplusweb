@@ -209,10 +209,10 @@ export default {
                     
                 }
            
-                this.form.nombre  = '';
-                this.form.estado  = '';
-                this.form.descripcion  = '';
-                this.form.grupo  = '';
+                this.form.nombre        = '';
+                this.form.estado        = '';
+                this.form.descripcion   = '';
+                this.form.grupo         = '';
 
                 axios.post(this.enlace+'estadosAdd',parametros)
                 .then(res => {

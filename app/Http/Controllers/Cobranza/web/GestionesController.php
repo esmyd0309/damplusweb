@@ -165,7 +165,9 @@ class GestionesController extends Controller
                 'DAMPLUSWEBgestiones.estado',
                 'DAMPLUSWEBgestiones.contacto',
                 'DAMPLUSWEBgestiones.telefono',
-                'DAMPLUSWEBgestiones.comentario'
+                'DAMPLUSWEBgestiones.comentario',
+                'DAMPLUSWEBgestiones.agente'
+
               )
       ->where("DAMPLUSWEBgestiones.idc",$idc)
       ->where("DAMPLUSWEBgestiones.estado",'!=','compromiso')
@@ -184,7 +186,9 @@ class GestionesController extends Controller
                 'DAMPLUSWEBgestiones.estado',
                 'DAMPLUSWEBgestiones.contacto',
                 'DAMPLUSWEBgestiones.telefono',
-                'DAMPLUSWEBgestiones.comentario'
+                'DAMPLUSWEBgestiones.comentario',
+                'DAMPLUSWEBgestiones.agente'
+
               )
       ->where("DAMPLUSWEBgestiones.idc",$idc)
       ->where("DAMPLUSWEBgestiones.estado",'compromiso')

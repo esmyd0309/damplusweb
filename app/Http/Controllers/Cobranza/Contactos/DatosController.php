@@ -162,11 +162,18 @@ class DatosController extends Controller
                         ->select('formas_pagos.nombre')
                         ->get();
 
+                        $getestados = DB::connection('mysql')
+                        ->table('estados')
+                        ->select('estados.nombre')
+                        ->where('grupo',4)
+                        ->where('estado',1)
+                        ->get();
+
                         
 
         $telefonosagregados = DAMPLUSWEBtelefonos::where('cedula',$ced)->get();
       // dd($telefonosagregados);
-        return view('Cobranza.Contactos.show',compact('datos','datosgenerales','telefonos','idc','bancos','formas_pagos','telefonosagregados','ced'));
+        return view('Cobranza.Contactos.show',compact('datos','datosgenerales','telefonos','idc','bancos','formas_pagos','telefonosagregados','ced','getestados'));
     }
 
     /**

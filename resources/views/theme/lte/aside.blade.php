@@ -105,6 +105,15 @@
               </li>
               @endcan--->
 
+              
+              @can('empresas.index')
+              <li class="nav-item">
+                <a href="{{ route('estadosweb.index') }}" class="nav-link">
+                  <i class="nav-icon fas fa-money-check"></i><strong><p>Estados</p></strong>
+                </a>
+              </li>
+              @endcan
+
            
               <i class="fad fa-album-collection"></i>
       

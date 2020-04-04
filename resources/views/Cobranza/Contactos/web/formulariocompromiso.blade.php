@@ -63,8 +63,9 @@
             </div>
             <select class="custom-select form-control"  name="tipocompromiso" >
               <option selected disabled>Seleccione el Tipo de Compromiso...</option>
-                <option value="compromisoTitular">Compromiso Titular</option>
-                <option value="CompromisoTercero">Compromiso Tercero</option>
+              @foreach ($getestados as $item)
+                <option value="{{$item->nombre}}">{{$item->nombre}}</option>
+              @endforeach
             </select>
             </div>
         </div>

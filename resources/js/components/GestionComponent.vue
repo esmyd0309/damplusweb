@@ -37,8 +37,8 @@
                     <b-col md="4">
                             <b-input-group prepend="Estado" class="mb-2 mr-sm-2 mb-sm-0">
                             <select v-model="form.estado" class="form-control" required>
-                                <option v-for="(item, index) in estado" :key="index"  v-bind:value="item.value " >
-                                    {{ item.text }}
+                                <option v-for="(item, index) in getestados" :key="index"  v-bind:value="item.nombre " >
+                                    {{ item.nombre }}
                                 </option>
                             </select>
                         </b-input-group>
@@ -235,7 +235,7 @@
                         </div>
                         <small v-if="!comprobar.mensajerespuesta">Es Obligatorio y un minimo de 15 Caracteres</small>
                     </b-col>
-                        <b-col md="4" v-if="form.contacto=='EMAIL'">
+                    <b-col md="4" v-if="form.contacto=='EMAIL'">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" >Email</label>
@@ -250,7 +250,7 @@
                             >
                             </b-form-input>
                         </div>
-                        <small v-if="!comprobar.telefono">Es Obligatorio y un minimo de 10 Caracteres</small>
+                        <small v-if="!comprobar.email">Es Obligatorio y un minimo de 10 Caracteres</small>
                     </b-col>
                     <b-col md="3" v-if="form.contacto=='EMAIL'">
                         <b-form-checkbox v-model="form.respuestaemail">
@@ -348,6 +348,7 @@
                 </b-row>
 
             </form>
+            
           <template v-slot:modal-footer>
         <div class="w-100">
           <p class="float-left">Debe llenar todo los campos requeridos</p>
@@ -355,7 +356,6 @@
       </template>
         </b-modal>
         
-
     </div>
 </template>
 
@@ -365,7 +365,7 @@ import Vue from "vue";
 import 'whatwg-fetch';
 import VueSwal from 'vue-swal'
 import VueSweetalert2 from 'vue-sweetalert2';
-import EventBus from "../event-bus";
+
 import Gestiones from "./GestionesComponent";
 
 
@@ -374,7 +374,6 @@ const options = {
     cancelButtonColor: '#ff7674',
 };
  Vue.use(VueSweetalert2, options);
-Vue.use(EventBus)
 
 Vue.use(VueSwal)
 export default {
@@ -446,7 +445,8 @@ export default {
             bodyTextVariant: 'dark',
             footerBgVariant: 'warning',
             footerTextVariant: 'dark',
-            enlace: 'http://damplus.estudiojuridicomedina.com/'
+            enlace: 'http://damplus.estudiojuridicomedina.com/',
+            getestados: []
         }
     },
     computed: {
@@ -467,7 +467,11 @@ export default {
         }
             
     },
-    created() {
+    beforeMount() {
+          axios.get('http://localhost/damplusweb/public/getestados')
+                        .then(res => {
+                        this.getestados = res.data;
+            });
     },
     methods:{
     
@@ -514,12 +518,7 @@ export default {
                     this.gestiones.push(res.data)
                     this.$swal('Gestión Creada con Exito');
                 });
-                EventBus.$on('getdata', function () {
-                    
-                       console.log( this.getData());
-                    
-                }.bind(this));
-                  this.show=false
+                
             },
             checkForm: function(){
                 this.errors = [];

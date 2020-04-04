@@ -78,33 +78,7 @@ class ApiclientesController extends Controller
     }
 
 
-    public function gestionesweb(Request $request )
-    {   
-      dd($request);
-
-      $fecha = Carbon::now();
-      $tabla = new DAMPLUSWEBgestiones();
-      $tabla->idc = $request->idc;
-      $tabla->cedula = $request->cedula;
-      $tabla->telefono = $request->telefono;
-      $tabla->comentario = $request->comentario;
-      $tabla->estado = $request->estado;
-      $tabla->fechapagar = $request->fechapagar;
-      $tabla->valor = $request->valor;
-      $tabla->formapago = $request->forma;
-
-
-      $tabla->agente = \Auth::user()->usuario;
-      $tabla->fecha = $fecha;
-
-      $tabla->save();
-
-      
-
-
-      return $tabla;
-
-    }
+   
     public function apiclientescobranzagestiones($idc)
     {  
       

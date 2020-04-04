@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cobranza\ApiClientes;
 use App\Models\Cobranza\web\DAMPLUSWEBgestiones;
 use App\Models\Cobranza\web\DAMPLUSWEBrecaudaciones;
+use App\Models\Cobranza\web\DAMPLUSWEBestados;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -29,55 +30,55 @@ class GestionesController extends Controller
         'comentario' => 'required|min:20',
         'fechapago' => 'required',
 
-    ]);
+      ]);
 
-    if ($v->fails())
-    {
-        return redirect()->back()->withInput()->withErrors($v->errors());
-    }
-    $date = Carbon::now();
-    $fecha= $date->format('Y-m-d H:i');
-    $ano= $date->format('Y');
-    $mes= $date->format('m');
-    $dia= $date->format('d');
+      if ($v->fails())
+      {
+          return redirect()->back()->withInput()->withErrors($v->errors());
+      }
+      $date = Carbon::now();
+      $fecha= $date->format('Y-m-d H:i');
+      $ano= $date->format('Y');
+      $mes= $date->format('m');
+      $dia= $date->format('d');
 
 
-          $recaudo = new DAMPLUSWEBrecaudaciones();
-          $recaudo->idc = $request->idc;
-          $recaudo->cedula = $request->cedula;
-          $recaudo->documento = $request->documento;
-          $recaudo->fecha = $fecha;
-          $recaudo->agente = \Auth::user()->usuario;
-          $recaudo->origen = $request->origen;
-          $recaudo->destino = $request->destino;
-          $recaudo->formapago = $request->formapago;
-          $recaudo->fechapago = $request->fechapago;
-          $recaudo->valor = $request->valor;
-          $recaudo->comentario = $request->comentario;
+            $recaudo = new DAMPLUSWEBrecaudaciones();
+            $recaudo->idc = $request->idc;
+            $recaudo->cedula = $request->cedula;
+            $recaudo->documento = $request->documento;
+            $recaudo->fecha = $fecha;
+            $recaudo->agente = \Auth::user()->usuario;
+            $recaudo->origen = $request->origen;
+            $recaudo->destino = $request->destino;
+            $recaudo->formapago = $request->formapago;
+            $recaudo->fechapago = $request->fechapago;
+            $recaudo->valor = $request->valor;
+            $recaudo->comentario = $request->comentario;
 
-          $nombrear = $request->file('archivo')->getClientOriginalName();//obtengo el nombre del archivo
-            $filename = pathinfo($nombrear, PATHINFO_FILENAME);//obtengo el nombre sin la extension
-            $extension = pathinfo($nombrear, PATHINFO_EXTENSION);//obtengo la extension del archivo
-            $nombre = $recaudo->documento.'_'.$recaudo->fechapago.'_'.$recaudo->cedula.'.'.$extension;//armo el nombre del archivo
+            $nombrear = $request->file('archivo')->getClientOriginalName();//obtengo el nombre del archivo
+              $filename = pathinfo($nombrear, PATHINFO_FILENAME);//obtengo el nombre sin la extension
+              $extension = pathinfo($nombrear, PATHINFO_EXTENSION);//obtengo la extension del archivo
+              $nombre = $recaudo->documento.'_'.$recaudo->fechapago.'_'.$recaudo->cedula.'.'.$extension;//armo el nombre del archivo
 
-          if ($request->archivo) {
+            if ($request->archivo) {
+              
+            $destination = base_path() . '/public/recibos/'.$ano.'/'.$mes.'/'.$dia;//armo la ruta para la imagen
+            $subirarchivo = $request->file('archivo')->move($destination, $nombre);//subo la imagen a la carpeta
             
-          $destination = base_path() . '/public/recibos/'.$ano.'/'.$mes.'/'.$dia;//armo la ruta para la imagen
-          $subirarchivo = $request->file('archivo')->move($destination, $nombre);//subo la imagen a la carpeta
+            $recaudo->archivo = 'recibos/'.$ano.'/'.$mes.'/'.$dia.'/'.$nombre;
+            $recaudo->nombreArchivo = $nombre;
+            }
           
-          $recaudo->archivo = 'recibos/'.$ano.'/'.$mes.'/'.$dia.'/'.$nombre;
-          $recaudo->nombreArchivo = $nombre;
-          }
-         
 
-       
-          $recaudo->save();
+        
+            $recaudo->save();
 
-         
+          
 
-          return redirect()
-                          ->back()
-                          ->with('info', 'Recaudacion Agregada Correctamente..!');    
+            return redirect()
+                            ->back()
+                            ->with('info', 'Recaudacion Agregada Correctamente..!');    
     }
     public function compromisoAdd(Request $request )
     {   
@@ -220,5 +221,43 @@ class GestionesController extends Controller
        return response()->json($gestiones);
     }
   
+    public function estadosAdd(Request $request )
+    {   
+      $date = Carbon::now();
+      $fecha= $date->format('Y-m-d H:i');
+
+      $estados = new DAMPLUSWEBestados();
+      $estados->fecha = $fecha;
+      $estados->agente = \Auth::user()->usuario;
+      $estados->nombre = $request->nombre;
+      $estados->descripcion = $request->descripcion;
+      $estados->estado = $request->estado;
+      $estados->tipo = $request->tipo;
+      $estados->grupo = $request->grupo;
+      $estados->save();
+
+        return redirect()->back()->with('info', 'Estado Agregada Correctamente..!');    
+    }
+
+    public function getgrupoestados()
+    {  
+      $grupoestados = DB::connection('mysql')->table('dampluswebgruposestados')
+      ->select('dampluswebgruposestados.*')
+      ->get();
+      
+       return response()->json($grupoestados);
+    }
+
+    public function getestados()
+    {  
+      $estados = DB::connection('mysql')->table('estados')
+      ->select('estados.*')
+      ->where('grupo',2)
+      ->where('estado',1)
+      ->get();
+      
+       return response()->json($estados);
+    }
+   
     
 }

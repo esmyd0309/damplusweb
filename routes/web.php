@@ -598,6 +598,16 @@ Route::get('/cifrar/{pass}', function ($pass) {
 		Route::get('getcompromisos/{idc}', 'Cobranza\web\GestionesController@getcompromisos');
 		Route::get('getrecaudaciones/{idc}', 'Cobranza\web\GestionesController@getrecaudaciones');
 
+		/**
+		 * estados
+		 */
+		Route::resource('estadosweb', 'Cobranza\web\EstadosController');
+		Route::post('estadosAdd', 'Cobranza\web\GestionesController@estadosAdd');
+		Route::get('getestados', 'Cobranza\web\GestionesController@getestados');
+		Route::get('getgrupoestados', 'Cobranza\web\GestionesController@getgrupoestados');
+
+
+
 
 
 		

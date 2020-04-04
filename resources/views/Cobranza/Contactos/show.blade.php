@@ -46,7 +46,7 @@
               <img class="profile-user-img img-fluid img-circle" src="{{ asset('contacto.jpg') }}" alt="User profile picture">
             </div>
             <h3 class="profile-username text-center">{{ $datos->Nombres }}</h3>
-              <p class="text-muted  text-center"> <strong> Cedula:</strong>     {{ $datos->Identificacion }}</p>
+              <p class="text-muted  text-center"> <strong> Cedula:</strong>     {{ $datos->cedula }}</p>
               @if (!empty($datosgenerales->cedula ))
               <p class="text-muted  text-center"> <strong> Nacionalidad:</strong> {{ $datosgenerales->DES_NACIONALID }} </p>
             

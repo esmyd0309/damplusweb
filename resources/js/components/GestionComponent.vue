@@ -547,6 +547,8 @@ export default {
                     this.gestiones.push(res.data)
                     this.$swal('Gestión Creada con Exito');
                 });
+
+                this.show=false
                 
             },
             checkForm: function(){

@@ -61,7 +61,9 @@ export default  {
             {headerName: 'Estado', field: 'estado'},
             {headerName: 'Contacto', field: 'contacto'},
             {headerName: 'Telefono', field: 'telefono'},
-            {headerName: 'Comentario', field: 'comentario'}
+            {headerName: 'Comentario', field: 'comentario'},
+            {headerName: 'Posicion', field: 'posicion'},
+            {headerName: 'Causa', field: 'causa'},
         ];
       
 

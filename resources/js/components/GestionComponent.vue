@@ -468,7 +468,7 @@ export default {
             
     },
     beforeMount() {
-          axios.get('http://localhost/damplusweb/public/getestados')
+          axios.get('http://damplus.estudiojuridicomedina.com/getestados')
                         .then(res => {
                         this.getestados = res.data;
             });

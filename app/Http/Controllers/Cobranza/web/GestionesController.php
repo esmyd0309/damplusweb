@@ -271,11 +271,11 @@ class GestionesController extends Controller
 
               )
       ->where("DAMPLUSWEBgestiones.idc",$idc)
-      ->whereIn("DAMPLUSWEBgestiones.estado",$estados)
+      ->whereIn("DAMPLUSWEBgestiones.contacto",$estados)
       ->orderBy('fecha', 'desc')
 
       ->get();
-      
+
        return response()->json($redes);
     }
 }

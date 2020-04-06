@@ -294,6 +294,9 @@
                           <li class="nav-item">
                             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#X" role="tab" aria-controls="X" aria-selected="false">Gestiones</a>
                           </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#redes" role="tab" aria-controls="redes" aria-selected="false">Redes</a>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -307,6 +310,9 @@
                       </div>
                       <div class="tab-pane fade" id="X"  aria-labelledby="contact-tab">
                         <gestiones-component :id="{{ $idc }}" :cedula="{{ $ced }}" :idcampana="{{ $datos->idcampana }}"/>
+                      </div>
+                      <div class="tab-pane fade" id="redes"  aria-labelledby="contact-tab">
+                        <redes-component :id="{{ $idc }}" :cedula="{{ $ced }}" :idcampana="{{ $datos->idcampana }}"/>
                       </div>
                     </div>
 

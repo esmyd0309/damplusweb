@@ -28,7 +28,7 @@ import { AgGridVue } from 'ag-grid-vue';
 import { AllCommunityModules } from "@ag-grid-community/all-modules";
 
 export default  {
-    name: 'compromisos',
+    name: 'redes',
     props: {
         id: {
         default: 1
@@ -57,21 +57,21 @@ export default  {
     beforeMount() {
         this.columnDefs = [
             {headerName: 'Registrado', field: 'fecha'},
-            {headerName: 'Fecha Pago', field: 'fechapago'},
-            {headerName: 'Valor', field: 'valor'},
-            {headerName: 'Tipo Compromiso', field: 'tipocompromiso'},
             {headerName: 'Agente', field: 'agente'},
             {headerName: 'Estado', field: 'estado'},
             {headerName: 'Contacto', field: 'contacto'},
-            {headerName: 'Telefono', field: 'telefono'},
+            {headerName: 'Mensaje Enviado', field: 'mensajeenviado'},
+            {headerName: 'Mensaje respuesta', field: 'mensajerespuesta'},
             {headerName: 'Comentario', field: 'comentario'}
+
         ];
       
 
        
-        fetch('http://damplus.estudiojuridicomedina.com/getcompromisos/'+this.id)
+        fetch('http://damplus.estudiojuridicomedina.com/getredes/'+this.id)
             .then(result => result.json())
             .then(rowData => this.rowData = rowData);
     },
+    
 }
 </script>

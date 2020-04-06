@@ -180,16 +180,11 @@ class GestionesController extends Controller
     {  
       $gestiones = DB::connection('mysql')->table('DAMPLUSWEBgestiones')
       ->select(
-                'DAMPLUSWEBgestiones.fecha',
-                'DAMPLUSWEBgestiones.estado',
-                'DAMPLUSWEBgestiones.contacto',
-                'DAMPLUSWEBgestiones.telefono',
-                'DAMPLUSWEBgestiones.comentario',
-                'DAMPLUSWEBgestiones.agente'
+                'DAMPLUSWEBgestiones.*'
 
               )
       ->where("DAMPLUSWEBgestiones.idc",$idc)
-      ->where("DAMPLUSWEBgestiones.estado",'compromiso')
+      ->where("DAMPLUSWEBgestiones.estado",'LIKE','%compromiso%')
       ->orderBy('fecha', 'desc')
 
       ->get();
@@ -267,5 +262,20 @@ class GestionesController extends Controller
        return response()->json($posicion);
     }
    
-    
+    public function getredes($idc)
+    {  
+      $estados = ['EMAIL','SMS','WHATSAPP'];
+      $redes = DB::connection('mysql')->table('DAMPLUSWEBgestiones')
+      ->select(
+                'DAMPLUSWEBgestiones.*'
+
+              )
+      ->where("DAMPLUSWEBgestiones.idc",$idc)
+      ->whereIn("DAMPLUSWEBgestiones.estado",$estados)
+      ->orderBy('fecha', 'desc')
+
+      ->get();
+      
+       return response()->json($redes);
+    }
 }

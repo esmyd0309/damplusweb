@@ -45,6 +45,7 @@ Vue.component('gestion-component', require('./components/GestionComponent.vue').
 Vue.component('gestionescompromiso-component', require('./components/GestionescompromisoComponent.vue').default);
 Vue.component('getrecaudaciones-component', require('./components/GetrecaudacionesComponent.vue').default);
 Vue.component('estados-component', require('./components/EstadosComponent.vue').default);
+Vue.component('redes-component', require('./components/RedesComponent.vue').default);
 
 
 

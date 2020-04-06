@@ -10,11 +10,15 @@
                 :modules="modules" 
                 :rowDragManaged="true"
                 :enableColResize="true"
+                :defaultColDef="defaultColDef"
                 enableSorting="true"
                 enableFilter="true"
                 animateRows="true"
                 pagination="true"
                 rowSelection="multiple"
+                @column-resized="onColumnResized"
+                :gridOptions="gridOptions"
+                @grid-ready="onGridReady"
         >
     </ag-grid-vue>
    </div>
@@ -43,6 +47,9 @@ export default  {
             rowData: null,
             domLayout: null,
             modules: AllCommunityModules,
+            defaultColDef: null,
+            gridOptions: null,
+            gridApi: null
 
         }
     },
@@ -55,6 +62,7 @@ export default  {
         
     },
     beforeMount() {
+         this.gridOptions = {};
         this.columnDefs = [
             {headerName: 'Registrado', field: 'fecha'},
             {headerName: 'Fecha Pago', field: 'fechapago'},
@@ -64,14 +72,35 @@ export default  {
             {headerName: 'Estado', field: 'estado'},
             {headerName: 'Contacto', field: 'contacto'},
             {headerName: 'Telefono', field: 'telefono'},
-            {headerName: 'Comentario', field: 'comentario'}
+            {headerName: 'Comentario', field: 'comentario'},
+            
         ];
-      
+        this.defaultColDef = {
+        flex: 1,
+        cellClass: 'cell-wrap-text',
+        autoHeight: true,
+        sortable: true,
+        resizable: true,
+        }
 
        
         fetch('http://damplus.estudiojuridicomedina.com/getcompromisos/'+this.id)
             .then(result => result.json())
             .then(rowData => this.rowData = rowData);
     },
+    mounted() {
+        this.gridApi = this.gridOptions.api;
+        this.gridColumnApi = this.gridOptions.columnApi;
+    },
+    methods: {
+    onColumnResized(params) {
+      params.api.resetRowHeights();
+    },
+    onGridReady(params) {
+      setTimeout(function() {
+        params.api.setRowData(createRowData());
+      }, 500);
+    },
+  },
 }
 </script>

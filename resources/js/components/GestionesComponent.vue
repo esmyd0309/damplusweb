@@ -10,6 +10,8 @@
                 :modules="modules" 
                 :rowDragManaged="true"
                 :enableColResize="true"
+                :defaultColDef="defaultColDef"
+                :rowHeight="rowHeight"
                 enableSorting="true"
                 enableFilter="true"
                 animateRows="true"
@@ -43,7 +45,8 @@ export default  {
             rowData: null,
             domLayout: null,
             modules: AllCommunityModules,
-
+            defaultColDef: null,
+            rowHeight: null,
         }
     },
     components: {
@@ -61,13 +64,19 @@ export default  {
             {headerName: 'Estado', field: 'estado'},
             {headerName: 'Contacto', field: 'contacto'},
             {headerName: 'Telefono', field: 'telefono'},
-            {headerName: 'Comentario', field: 'comentario', autoHeight: true},
+            {headerName: 'Comentario', field: 'comentario', autoHeight:  'comentario'},
             {headerName: 'Posicion', field: 'posicion'},
             {headerName: 'Causa', field: 'causa'},
         ];
-      
+        this.defaultColDef = {
+        flex: 1,
+        cellClass: 'cell-wrap-text',
+        autoHeight: true,
+        sortable: true,
+        resizable: true,
+        }
 
-       
+        this.rowHeight = 275;
         fetch('http://damplus.estudiojuridicomedina.com/getgestiones/'+this.id)
             .then(result => result.json())
             .then(rowData => this.rowData = rowData);

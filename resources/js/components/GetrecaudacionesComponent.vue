@@ -10,6 +10,7 @@
                 :modules="modules" 
                 :rowDragManaged="true"
                 :enableColResize="true"
+                :defaultColDef="defaultColDef"
                 enableSorting="true"
                 enableFilter="true"
                 animateRows="true"
@@ -42,7 +43,9 @@ export default  {
             columnDefs: null,
             rowData: null,
             domLayout: null,
-            modules: AllCommunityModules,
+            modules: AllCommunityModules,            
+            defaultColDef: null,
+
 
         }
     },
@@ -66,7 +69,13 @@ export default  {
             {headerName: 'Archivo', field: 'archivo'},
 
         ];
-      
+      this.defaultColDef = {
+      flex: 1,
+      cellClass: 'cell-wrap-text',
+      autoHeight: true,
+      sortable: true,
+      resizable: true,
+    }
 
        
         fetch('http://damplus.estudiojuridicomedina.com/getrecaudaciones/'+this.id)

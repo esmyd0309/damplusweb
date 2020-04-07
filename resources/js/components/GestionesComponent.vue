@@ -28,9 +28,8 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import { AgGridVue } from 'ag-grid-vue';
 import { AllCommunityModules } from "@ag-grid-community/all-modules";
-import EventBus from "../event-bus";
 export default  {
-    name: 'Gestiones',
+    name: 'Gestionesgenerales',
     props: {
         id: {
         default: 1
@@ -53,7 +52,6 @@ export default  {
         AgGridVue
     },
     created(){
-        EventBus.$emit('getdata', this.getDatagestiones);
         this.domLayout = "autoHeight";
         
     },
@@ -62,7 +60,7 @@ export default  {
             {headerName: 'Registrado', field: 'fecha'},
             {headerName: 'Agente', field: 'agente'},
             {headerName: 'Estado', field: 'estado'},
-            {headerName: 'Contacto', field: 'contacto'},
+            {headerName: 'contacto', field: 'contacto'},
             {headerName: 'Telefono', field: 'telefono',editable: true},
             {headerName: 'Comentario', field: 'comentario',editable: true},
             {headerName: 'Posicion', field: 'posicion'},
@@ -81,11 +79,6 @@ export default  {
             .then(result => result.json())
             .then(rowData => this.rowData = rowData);
     },
-    getDatagestiones(){
-      
-        fetch('http://damplus.estudiojuridicomedina.com/getgestiones/'+this.id)
-            .then(result => result.json())
-            .then(rowData => this.rowData = rowData);
-    }
+    
 }
 </script>

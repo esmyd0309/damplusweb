@@ -109,6 +109,8 @@ class GestionesController extends Controller
       $tabla->fechapago = $request->fechapago;
       $tabla->tipocompromiso = $request->tipocompromiso;
       $tabla->tipocontacto = $request->tipocontacto;
+      $tabla->contacto = "TELEFONICA";
+
       $tabla->comentario = $request->comentario;
       $tabla->agente = \Auth::user()->usuario;
       $tabla->fecha = $fecha;

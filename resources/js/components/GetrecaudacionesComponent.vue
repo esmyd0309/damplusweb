@@ -1,35 +1,45 @@
 <template>
    <div>
-       <div class="test-header">
-            Selecionado:
-            <span id="selectedRows" hidden></span>
-        </div>
-        <ag-grid-vue 
-                style="width: 100%; height: 100%;"
-                class="ag-theme-blue"
-                id="myGrid"
-                :gridOptions="gridOptions"
-                :columnDefs="columnDefs"
-                :rowData="rowData"
-                :domLayout="domLayout"
-                :modules="modules" 
-                :rowDragManaged="true"
-                :enableColResize="true"
-                :defaultColDef="defaultColDef"
-                enableSorting="true"
-                enableFilter="true"
-                animateRows="true"
-                pagination="true"
-                rowSelection="multiple"
-                @selection-changed="onSelectionChanged"
-        >
+       
+    <b-alert
+      :show="dismissCountDown"
+      dismissible
+      variant="warning"
+      @dismissed="dismissCountDown=0"
+      @dismiss-count-down="countDownChanged"
+    >
+      <strong>Para ver el detalle de cada registro, ejecute doble click  {{ dismissCountDown }} segundos...</strong> 
+    </b-alert>
+    <div class="test-header" hidden>
+        Selecionado:
+        <span id="selectedRows" ></span>
+    </div>
+    <ag-grid-vue 
+            style="width: 100%; height: 100%;"
+            class="ag-theme-blue"
+            id="myGrid"
+            :gridOptions="gridOptions"
+            :columnDefs="columnDefs"
+            :rowData="rowData"
+            :domLayout="domLayout"
+            :modules="modules" 
+            :rowDragManaged="true"
+            :enableColResize="true"
+            :defaultColDef="defaultColDef"
+            enableSorting="true"
+            enableFilter="true"
+            animateRows="true"
+            pagination="true"
+            rowSelection="multiple"
+            @selection-changed="onSelectionChanged"
+    >
     </ag-grid-vue>
 
     <b-modal 
         v-model="show"  
         id="modal-xl" 
         size="xl" 
-        title="Gestion"
+        title="Gestion de Recaudación"
     >
     
         
@@ -90,7 +100,9 @@ export default  {
             gridApi: null,
             show: false,
             showDocumento: '',
-            showarchivo: ''
+            showarchivo: '',
+            dismissSecs: 10,
+            dismissCountDown: 0
 
 
         }
@@ -104,6 +116,7 @@ export default  {
         
     },
     beforeMount() {
+        this.showAlert()
         this.gridOptions = {};
 
         this.columnDefs = [
@@ -139,6 +152,12 @@ export default  {
 
     },
     methods: {
+        countDownChanged(dismissCountDown) {
+            this.dismissCountDown = dismissCountDown
+        },
+        showAlert() {
+            this.dismissCountDown = this.dismissSecs
+        },
         onSelectionChanged() {
             var selectedRows = this.gridApi.getSelectedRows();
             var selectedRowsString = '';
@@ -153,7 +172,6 @@ export default  {
                 selectedRowsString += selectedRow.archivo;
             });
             this.showarchivo = "http://damplus.estudiojuridicomedina.com/"+selectedRowsString
-            console.log(this.showarchivo)
             this.showDocumento = selectedRows
             if (selectedRows.length > maxToShow) {
                 var othersCount = selectedRows.length - maxToShow;

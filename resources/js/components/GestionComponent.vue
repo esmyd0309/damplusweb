@@ -1,13 +1,13 @@
 <template>
     <div>
         
-        <b-button class="btn btn-primary btn-sm" @click="show=true" v-b-modal.modal-xl variant="primary"><i class="fas fa-plus-circle"></i> Gestiones</b-button>
+        <b-button class="btn btn-primary btn-sm" @click="showgestion=true" v-b-modal.modal-xl-2 variant="primary"><i class="fas fa-plus-circle"></i> Gestiones</b-button>
 
         <b-modal 
-            id="modal-xl" 
+            id="modal-xl-2" 
             size="xl" 
             title="Agregar una Gestión" 
-            v-model="show"
+            v-model="showgestion"
             :header-bg-variant="headerBgVariant"
             :header-text-variant="headerTextVariant"
             :body-bg-variant="bodyBgVariant"
@@ -362,7 +362,7 @@
                     <b-col md="4">
                         
 
-                         <b-button class="mt-3" variant="outline-danger" block @click="show=false">Cerrar</b-button>
+                         <b-button class="mt-3" variant="outline-danger" block @click="showgestion=false">Cerrar</b-button>
                     </b-col>
                     <b-col md="2">
                     </b-col>
@@ -370,11 +370,11 @@
 
             </form>
             
-          <template v-slot:modal-footer>
-        <div class="w-100">
-          <p class="float-left">Debe llenar todo los campos requeridos</p>
-        </div>
-      </template>
+            <template v-slot:modal-footer>
+                <div class="w-100">
+                <p class="float-left">Debe llenar todo los campos requeridos</p>
+                </div>
+            </template>
         </b-modal>
         
     </div>
@@ -387,7 +387,6 @@ import 'whatwg-fetch';
 import VueSwal from 'vue-swal'
 import VueSweetalert2 from 'vue-sweetalert2';
 
-import Gestiones from "./GestionesComponent";
 
 
 const options = {
@@ -462,7 +461,7 @@ export default {
             errors: [],
             crear: true,
             gestiones: [],
-            show: false,
+            showgestion: false,
             variants: ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'light', 'dark'],
             headerBgVariant: 'dark',
             headerTextVariant: 'light',
@@ -548,7 +547,7 @@ export default {
                     this.$swal('Gestión Creada con Exito');
                 });
 
-                this.show=false
+                this.showgestion=false
                 
             },
             checkForm: function(){

@@ -63,9 +63,9 @@ export default  {
             {headerName: 'Agente', field: 'agente'},
             {headerName: 'Estado', field: 'estado'},
             {headerName: 'Contacto', field: 'contacto'},
-            {headerName: 'Mensaje Enviado', field: 'mensajeenviado'},
-            {headerName: 'Mensaje respuesta', field: 'mensajerespuesta'},
-            {headerName: 'Comentario', field: 'comentario'}
+            {headerName: 'Mensaje Enviado', field: 'mensajeenviado',editable: true},
+            {headerName: 'Mensaje respuesta', field: 'mensajerespuesta',editable: true},
+            {headerName: 'Comentario', field: 'comentario',editable: true}
 
         ];
       

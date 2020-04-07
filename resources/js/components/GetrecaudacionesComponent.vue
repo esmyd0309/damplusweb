@@ -1,9 +1,14 @@
 <template>
    <div>
+       <div class="test-header">
+            Selecionado:
+            <span id="selectedRows" hidden></span>
+        </div>
         <ag-grid-vue 
                 style="width: 100%; height: 100%;"
                 class="ag-theme-blue"
                 id="myGrid"
+                :gridOptions="gridOptions"
                 :columnDefs="columnDefs"
                 :rowData="rowData"
                 :domLayout="domLayout"
@@ -16,8 +21,45 @@
                 animateRows="true"
                 pagination="true"
                 rowSelection="multiple"
+                @selection-changed="onSelectionChanged"
         >
     </ag-grid-vue>
+
+    <b-modal 
+        v-model="show"  
+        id="modal-xl" 
+        size="xl" 
+        title="Gestion"
+    >
+    
+        
+        <b-card no-body class="overflow-hidden" >
+            <b-row no-gutters>
+            <b-col md="8">
+                <b-card-img :src="showarchivo" class="rounded-0"></b-card-img>
+            </b-col>
+            <b-col md="4">
+                <b-card-body title="Detalle de la Recaudación">
+                <b-card-text v-for="(item, index) in showDocumento" :key="index"><br/>
+                    <strong>Documento: </strong> {{item.documento}} <br/>
+                    <strong>Fecha De Pago: </strong> {{item.fechapago}}<br/>
+                    <strong>Forma de Pago:</strong> {{item.formapago}}<br/>
+                    <strong>Valor: </strong> {{item.valor}}<br/>
+                    <strong>Banco Origen: </strong> {{item.origen}}<br/>
+                    <strong>Banco Destino: </strong> {{item.destino}}<br/>
+
+                   <strong>Comentario: </strong> {{item.comentario}}<br/>
+                    <strong>Nombre Archivo: </strong> {{item.nombreArchivo}}<br/>
+
+                </b-card-text>
+                </b-card-body>
+            </b-col>
+            </b-row>
+        </b-card>
+
+    </b-modal>
+
+
    </div>
 </template>
 
@@ -45,6 +87,10 @@ export default  {
             domLayout: null,
             modules: AllCommunityModules,            
             defaultColDef: null,
+            gridApi: null,
+            show: false,
+            showDocumento: '',
+            showarchivo: ''
 
 
         }
@@ -58,6 +104,8 @@ export default  {
         
     },
     beforeMount() {
+        this.gridOptions = {};
+
         this.columnDefs = [
             {headerName: 'Registrado', field: 'fecha'},
             {headerName: 'Agente', field: 'agente'},
@@ -65,7 +113,10 @@ export default  {
             {headerName: 'Forma Pago', field: 'formapago'},
             {headerName: 'Feha Pago', field: 'fechapago'},
             {headerName: 'Valor', field: 'valor'},
-            {headerName: 'Comentario', field: 'comentario'},
+            {headerName: 'Banco Origen', field: 'origen'},
+            {headerName: 'Banco Destino', field: 'destino'},
+
+            {headerName: 'Comentario', field: 'comentario',editable: true},
             {headerName: 'Archivo', field: 'archivo'},
 
         ];
@@ -82,6 +133,36 @@ export default  {
             .then(result => result.json())
             .then(rowData => this.rowData = rowData);
     },
-    
+    mounted() {
+        this.gridApi = this.gridOptions.api;
+        this.gridColumnApi = this.gridOptions.columnApi;
+
+    },
+    methods: {
+        onSelectionChanged() {
+            var selectedRows = this.gridApi.getSelectedRows();
+            var selectedRowsString = '';
+            var maxToShow = 155;
+            selectedRows.forEach(function(selectedRow, index) {
+                if (index >= maxToShow) {
+                return;
+                }
+                if (index > 0) {
+                selectedRowsString += ', ';
+                }
+                selectedRowsString += selectedRow.archivo;
+            });
+            this.showarchivo = "http://damplus.estudiojuridicomedina.com/"+selectedRowsString
+            console.log(this.showarchivo)
+            this.showDocumento = selectedRows
+            if (selectedRows.length > maxToShow) {
+                var othersCount = selectedRows.length - maxToShow;
+                selectedRowsString +=
+                ' and ' + othersCount + ' other' + (othersCount !== 1 ? 's' : '');
+            }
+            document.querySelector('#selectedRows').innerHTML = selectedRowsString;
+            this.show=true
+        },
+    }
 }
 </script>

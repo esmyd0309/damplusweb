@@ -63,8 +63,8 @@ export default  {
             {headerName: 'Agente', field: 'agente'},
             {headerName: 'Estado', field: 'estado'},
             {headerName: 'Contacto', field: 'contacto'},
-            {headerName: 'Telefono', field: 'telefono'},
-            {headerName: 'Comentario', field: 'comentario', autoHeight:  'comentario'},
+            {headerName: 'Telefono', field: 'telefono',editable: true},
+            {headerName: 'Comentario', field: 'comentario',editable: true},
             {headerName: 'Posicion', field: 'posicion'},
             {headerName: 'Causa', field: 'causa'},
         ];

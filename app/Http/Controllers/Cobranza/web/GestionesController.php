@@ -196,14 +196,7 @@ class GestionesController extends Controller
     {  
       $gestiones = DB::connection('mysql')->table('dampluswebrecaudaciones')
       ->select(
-                'dampluswebrecaudaciones.fecha',
-                'dampluswebrecaudaciones.documento',
-                'dampluswebrecaudaciones.agente',
-                'dampluswebrecaudaciones.formapago',
-                'dampluswebrecaudaciones.fechapago',
-                'dampluswebrecaudaciones.valor',
-                'dampluswebrecaudaciones.comentario',
-                'dampluswebrecaudaciones.archivo'
+                'dampluswebrecaudaciones.*'
               )
       ->where("dampluswebrecaudaciones.idc",$idc)
       ->orderBy('fecha', 'desc')

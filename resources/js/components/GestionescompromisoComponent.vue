@@ -16,9 +16,6 @@
                 animateRows="true"
                 pagination="true"
                 rowSelection="multiple"
-                @column-resized="onColumnResized"
-                :gridOptions="gridOptions"
-                @grid-ready="onGridReady"
         >
     </ag-grid-vue>
    </div>
@@ -47,10 +44,7 @@ export default  {
             rowData: null,
             domLayout: null,
             modules: AllCommunityModules,
-            defaultColDef: null,
-            gridOptions: null,
-            gridApi: null
-
+            getRowHeight: null
         }
     },
     components: {
@@ -62,7 +56,6 @@ export default  {
         
     },
     beforeMount() {
-         this.gridOptions = {};
         this.columnDefs = [
             {headerName: 'Registrado', field: 'fecha'},
             {headerName: 'Fecha Pago', field: 'fechapago'},
@@ -71,36 +64,22 @@ export default  {
             {headerName: 'Agente', field: 'agente'},
             {headerName: 'Estado', field: 'estado'},
             {headerName: 'Contacto', field: 'contacto'},
-            {headerName: 'Telefono', field: 'telefono'},
-            {headerName: 'Comentario', field: 'comentario'},
-            
+            {headerName: 'Telefono', field: 'telefono',editable: true},
+            {headerName: 'Comentario', field: 'comentario', editable: true,
+}
         ];
-        this.defaultColDef = {
-        flex: 1,
-        cellClass: 'cell-wrap-text',
-        autoHeight: true,
-        sortable: true,
-        resizable: true,
-        }
+      this.defaultColDef = {
+      flex: 1,
+      cellClass: 'cell-wrap-text',
+      autoHeight: true,
+      sortable: true,
+      resizable: true,
+    }
 
        
         fetch('http://damplus.estudiojuridicomedina.com/getcompromisos/'+this.id)
             .then(result => result.json())
             .then(rowData => this.rowData = rowData);
     },
-    mounted() {
-        this.gridApi = this.gridOptions.api;
-        this.gridColumnApi = this.gridOptions.columnApi;
-    },
-    methods: {
-    onColumnResized(params) {
-      params.api.resetRowHeights();
-    },
-    onGridReady(params) {
-      setTimeout(function() {
-        params.api.setRowData(createRowData());
-      }, 500);
-    },
-  },
 }
 </script>

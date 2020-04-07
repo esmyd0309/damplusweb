@@ -67,7 +67,7 @@ export default  {
             {headerName: 'Causa', field: 'causa'},
         ];
         this.defaultColDef = {
-        flex: 1,
+        //flex: 1,
         cellClass: 'cell-wrap-text',
         autoHeight: true,
         sortable: true,

@@ -134,7 +134,7 @@ export default  {
 
         ];
       this.defaultColDef = {
-      flex: 1,
+      //flex: 1,
       cellClass: 'cell-wrap-text',
       autoHeight: true,
       sortable: true,

@@ -48,7 +48,7 @@
                 
             <b-col md="8" v-if="!showarchivo">
                 <div v-if="success != ''" class="alert alert-success" role="alert">
-                    {{success}}
+                   <center>{{success}}</center>
                 </div>
 
                 <form @submit="formSubmit" enctype="multipart/form-data">
@@ -123,7 +123,7 @@ export default  {
             showarchivo: null,
             dismissSecs: 10,
             dismissCountDown: 0,
-            enlace: 'http://localhost/damplusweb/public/',
+            enlace: 'http://damplus.estudiojuridicomedina.com/',
             file: '',
             success: '',
             image: '',
@@ -153,7 +153,6 @@ export default  {
             {headerName: 'Valor', field: 'valor'},
             {headerName: 'Banco Origen', field: 'origen'},
             {headerName: 'Banco Destino', field: 'destino'},
-
             {headerName: 'Comentario', field: 'comentario',editable: true},
             {headerName: 'Archivo', field: 'archivo'},
 

@@ -17,6 +17,19 @@ use Auth;
 use DB;
 class GestionesController extends Controller
 {
+
+    public function sanear_string($string)
+    {
+      $string = trim($string);
+        
+      $string = str_replace(
+          array(',', ' ', '$'),
+          array('.', '', ''),
+          $string
+      );
+      return $string;
+
+    }
    
     public function recaudacionesAdd(Request $request )
     {   
@@ -53,15 +66,17 @@ class GestionesController extends Controller
             $recaudo->destino = $request->destino;
             $recaudo->formapago = $request->formapago;
             $recaudo->fechapago = $request->fechapago;
-            $recaudo->valor = $request->valor;
+            $recaudo->fechaRecibo = $fecha;
+            $recaudo->agenteRecibo = \Auth::user()->usuario;
+            $recaudo->valor = $this->sanear_string($request->valor);
             $recaudo->comentario = $request->comentario;
-
-            $nombrear = $request->file('archivo')->getClientOriginalName();//obtengo el nombre del archivo
-              $filename = pathinfo($nombrear, PATHINFO_FILENAME);//obtengo el nombre sin la extension
-              $extension = pathinfo($nombrear, PATHINFO_EXTENSION);//obtengo la extension del archivo
-              $nombre = $recaudo->documento.'_'.$recaudo->fechapago.'_'.$recaudo->cedula.'.'.$extension;//armo el nombre del archivo
-
             if ($request->archivo) {
+            $nombrear = $request->file('archivo')->getClientOriginalName();//obtengo el nombre del archivo
+            $filename = pathinfo($nombrear, PATHINFO_FILENAME);//obtengo el nombre sin la extension
+            $extension = pathinfo($nombrear, PATHINFO_EXTENSION);//obtengo la extension del archivo
+            $nombre = $recaudo->documento.'_'.$recaudo->fechapago.'_'.$recaudo->cedula.'.'.$extension;//armo el nombre del archivo
+
+            
               
             $destination = base_path() . '/public/recibos/'.$ano.'/'.$mes.'/'.$dia;//armo la ruta para la imagen
             $subirarchivo = $request->file('archivo')->move($destination, $nombre);//subo la imagen a la carpeta
@@ -104,7 +119,7 @@ class GestionesController extends Controller
       $fecha = Carbon::now();
       $tabla = new DAMPLUSWEBgestiones();
       $tabla->telefono = $request->contacto;
-      $tabla->valor = $request->valor;
+      $tabla->valor = $this->sanear_string($request->valor);     
       $tabla->formapago = $request->formapago;
       $tabla->fechapago = $request->fechapago;
       $tabla->tipocompromiso = $request->tipocompromiso;
@@ -161,6 +176,43 @@ class GestionesController extends Controller
       $tabla->save();
 
         return redirect()->back()->with('info', 'Gestion Agregada Correctamente..!');    
+    }
+
+    public function addrecibo(Request $request )
+    {   
+      $id = $request->id;
+
+      $datos =  DAMPLUSWEBrecaudaciones::where('id',$id)->first();
+
+      $date = Carbon::now();
+      $fecha= $date->format('Y-m-d H:i');
+      $ano= $date->format('Y');
+      $mes= $date->format('m');
+      $dia= $date->format('d');
+
+
+      if ($request->file) {
+        $nombrear = time().'.'.$request->file->getClientOriginalExtension();
+        $filename = pathinfo($nombrear, PATHINFO_FILENAME);//obtengo el nombre sin la extension
+        $extension = pathinfo($nombrear, PATHINFO_EXTENSION);//obtengo la extension del archivo
+        $nombre = $datos->documento.'_'.$datos->fechapago.'_'.$datos->cedula.'.'.$extension;//armo el nombre del archivo
+
+        $destination = base_path() . '/public/recibos/'.$ano.'/'.$mes.'/'.$dia;//armo la ruta para la imagen
+        $subirarchivo = $request->file('file')->move($destination, $nombre);//subo la imagen a la carpeta
+
+        $archivo        = DAMPLUSWEBrecaudaciones::where('id',$id)->update(['archivo' => 'recibos/'.$ano.'/'.$mes.'/'.$dia.'/'.$nombre]);// 
+        $nombreArchivo  = DAMPLUSWEBrecaudaciones::where('id',$id)->update(['nombreArchivo' => $nombre]);// 
+        $agenteRecibo   = DAMPLUSWEBrecaudaciones::where('id',$id)->update(['agenteRecibo' => \Auth::user()->usuario]);// 
+        $fechaRecibo  = DAMPLUSWEBrecaudaciones::where('id',$id)->update(['fechaRecibo' => $fecha]);// 
+        return response()->json(['success' => 'Imagen Cargada Correctamente'], 200);
+
+
+      }
+     
+
+       
+         
+       
     }
     public function getgestiones($idc)
     {  

@@ -16,7 +16,7 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" >$0.00</label>
                 </div>
-                <input name="valor" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                <input name="valor" type="text" class="form-control" >
             </div>
         </div>
         <div  class="col">

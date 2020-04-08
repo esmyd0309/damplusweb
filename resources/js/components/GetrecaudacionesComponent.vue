@@ -45,8 +45,28 @@
         
         <b-card no-body class="overflow-hidden" >
             <b-row no-gutters>
-            <b-col md="8">
+                
+            <b-col md="8" v-if="!showarchivo">
+                <div v-if="success != ''" class="alert alert-success" role="alert">
+                    {{success}}
+                </div>
+
+                <form @submit="formSubmit" enctype="multipart/form-data">
+                    <b-form-file
+                        v-model="file"
+                        placeholder="Subir la Imagen..."
+                        v-on:change="onFileChange"
+                    ></b-form-file>
+                        <div class="col-md-3" v-if="image">
+                            <img :src="image" class="img-responsive">
+                        </div>
+                    <b-button type="submit"  class="mt-3" variant="outline-success" block >Cargar Recibo</b-button>
+                </form>
+            </b-col>
+            <b-col md="8" v-else>
+                
                 <b-card-img :src="showarchivo" class="rounded-0"></b-card-img>
+                
             </b-col>
             <b-col md="4">
                 <b-card-body title="Detalle de la Recaudación">
@@ -100,10 +120,14 @@ export default  {
             gridApi: null,
             show: false,
             showDocumento: '',
-            showarchivo: '',
+            showarchivo: null,
             dismissSecs: 10,
-            dismissCountDown: 0
-
+            dismissCountDown: 0,
+            enlace: 'http://localhost/damplusweb/public/',
+            file: '',
+            success: '',
+            image: '',
+            idc: null
 
         }
     },
@@ -120,6 +144,7 @@ export default  {
         this.gridOptions = {};
 
         this.columnDefs = [
+            {headerName: 'Id', field: 'id'},
             {headerName: 'Registrado', field: 'fecha'},
             {headerName: 'Agente', field: 'agente'},
             {headerName: 'Documento', field: 'documento'},
@@ -133,13 +158,13 @@ export default  {
             {headerName: 'Archivo', field: 'archivo'},
 
         ];
-      this.defaultColDef = {
-      //flex: 1,
-      cellClass: 'cell-wrap-text',
-      autoHeight: true,
-      sortable: true,
-      resizable: true,
-    }
+        this.defaultColDef = {
+            //flex: 1,
+            cellClass: 'cell-wrap-text',
+            autoHeight: true,
+            sortable: true,
+            resizable: true,
+        }
 
        
         fetch('http://damplus.estudiojuridicomedina.com/getrecaudaciones/'+this.id)
@@ -170,16 +195,64 @@ export default  {
                 selectedRowsString += ', ';
                 }
                 selectedRowsString += selectedRow.archivo;
+
+
             });
-            this.showarchivo = "http://damplus.estudiojuridicomedina.com/"+selectedRowsString
+            if(selectedRowsString!='null'){
+                this.showarchivo = "http://damplus.estudiojuridicomedina.com/"+selectedRowsString
+            }
             this.showDocumento = selectedRows
+
             if (selectedRows.length > maxToShow) {
                 var othersCount = selectedRows.length - maxToShow;
                 selectedRowsString +=
                 ' and ' + othersCount + ' other' + (othersCount !== 1 ? 's' : '');
             }
             document.querySelector('#selectedRows').innerHTML = selectedRowsString;
+            selectedRows.forEach(element => {
+                this.idc = element.id;
+
+            });
             this.show=true
+        },
+
+        onFileChange(e){
+            console.log(e.target.files[0]);
+            this.file = e.target.files[0];
+            let files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                return;
+            this.createImage(files[0]);
+        },
+        formSubmit(e) {
+            e.preventDefault();
+            let currentObj = this;
+
+            const config = {
+                headers: { 'content-type': 'multipart/form-data' }
+            }
+
+            let formData = new FormData();
+            formData.append('file', this.file);
+            formData.append('id',this.idc);
+            
+
+            axios.post(this.enlace+'addrecibo', formData, config)
+            .then(function (response) {
+                currentObj.success = response.data.success;
+            })
+            .catch(function (error) {
+                currentObj.output = error;
+            });
+            this.dismissCountDown=false
+        },
+        createImage(file) {
+            let reader = new FileReader();
+            let vm = this;
+            reader.onload = (e) => {
+                vm.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
         },
     }
 }

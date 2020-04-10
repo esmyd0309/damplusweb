@@ -267,7 +267,7 @@
                
                 cliente: [],
                 pagos: [],
-                url: 'http://localhost/damplusweb/public/',
+                url: 'http://damplus.estudiojuridicomedina.com/',
                 abono: parseFloat((this.saldodeuda/2).toFixed(2)),
                 periodo: 0,
                 interes: 0.8,
@@ -487,7 +487,7 @@
                             'detalleCuota': me.arrayData
                     }
 
-                        axios.post('http://localhost/damplusweb/public/apipago/store', parametros)
+                        axios.post('http://damplus.estudiojuridicomedina.com/apipago/store', parametros)
                             .then(res => {
                             me.getPagos()
                             me.amortizar = false

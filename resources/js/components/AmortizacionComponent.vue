@@ -143,7 +143,7 @@
                
                 cliente: [],
                 pagos: [],
-                url: 'http://localhost/damplusweb/public/',
+                url: 'http://damplus.estudiojuridicomedina.com/',
                 abono: this.saldodeuda/2,
                 periodo: 0,
                 interes: 0.8,

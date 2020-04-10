@@ -599,6 +599,8 @@ Route::get('/cifrar/{pass}', function ($pass) {
 		Route::get('getrecaudaciones/{idc}', 'Cobranza\web\GestionesController@getrecaudaciones');
 		Route::get('getredes/{idc}', 'Cobranza\web\GestionesController@getredes');
 		Route::get('getcliente/{idc}', 'Cobranza\web\GestionesController@getcliente');
+		Route::get('getcuotas/{idc}', 'Cobranza\web\GestionesController@getcuotas');
+		Route::get('getcuotasdetalle/{idc}', 'Cobranza\web\GestionesController@getcuotasdetalle');
 
 		/**
 		 * cargar recibo

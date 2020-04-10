@@ -10,7 +10,7 @@ use App\User;
 class Pago extends Model
 {
     protected $primaryKey = 'id';
-    protected $table = 'pagos';
+    protected $table = 'dampluswebcuotas';
    // protected $fillable = ['detalle_campania_id', 'periodo', 'interes', 'cuota', 'abono', 'fecha_pago'];
     protected $fillable = ['campania_idc', 'periodo', 'interes', 'cuota', 'abono', 'fecha_pago', 'user_id'];
     public $timestamps = false;

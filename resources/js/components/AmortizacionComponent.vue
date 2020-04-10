@@ -38,7 +38,7 @@
                     </div>
                     <div class="col">                    
                         <div class="form-group">
-                            <label for="periodo">Cuota a pagar</label>
+                            <label for="periodo">Cuota a pagar $</label>
                             <input type="text" class="form-control" @keyup="validarCuotaNumerico()" v-model="cuota" required="required" placeholder="Ingrese la cuota a pagar">
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                     <div class="col-4"> 
                         <div class="form-group">
                             <label for="fecha_pago">Fecha Pagar</label>
-                            <b-form-datepicker v-model="fecha_pago" :date-disabled-fn="dateDisabled" locale="en"></b-form-datepicker>
+                            <b-form-datepicker v-model="fecha_pago" :min="min" :max="max" locale="en"></b-form-datepicker>
                         </div>
                     </div>
                 </div>
@@ -57,33 +57,37 @@
                     </div>
                 </template>
                 <div class="card-footer">
-                    <button type="button" @click="calculate" class="btn btn-sm btn-primary"><i class="fas fa-cogs"></i> Calcular</button>
-                    <!--<button type="button" @click="reset" class="btn btn-sm btn-warning">Nuevo</button>
-                    <button type="button" @click="postPago" class="btn btn-sm btn-success">Enviar</button>-->
+                    <button type="button" @click="calculate" class="btn btn-sm btn-primary" v-if="fecha_pago"><i class="fas fa-cogs"></i> Calcular</button>
+                    <button type="button" @click="reset" class="btn btn-sm btn-warning" v-if="amortizar == true"><i class="fas fa-broom"></i> Limpiar</button>
+                    <button type="button" @click="postPago" class="btn btn-sm btn-success" v-if="amortizar == true"><i class="far fa-check-circle"></i> Establecer</button>
                 </div>
                        
                 <br>
                 <template v-if="amortizar == true">
                     
                     <div class="row"  v-if="amortizar == true">
-                        <table class="table table-bordered table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Monto Original</th>
-                                    <th class="text-center">Numero de Cuotas</th>
-                                    <th class="text-center">Interes %</th>
-                                    <th class="text-center">Monto Mensual Promedio</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-center">$ {{SaldoDeuda}}</td>
-                                    <td class="text-center">{{calcularPeriodo}}</td>
-                                    <td class="text-center">{{interes}} %</td>
-                                    <td class="text-center">$ {{cuota_fija2}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            
+                        <div class="table-responsive">
+                            <b-alert show variant="secondary"><center><i class="fas fa-chart-pie"></i> <strong>Datos de la Amortización Simulador</strong> </center> </b-alert>
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Monto Original</th>
+                                        <th class="text-center">Numero de Cuotas</th>
+                                        <th class="text-center">Interes %</th>
+                                        <th class="text-center">Monto Mensual Promedio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">$ {{SaldoDeuda}}</td>
+                                        <td class="text-center">{{calcularPeriodo}}</td>
+                                        <td class="text-center">{{interes}} %</td>
+                                        <td class="text-center">$ {{cuota_fija2}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     
                     <div class="row">
@@ -96,6 +100,8 @@
                     <br>
                     <div class="row">
                         <div class="table-responsive">
+                            <b-alert show variant="secondary"><center><i class="fas fa-chart-pie"></i> <strong>Tabla de Amortización Simulador</strong> </center> </b-alert>
+
                             <table class="table table-bordered table-hover table-striped ">
                                 <thead>
                                     <tr>
@@ -125,6 +131,113 @@
                         </div>   
                     </div>
                 </template>
+                <div class="row">
+                   
+                    <div class="table-responsive"> 
+                        <b-alert show variant="primary"><center><i class="fas fa-chart-pie"></i> <strong>Amortización Generadas</strong> </center> </b-alert>
+                        <table class="table table-bordered table-hover table-striped ">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Deuda $</th>
+                                    <th>Periodo</th>
+                                    <th>Interés</th>
+                                    <th>Cuota</th>
+                                    <th>Abono</th>     
+                                    <th>Asesor</th>
+                                    <th>Estado</th>       
+                                    <th>Fecha de pago</th>     
+                                    <th colspan="2">Acciones</th>     
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(pago, index) in pagos" :key="pago.id">
+                                    <td>{{( index + 1 )}}</td>
+                                    <td>$ {{ pago.saldodeuda }}</td>
+                                    <td>{{ pago.periodo }} mes(es)</td>
+                                    <td>{{ pago.interes }} %</td>
+                                    <td>$ {{ pago.cuota }}</td>
+                                    <td>$ {{ pago.abono }}</td>
+                                    <td>{{ pago.user.apellido_paterno }} {{ pago.user.nombre1 }} </td>
+                                    <td v-if="pago.estado==1"><b-badge variant="success">Activo</b-badge></td>
+                                    <td v-else><b-badge variant="danger">Descartado</b-badge></td>
+                                    <td>{{ pago.fecha_pago }}</td>
+                            
+                                    <td>    
+                                        <button type="button" @click="getcuotas(pago.id)" class="btn btn-sm btn-info" ><i class="fa fa-eye"></i></button>
+                                    </td>
+                                    <td>
+                                        <button type="button" @click="donwloadPdf" class="btn btn-sm btn-danger" style="float: right;"><i class="nav-icon far fa-file-pdf"></i> Descargar</button>    
+                                        <!--<button type="button" @click="deletePago(pago.id)" class="btn btn-sm btn-danger" ><i class="fa fa-trash"></i></button>-->
+                                    </td>
+
+                                </tr>
+                            </tbody>         
+                        </table>
+                    </div>
+                </div>
+                <div class="row" v-if="getcuota">
+                   
+                    <div class="table-responsive"> 
+                        <b-alert show variant="primary"><center><i class="fas fa-chart-pie"></i> <strong>Tabla de Amortización</strong> </center> </b-alert>
+                        
+                       <table class="table table-bordered table-hover table-striped ">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"># Periodos</th>
+                                    <th class="text-center">Fecha de pago</th>
+                                    <th class="text-center">Saldo inicial</th>
+                                    <th class="text-center">Cuota fija</th>
+                                    <th class="text-center">Interes</th>
+                                    <th class="text-center">Abono al capital</th>     
+                                    <th class="text-center">Saldo final</th>      
+                                                                        
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(data, index) in getcuotadetalle" :key="data.id">
+                                    <td class="text-center">{{ index + 1  }}</td>
+                                    <td>{{ data.fecha_pago }}</td>  
+                                    <td class="text-center">$ {{ data.saldo_inicial }}</td>
+                                    <td class="text-center">$ {{ data.cuota }}</td>
+                                    <td class="text-center">$ {{ data.interes }}</td>
+                                    <td class="text-center">$ {{ data.abono }}</td>
+                                    <td class="text-center">$ {{ data.saldo_final }}</td>                 
+                                                    
+                                </tr>
+                            </tbody>         
+                        </table>
+                    </div>
+                </div>
+
+                 <div class="row" v-if="getcuota">
+                    <div class="table-responsive"> 
+                        <b-alert show variant="primary"><center><i class="fas fa-chart-pie"></i> <strong>Detalle del Pago</strong> </center> </b-alert>
+                        <table class="table table-bordered table-hover table-striped ">
+                            <thead>
+                                <tr>
+                                    <th># Cuotas</th>
+                                    <th>Interés Total</th>
+                                    <th>Monto en Cuotas</th>
+                                    <th>Abono Total</th>
+                                    <th>Fecha Inicio</th>     
+                                    <th>Fecha Fin</th>       
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(pago, index) in getcuota" :key="index">
+                                    <td>{{ pago.CantCuotas }} mes(es)</td>
+                                    <td>$ {{ pago.interes }}</td>
+                                    <td>$ {{ pago.Montocuota }}</td>
+                                    <td>$ {{ pago.MontoAbono }}</td>
+                                    <td>{{ pago.Incio_fecha_pago }}</td>
+                                    <td>{{ pago.ultima_fecha_pago }}</td>
+                                </tr>
+                            </tbody>         
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -138,13 +251,24 @@
     export default {
         props: ['id','saldodeuda'],
     	data () {
+                 const now = new Date()
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+                // 15th two months prior
+                const minDate = new Date(today)
+                minDate.setMonth(minDate.getMonth())
+                minDate.setDate(now.getDate())
+                // 15th in two months
+                const maxDate = new Date(today)
+                maxDate.setMonth(maxDate.getMonth() + 1)
+                maxDate.setDate(15)
+
             return {
                 idcampana: String(this.id),
                
                 cliente: [],
                 pagos: [],
-                url: 'http://damplus.estudiojuridicomedina.com/',
-                abono: this.saldodeuda/2,
+                url: 'http://localhost/damplusweb/public/',
+                abono: parseFloat((this.saldodeuda/2).toFixed(2)),
                 periodo: 0,
                 interes: 0.8,
                 fecha_pago: '',
@@ -154,7 +278,12 @@
                 amortizar: false,
                 arrayData : [],
                 SaldoDeuda: String(this.saldodeuda),
-                cuota_fija2: ''
+                cuota_fija2: '',
+                        
+                min: minDate,
+                max: maxDate,
+                getcuota: null,
+                getcuotadetalle: null
             }
         },
         
@@ -167,14 +296,7 @@
             }
         },
         methods: {
-            dateDisabled(ymd, date) {
-        // Disable weekends (Sunday = `0`, Saturday = `6`) and
-        // disable days that fall on the 13th of the month
-        const weekday = date.getDay()
-        const day = date.getDate()
-        // Return `true` if the date should be disabled
-        return weekday === 0 || weekday === 6 || day === 13
-      },
+            
             getCampanaCliente()
             {
           
@@ -191,14 +313,15 @@
             getPagos()
             {
                 let me = this
-                axios.get(`/apipago/index?id=${me.idcampana}`)
+                axios.get(`${me.url}apipago/index?id=${me.idcampana}`)
                     .then(res => {
                         me.pagos = res.data 
-                        console.log(me.pagos);
                     })
                     .catch(err => {
                         console.log(err)
                     })
+                                          
+
             },
             nuevaFecha(fecha, intervalo, dma) {
                 let arrayFecha = fecha.split('-')
@@ -241,19 +364,20 @@
                   
                 let fecha = new Date(year, month - 1, day);
                 let meses = [
-                    "Enero", "Febrero", "Marzo",
-                    "Abril", "Mayo", "Junio", "Julio",
-                    "Agosto", "Septiembre", "Octubre",
-                    "Noviembre", "Diciembre"
+                    "01", "02", "03",
+                    "04", "05", "06", "07",
+                    "08", "09", "10",
+                    "11", "12"
                 ];
                 let dia = fecha.getDate();
                 let mesIndice = fecha.getMonth();
                 let anio = fecha.getFullYear();
-                return dia + '/' + meses[mesIndice] + '/' + anio;
+                return anio + '-' + meses[mesIndice] + '-' + dia;
             },
             calculate()
             {
-              console.log(this.SaldoDeuda)
+                this.getcuota=null
+                this.getcuotadetalle=null
                 if(this.validate())
                 {
                     return
@@ -273,7 +397,7 @@
                     {  
                         me.amortizar = true
                         me.arrayData = []
-                
+
                         let object = {}
                         let monto_cobrar = Math.round(parseFloat(me.SaldoDeuda) - parseFloat(me.abono), 3);
                         let interesDecimal = (parseFloat(me.interes) / 100);
@@ -323,7 +447,7 @@
                 ];
                 doc.text('Amortización del cliente '+me.cliente.Nombres, 10, 18)
                 doc.autoTable(columns, me.arrayData)
-                doc.save('amortizacion-'+(me.cliente.IdCampaña + me.cliente.cedula)+'.pdf')
+                doc.save('amortizacion-'+(me.cliente.idcampana + me.cliente.cedula)+'.pdf')
             },
             postPago()
             {
@@ -347,21 +471,24 @@
                         let monto_cobrar = parseFloat(me.SaldoDeuda) - parseFloat(me.abono);
                         let interesDecimal = (parseFloat(me.interes) / 100);
                         let denominador = Math.pow((1 / (1 + parseFloat(interesDecimal))), parseFloat(me.periodo));
-                        
                         let cuota = (parseFloat(interesDecimal) * parseFloat(monto_cobrar)) / (1 - parseFloat(denominador));
-                        axios.post(`/apipago/store`, {
-                            'campania_idc': (me.cliente.IdCampaña + me.cliente.cedula),
+                    const parametros ={
+                            'campania_idc': (me.idcampana),
                             'periodo': me.periodo,
                             'interes': me.interes,
-                            'cuota': cuota,
+                            'cuota': parseFloat(cuota.toFixed(2)),
                             'abono': me.abono,
                             'fecha_pago': me.fecha_pago,
                             'monto_cobrar' : monto_cobrar,
                             'nombres': me.cliente.Nombres,
                             'saldoDeuda': me.SaldoDeuda,
                             'valorDeuda': me.cliente.ValorDeuda,
-                            'campania': me.cliente.Descripcion
-                        }).then(res => {
+                            'campania': me.cliente.Descripcion,
+                            'detalleCuota': me.arrayData
+                    }
+
+                        axios.post('http://localhost/damplusweb/public/apipago/store', parametros)
+                            .then(res => {
                             me.getPagos()
                             me.amortizar = false
                             swal(
@@ -369,6 +496,7 @@
                                 res.data.success,
                                 'success'
                             )
+
                             me.resetError()
                           
                             me.reset()
@@ -406,7 +534,7 @@
                     if (result.value) 
                     {
                         let me = this
-                        axios.delete('/apipago/'+id)
+                        axios.delete(me.url+'apipago/'+id)
                         .then( res => {
                             me.getPagos()
                             swal(
@@ -490,6 +618,18 @@
                 
                 if (this.errorMostrarMsgPago.length) this.errorPago = 1
                 return this.errorPago
+            },
+            getcuotas(id){
+                
+                  axios.get(this.url+'getcuotas/'+id)
+                        .then(res => {
+                        this.getcuota = res.data;
+                });
+
+                  axios.get(this.url+'getcuotasdetalle/'+id)
+                        .then(res => {
+                        this.getcuotadetalle = res.data;
+                });
             }
         },
         mounted() 
@@ -497,8 +637,9 @@
             console.log('Componente pagos montado.')
             this.getCampanaCliente()
             this.getPagos()
+           
 
-            console.log()
+
         }
     }
 </script>

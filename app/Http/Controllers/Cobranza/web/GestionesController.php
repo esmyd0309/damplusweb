@@ -9,9 +9,9 @@ use App\Models\Cobranza\web\DAMPLUSWEBrecaudaciones;
 use App\Models\Cobranza\web\DAMPLUSWEBestados;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Carbon\Carbon;
 use App\User;
 use Auth;
 use DB;
@@ -337,5 +337,23 @@ class GestionesController extends Controller
       ->get();
 
        return response()->json($redes);
+    }
+
+    public function getcuotas($id)
+    {  
+     
+      $cuotas =  DB::connection('mysql')->select("SELECT COUNT(periodo) AS CantCuotas, SUM(ROUND(interes, 2)) AS interes, SUM(ROUND(cuota, 2)) AS Montocuota, SUM(ROUND(abono, 2)) AS MontoAbono,MIN(fecha_pago) AS Incio_fecha_pago, MAX(fecha_pago) AS ultima_fecha_pago
+      FROM dampluswebcuotadetalle WHERE cuota_id='$id'
+      ");
+      
+       return response()->json($cuotas);
+    }
+
+    public function getcuotasdetalle($id)
+    {  
+     
+      $cuotasdetalle =  DB::connection('mysql')->select("SELECT * FROM dampluswebcuotadetalle WHERE cuota_id='$id'");
+      
+       return response()->json($cuotasdetalle);
     }
 }

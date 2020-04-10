@@ -17,7 +17,20 @@ use Auth;
 use DB;
 class GestionesController extends Controller
 {
+  public function getcliente($idc)
+  {  
+    $gestiones = DB::connection('mysql')->table('clientescobranza')
+    ->select(
+              'clientescobranza.*'
 
+            )
+    ->where("clientescobranza.idc",$idc)
+    ->get();
+    
+     return response()->json($gestiones);
+  }
+
+  
     public function sanear_string($string)
     {
       $string = trim($string);

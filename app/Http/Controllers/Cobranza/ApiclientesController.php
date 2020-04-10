@@ -26,17 +26,17 @@ class ApiclientesController extends Controller
 
       // dd($request);
         $nombres = $request->get('nombres');
-        $cedula = $request->get('cedula');
+        $idc = $request->get('idc');
 
       //  
-        $clientes=ApiClientes::orderBy('Identificacion', 'DESC')
+        $clientes=ApiClientes::orderBy('idc', 'DESC')
         ->nombres($nombres)
-        ->cedula($cedula)
+        ->idc($idc)
 
         ->paginate(10);
      
         //dd($clientes);
-        return view('cliente.index', compact('clientes'));
+        return view('clientes.cliente.index', compact('clientes'));
     }
 
     public function apiclientescobranza($datobuscar,$tipobuscar )

@@ -57,9 +57,9 @@
                         placeholder="Subir la Imagen..."
                         v-on:change="onFileChange"
                     ></b-form-file>
-                        <div class="col-md-3" v-if="image">
-                            <img :src="image" class="img-responsive">
-                        </div>
+                    <div class="col-md-3" v-if="image">
+                        <img :src="image" class="img-responsive">
+                    </div>
                     <b-button type="submit"  class="mt-3" variant="outline-success" block >Cargar Recibo</b-button>
                 </form>
             </b-col>
@@ -77,7 +77,6 @@
                     <strong>Valor: </strong> {{item.valor}}<br/>
                     <strong>Banco Origen: </strong> {{item.origen}}<br/>
                     <strong>Banco Destino: </strong> {{item.destino}}<br/>
-
                    <strong>Comentario: </strong> {{item.comentario}}<br/>
                     <strong>Nombre Archivo: </strong> {{item.nombreArchivo}}<br/>
 
@@ -154,7 +153,12 @@ export default  {
             {headerName: 'Banco Origen', field: 'origen'},
             {headerName: 'Banco Destino', field: 'destino'},
             {headerName: 'Comentario', field: 'comentario',editable: true},
-            {headerName: 'Archivo', field: 'archivo'},
+            {headerName: 'Archivo', field: 'archivo'},            
+            {headerName: 'Nombre Archivo', field: 'nombreArchivo'},
+            {headerName: 'Cargado Archivo', field: 'agenteRecibo'},
+            {headerName: 'fecha Archivo', field: 'fechaRecibo'},
+
+
 
         ];
         this.defaultColDef = {

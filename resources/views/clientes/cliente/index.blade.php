@@ -15,7 +15,7 @@
                 
                 {{ Form::text('nombres', null, ['class' => 'form-control', 'placeholder' => 'Apellidos']) }}
             
-                {{ Form::text('cedula', null, ['class' => 'form-control', 'placeholder' => 'Cedula']) }}
+                {{ Form::text('idc', null, ['class' => 'form-control', 'placeholder' => 'idc']) }}
      
                 
                 
@@ -45,12 +45,12 @@
                 
              <table >
                 <thead class="thead-dark">
-                    
+                <th  class='text-center'>idc</th>
                 <th  class='text-center'>Cedula</th>
-                <th class='text-center'>Apellidos</th>
-                <th class='text-center'>Nombres</th>
-                <th class='text-center'>Telf Celular</th>
-                <th class='text-center'>Estado Laboral</th>
+                <th class='text-center'>nombres</th>
+                <th class='text-center'>campaña</th>
+                <th class='text-center'>valordeuda</th>
+                <th class='text-center'>saldodeuda</th>
                
                 <center><th  class='text-center'>Accion</th></center>
                 </thead>
@@ -58,11 +58,13 @@
                 
                 @foreach ($clientes as $clientess)
                 <tr >
-                    <td class='text-center'><small class="text-muted">{{ $clientess->Identificacion }}</small></td> 
-                    <td class='text-center'><small class="text-muted">{{ $clientess->IdCampaña }}</small></td> 
+                    <td class='text-center'><small class="text-muted">{{ $clientess->idc }}</small></td> 
+                    <td class='text-center'><small class="text-muted">{{ $clientess->cedula }}</small></td> 
                     <td class='text-center'><small class="text-muted">{{ $clientess->Nombres }}</small></td>
-                    <td class='text-center'><small class="text-muted">{{ $clientess->TelefonoPrincipal }}</small></td>
-                    <td class='text-center'><small class="text-muted">{{ $clientess->Campo4 }}</small></td>
+                    <td class='text-center'><small class="text-muted">{{ $clientess->descripcion }}</small></td>
+
+                    <td class='text-center'><small class="text-muted">{{ $clientess->valordeuda }}</small></td>
+                    <td class='text-center'><small class="text-muted">{{ $clientess->saldodeuda }}</small></td>
                     
                    <!-- <td class='text-center'><a href="" class="btn btn-success" class="btn btn-default btn-xs">Detalles</a>
                     <a href="" class="btn btn-danger" class="btn btn-default btn-xs">Actualizar</a></td>-->

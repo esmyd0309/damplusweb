@@ -7,20 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class ApiClientes extends Model
 {
     public $timestamps = false;
-    protected $connection = 'sqlsrv';
-    protected $table ='tbCampañaPersona';
+    //protected $connection = 'sqlsrv';
+    protected $table ='clientescobranza';
     
 
-     public function scopeCedula($query, $cedula)
+     public function scopeidc($query, $idc)
      {
-         if($cedula)
-         return $query->where('Identificacion', 'LIKE', "%$cedula%"); 
+         if($idc)
+         return $query->where('idc', 'LIKE', "%$idc%"); 
      }
     
      public function scopeNombres($query, $nombres)
      {
          if($nombres)
-         return $query->where('Nombres', 'LIKE', "%$nombres%"); 
+         return $query->where('nombres', 'LIKE', "%$nombres%"); 
      }
       
 }

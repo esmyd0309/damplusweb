@@ -243,6 +243,9 @@
                       <div class="col">
                         <gestion-component :id="{{ $idc }}" :cedula="{{ $ced }}"></gestion-component>
                       </div>
+                      <div class="col">
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".cuotas"><i class="fas fa-plus-circle"></i> Cuotas</button>
+                      </div>
                     </div>
                     <hr>
                      <!-- Modal recaudacion -->
@@ -282,6 +285,19 @@
                       </div>
                     </div>
                     <!-- Modal Compromiso-->
+
+                    
+                    <!-- Modal Compromiso-->
+                    <div class="modal fade cuotas" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                          <amortizacion-component :id="{{ $idc }}" :saldodeuda="{{ $datos->saldodeuda }}" :idcampana="{{ $datos->idcampana }}"/>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Modal Compromiso-->
+
+
                     <div class="container">
                       <div class="row">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -296,6 +312,9 @@
                           </li>
                           <li class="nav-item">
                             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#redes" role="tab" aria-controls="redes" aria-selected="false">Redes</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#cuotas" role="tab" aria-controls="cuotas" aria-selected="false">Cuotas</a>
                           </li>
                         </ul>
                       </div>
@@ -313,6 +332,9 @@
                       </div>
                       <div class="tab-pane fade" id="redes"  aria-labelledby="contact-tab">
                         <redes-component :id="{{ $idc }}" :cedula="{{ $ced }}" :idcampana="{{ $datos->idcampana }}"/>
+                      </div>
+                      <div class="tab-pane fade" id="cuotas"  aria-labelledby="contact-tab">
+                        <amortizacion-component :id="{{ $idc }}" :saldodeuda="{{ $datos->saldodeuda }}" :idcampana="{{ $datos->idcampana }}"/>
                       </div>
                     </div>
 

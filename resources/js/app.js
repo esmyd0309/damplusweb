@@ -46,6 +46,8 @@ Vue.component('gestionescompromiso-component', require('./components/Gestionesco
 Vue.component('getrecaudaciones-component', require('./components/GetrecaudacionesComponent.vue').default);
 Vue.component('estados-component', require('./components/EstadosComponent.vue').default);
 Vue.component('redes-component', require('./components/RedesComponent.vue').default);
+Vue.component('plancuota-component', require('./components/PlanCuotaComponent.vue').default);
+Vue.component('amortizacion-component', require('./components/AmortizacionComponent.vue').default);
 
 
 

@@ -487,7 +487,7 @@
                             'detalleCuota': me.arrayData
                     }
 
-                        axios.post('http://damplus.estudiojuridicomedina.com/apipago/store', parametros)
+                        axios.post(this.url+'apipago/store', parametros)
                             .then(res => {
                             me.getPagos()
                             me.amortizar = false

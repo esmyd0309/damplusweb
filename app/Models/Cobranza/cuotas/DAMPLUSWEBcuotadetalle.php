@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DAMPLUSWEBcuotadetalle extends Model
 {
     public $timestamps = false;
-    protected $table ='DAMPLUSWEBcuotadetalle';
+    protected $table ='dampluswebcuotadetalle';
     protected $fillable = [
                             'cuota_id',
                             'periodo', 
